@@ -1,0 +1,1 @@
+Please don't put the files in bin into the git repository

@@ -185,6 +185,8 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 //			l = new Load();
 
 			Socket socket = new Socket(ip, port);
+			this.dispose();
+			Loader l = new Loader();
 			socket.setKeepAlive(true);
 			// Scanner sc = new Scanner(socket.getInputStream());
 			// Thread.sleep(100);
@@ -197,11 +199,11 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 			// Olmec.main(info);
 //			GridSetUp gs = new GridSetUp();
 //			GridSetUp.gs = gs;
-			synchronized (this) {
-				// Client.addExecutionListener(gs);
-//				PlayerProcessor.launch();
-			}
-			// l.dispose();
+//			synchronized (this) {
+//				// Client.addExecutionListener(gs);
+////				PlayerProcessor.launch();
+//			}
+			l.dispose();
 			return true;
 
 		} catch (Exception e) {

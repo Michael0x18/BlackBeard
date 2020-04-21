@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 //import java.util.Scanner;
 
-
 public class ClientHandler extends Thread {
 	private Socket socket;
 	private PrintWriter out;
@@ -36,7 +35,7 @@ public class ClientHandler extends Thread {
 		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		playerHP = 5;
 		this.start();
-		
+
 	}
 
 	public void run() {
@@ -83,107 +82,37 @@ public class ClientHandler extends Thread {
 					pinging = false;
 				}
 
-				if (runTime % 15 == 0) {
-					messageQueue.add(":exec<grep>");
-					messageQueue.add(":exec<?state>");
-				}
+				this.processEvents();
 
-				if (runTime % 15 == 0) {
-
-					String str = "";
-					String thisIp = socket.getInetAddress().getHostAddress();
-					// System.out.println(thisIp);
-					synchronized (this) {
-						for (String s : Server.playerCoords.keySet()) {
-							if (!s.equals(thisIp)) {
-								str += Server.playerCoords.get(s);
-								str += "_";
-
-							}
-						}
-
-					}
-					if (str.length() > 0) {
-						// System.out.println(str.substring(0, str.length() - 1));\
-						if (str.substring(0, str.length() - 1).equals("null")) {
-							System.err.println("NULL!!!!!!");
-						}
-						messageQueue.add(":exec<PlayerData>" + str.substring(0, str.length() - 1));
-						
-					}
-//					if(Server.shotsList.size() > 0) {TODO-Server shots.
-//						String msg = ":exec<!shots>";
-//						for(SnowBall sb : Server.shotsList) {
-//							msg += "{"+sb.toString()+"}`";
-//						}
-//						messageQueue.add(msg.substring(0, msg.length()-1));
-//						//System.out.println(msg);
-//					}
-//					else {
-//						messageQueue.add(":exec<!clearShots>");
-//					}
-				}
-
-				String finalStr = "";
-				for (String s : inQueue) {
-					if (s.startsWith("/exec<?state>")) {
-						// System.out.println(s);
-//						ShotThingie stth = new ShotThingie();
-//						if (Server.playerCoords.get(socket.getInetAddress().getHostAddress()) != null)
-//							stth.CreateShot(Server.playerCoords.get(socket.getInetAddress().getHostAddress()));
-//						s = null;
-						//Found a bullet.
-					} else if (s.startsWith(":exec")) {
-						Server.sendExecutionEvent(new ExecutionEvent(s, null));
-						s = null;
-					}
-
-					else if (s.startsWith("/exec<grep>")) {
-						String str = s.substring(11);
-						synchronized (this) {
-
-							finalStr = str;
-							// inQueue.remove(str);
-							s = null;
-						}
-
-						// Server.println(s);
-
-					}
-
-				}
-
-				if (!finalStr.equals("")) {
-					if (printCoords)
-						System.out.println(finalStr);
-					Server.playerCoords.remove(this.socket.getInetAddress().getHostAddress());
-					Server.playerCoords.put(this.socket.getInetAddress().getHostAddress(), finalStr.substring(0, finalStr.length()-1)+","+this.socket.getInetAddress().getHostAddress()+"}");
-				}
 				while (inQueue.contains(null))
 					inQueue.remove(null);
 
-				
 				try {
-				Iterator<String> it = inQueue.iterator();
-				while (it.hasNext()) {
-					String str = (String) it.next();
-					if (str.startsWith("/grep") || str.startsWith("/exec<?state>")) {
-						inQueue.remove(str);
-					}
-				}
-				}catch(Exception e) {
-					
+//				Iterator<String> it = inQueue.iterator();
+//				while (it.hasNext()) {
+//					String str = (String) it.next();
+//					if (str.startsWith("/grep") || str.startsWith("/exec<?state>")) {
+//						inQueue.remove(str);
+//					}
+//				}
+				} catch (Exception e) {
+
 				}
 
 				while (messageQueue.size() > 0) { // Send all messages
 					String msg = messageQueue.poll();
-					out.println(msg);
-					if (msg.equals(":disc") || msg.equals(":kill")) {
-						this.stopped = true;
+					if (msg != null) {
+						out.println(msg);
+						if (msg.equals(":disc") || msg.equals(":kill")) {
+							this.stopped = true;
+						}
+						if (msg.startsWith(":echo")) {
+							printCoords = true;
+						}
 					}
-					if (msg.startsWith(":echo")) {
-						printCoords = true;
-					}
+				}
+				if (inQueue.size() > 0) {
+					inQueue.clear();
 				}
 			} catch (Exception e) {
 				if (Server.verbose)
@@ -232,11 +161,25 @@ public class ClientHandler extends Thread {
 		this.addMessage(e.getMessage());
 
 	}
-	
+
 	public void hit() {
 		playerHP--;
-		if(playerHP <= 0) {
+		if (playerHP <= 0) {
 			this.addMessage(":die");
+		}
+	}
+
+	public void processEvents() {
+		// add code for handling front-end interactions here and here only.
+		// use the Runtime millisecond counter eg: %15.
+		if (runTime % 15 == 0) {
+			messageQueue.add(":coords");
+		}
+		for (String msg : inQueue) {
+			if (msg.startsWith("/coords")) {
+				// System.out.println(msg);
+				Server.playerCoords.put(this.socket.getInetAddress().getHostAddress(), msg.substring(7));
+			}
 		}
 	}
 

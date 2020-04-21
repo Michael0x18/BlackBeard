@@ -1,0 +1,353 @@
+package world.viewport;
+
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import world.constants.declaration.MConstants;
+import world.constructs.blocks.Clippable;
+import world.constructs.blocks.Ship;
+
+public class Player extends Camera {
+	private double w, h, d;
+	private boolean grounded;
+	private double gravity;
+	public double dx;
+	public double dy;
+	public double dz;
+	private CopyOnWriteArrayList<Clippable> br3 = new CopyOnWriteArrayList<Clippable>();
+	boolean allowJump = true;
+	// private boolean gravityOn = true;
+
+	// public static Chunk selectedChunk;
+
+	public Player(JoglPane jp) {
+		// speed is at .1f max
+		this(0.5, 1.5, 0.5, .05f, .5f, .5f, .75f, MConstants.PI / 3f, 1000f, jp);
+		this.position.y = 5;
+	}
+
+	/**
+	 * It would appear that the Player is not covered under the Server license, but
+	 * the wtfpl still applies.
+	 * 
+	 * @param w            Width of the player
+	 * @param h            Height of the player
+	 * @param d            Depth of the player
+	 * @param speed        How fast the player moves
+	 * @param xSensitivity Mouse sensitivity on the x-axis
+	 * @param ySensitivity Mouse sensitivity on the y-axis
+	 * @param friction     The amount of friction the player experiences while
+	 *                     moving
+	 * @param fov          The player's field of view
+	 * @param viewDistance How far the player can look in the distance
+	 * 
+	 * 
+	 */
+	public Player(double w, double h, double d, double speed, double xSensitivity, double ySensitivity, double friction,
+			double fov, double viewDistance, JoglPane jp) {
+		super(speed, xSensitivity, ySensitivity, friction, fov, viewDistance, jp);
+		this.w = w;
+		this.h = h;
+		this.d = d;
+		grounded = false;
+		// gravity = 0.0111f;
+		gravity = 0.02f;
+	}
+
+	public void jump() {
+		if (grounded) {
+			grounded = false;
+			vY += 0.18;
+//			velocity.x *= 2.5;
+//			velocity.z *= 2.5;
+		}
+		if (!gravityOn) {
+			position.y += 0.01;
+		}
+	}
+
+	/**
+	 * Checks to see if the player is colliding with any of the Block objects inside
+	 * the specified ArrayList
+	 * 
+	 * @param chunks ArrayList of Block objects to check collision with
+	 */
+	public void act(CopyOnWriteArrayList<Clippable> t) {
+		// selectedChunk = chunks.get(0);
+		// if ((int)Math.abs(c.getC1() - position.z / 32) == 0 &&
+		// (int)Math.abs(c.getC2() - position.x / 32) == 0)
+		// selectedChunk = c;
+
+		grounded = false;
+
+		for (Clippable b : t) {
+			if (b != null) {
+				// position is in the center of the so you have to add/substract
+				// its (dimension in axis)/2 to get the edges
+				double left = position.x - w / 2;
+				double right = position.x + w / 2;
+				double top = (double) (position.y + h / 8);
+				double bottom = (double) (position.y - h / 2);
+				double front = position.z + d / 2;
+				double back = position.z - d / 2;
+//				System.out.println();
+//				System.out.println(top);
+//				System.out.println(bottom);
+
+				// block position is in the center of the block so you have to
+				// add/substract its
+				// dimensions/2 to get the edges
+				double blockSize = b.getSize();
+				double blockHeight = b.getSize();
+				double blockLeft = b.getX() - blockSize / 2;
+				double blockRight = b.getX() + blockSize / 2;
+				double blockTop = b.getY() + blockHeight / 2;
+				double blockBottom = b.getY() - blockHeight / 2;
+				double blockFront = b.getZ() - blockSize / 2;
+				double blockBack = b.getZ() + blockSize / 2;
+
+//				if (b.containsPoint(position.x, top, position.z)) {
+//					// move down
+//					if (vY > 0) {
+//						position.y = blockBottom - h / 8;
+//						vY = 0;
+//						// vY += gravity;
+//						return;
+//					}
+//				}
+
+				// Checks to see if any of the sides are in the block and move
+				// the player
+				// accordingly
+				if (b.containsPoint(left, position.y, position.z)
+						|| b.containsPoint(left, bottom + h / 4, position.z)) {
+					// move right
+					position.x = blockRight + w / 2;
+					// System.out.println("Hit left line 118");
+
+				} else if (b.containsPoint(right, position.y, position.z)
+						|| b.containsPoint(right, bottom + h / 4, position.z)) {
+					// move left
+					position.x = blockLeft - w / 2;
+					// System.out.println("Hit Right line 124");
+
+				}
+
+				if (b.containsPoint(position.x, top, position.z)) {
+					// move down
+					if (vY > 0) {
+						position.y = blockBottom - h / 8;
+						vY = 0;
+						// vY += gravity;
+						// System.out.println("Hit: UP line 134");
+
+					}
+				} else if (b.containsPoint(position.x, bottom, position.z)) {
+					// move up/grounded
+					if (vY < 0) {
+						position.y = blockTop + h / 2;
+						vY = 0;
+						// System.out.println("Hit: DOWN line 142");
+						grounded = true;
+
+					}
+				}
+
+				if (position.y <= -5) {
+					moveTo(2.5, 5, 2.5);
+					vY = 0;
+				}
+
+				if (b.containsPoint(position.x, position.y, front) || b.containsPoint(position.x, bottom + h / 4, front)
+						|| b.containsPoint(position.x, top - h / 4, front)) {
+					// System.out.println("Hit Front line 155");
+					// move back
+					position.z = blockFront - d / 2;
+				} else if (b.containsPoint(position.x, position.y, back)
+						|| b.containsPoint(position.x, bottom + h / 4, back)
+						|| b.containsPoint(position.x, top - h / 4, back)) {
+					// move forward
+					position.z = blockBack + d / 2;
+					// System.out.println("Hit back Line 163");
+				}
+
+			}
+		}
+		for (Ship s : Grid.ships)
+			for (Clippable b : s.blocks) {
+				if (b != null) {
+					// position is in the center of the so you have to add/substract
+					// its (dimension in axis)/2 to get the edges
+
+					MVector position = new MVector();
+					position.x = this.position.x;
+					position.z = this.position.z;
+					position.y = this.position.y;
+					position.x -= (s.x + 8);
+					position.z -= (s.z + 8);
+
+//					System.out.println(position.x);
+					double left = position.x - w / 2;
+					double right = position.x + w / 2;
+					double top = (double) (position.y + h / 8);
+					double bottom = (double) (position.y - h / 2);
+					double front = position.z + d / 2;
+					double back = position.z - d / 2;
+//				System.out.println();
+//				System.out.println(top);
+//				System.out.println(bottom);
+
+					// block position is in the center of the block so you have to
+					// add/substract its
+					// dimensions/2 to get the edges
+					double blockSize = b.getSize();
+					double blockHeight = b.getSize();
+					double blockLeft = b.getX() - blockSize / 2;
+					double blockRight = b.getX() + blockSize / 2;
+					double blockTop = b.getY() + blockHeight / 2;
+					double blockBottom = b.getY() - blockHeight / 2;
+					double blockFront = b.getZ() - blockSize / 2;
+					double blockBack = b.getZ() + blockSize / 2;
+					double r = Math.sqrt((position.x - b.getX()) * (position.x - b.getX())
+							+ (position.x - b.getY()) * (position.x - b.getY()));
+					position.x -= r * Math.PI + Math.cos(Math.toRadians(-s.rot));
+					position.z-= r * Math.PI + Math.sin(Math.toRadians(-s.rot));
+//				if (b.containsPoint(position.x, top, position.z)) {
+//					// move down
+//					if (vY > 0) {
+//						position.y = blockBottom - h / 8;
+//						vY = 0;
+//						// vY += gravity;
+//						return;
+//					}
+//				}
+
+					// Checks to see if any of the sides are in the block and move
+					// the player
+					// accordingly
+					if (b.containsPoint(left, position.y, position.z)
+							|| b.containsPoint(left, bottom + h / 4, position.z)) {
+						// move right
+						this.position.x = blockRight + w / 2;
+						// System.out.println("Hit left line 118");
+
+					} else if (b.containsPoint(right, position.y, position.z)
+							|| b.containsPoint(right, bottom + h / 4, position.z)) {
+						// move left
+						this.position.x = blockLeft - w / 2;
+						// System.out.println("Hit Right line 124");
+
+					}
+
+					if (b.containsPoint(position.x, top, position.z)) {
+						// move down
+						if (vY > 0) {
+							this.position.y = blockBottom - h / 8;
+							vY = 0;
+							// vY += gravity;
+							// System.out.println("Hit: UP line 134");
+
+						}
+					} else if (b.containsPoint(position.x, bottom, position.z)) {
+						// move up/grounded
+						if (vY < 0) {
+							this.position.y = blockTop + h / 2;
+							vY = 0;
+							// System.out.println("Hit: DOWN line 142");
+							grounded = true;
+
+						}
+					}
+
+					if (this.position.y <= -5) {
+						moveTo(2.5, 5, 2.5);
+						vY = 0;
+					}
+
+					if (b.containsPoint(position.x, position.y, front)
+							|| b.containsPoint(position.x, bottom + h / 4, front)
+							|| b.containsPoint(position.x, top - h / 4, front)) {
+						// System.out.println("Hit Front line 155");
+						// move back
+						this.position.z = blockFront - d / 2;
+					} else if (b.containsPoint(position.x, position.y, back)
+							|| b.containsPoint(position.x, bottom + h / 4, back)
+							|| b.containsPoint(position.x, top - h / 4, back)) {
+						// move forward
+						this.position.z = blockBack + d / 2;
+						// System.out.println("Hit back Line 163");
+					}
+
+				}
+			}
+
+		// if (!grounded)
+		vY -= gravity;
+		if (vY <= -0.3)
+			vY = -0.3;
+
+		if (!gravityOn) {
+			if (vY < 0)
+				;
+			vY = 0;
+
+			grounded = true;
+		}
+	}
+
+	// vY += gravity;
+	// if(vY > .3f) {
+	// vY = .3f;
+	// }
+
+//	public void jump() {
+//		if (grounded && allowJump) {
+//			grounded = false;
+//			allowJump = false;
+//			vY -= 1.0f;
+//			velocity.x *= 1.5;
+//			vY *= 1.5;
+//			velocity.z *= 1.5;
+//			// getPosition().y -= 3;
+//			// JumpPatch p = new JumpPatch();
+//			// p.start();
+//		}
+//	}
+
+	public double getWidth() {
+		return w;
+	}
+
+	public double getHeight() {
+		return h;
+	}
+
+	public double getDepth() {
+		return d;
+	}
+
+	public void toggleGravity() {
+		gravityOn = !gravityOn;
+	}
+
+	/**
+	 * Sets the position of the player to the given coordinates
+	 * 
+	 * @param x x-coordinate of where to move the player
+	 * @param y y-coordinate of where to move the player
+	 * @param z z-coordinate of where to move the player
+	 */
+	public void moveTo(double x, double y, double z) {
+		this.position.x = x;
+		this.position.y = y;
+		this.position.z = z;
+	}
+
+	public double getAngle() {
+		return this.getPan();
+	}
+
+	public double getAngle2() {
+		return this.getTilt();
+	}
+
+}

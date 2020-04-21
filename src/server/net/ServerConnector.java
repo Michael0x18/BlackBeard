@@ -7,6 +7,8 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import server.mirrors.Ship;
+
 
 public class ServerConnector extends Thread{
 	private ServerSocket socket;
@@ -38,6 +40,7 @@ public class ServerConnector extends Thread{
 	}
 	
 	public void run() {
+		Ship sh = new Ship("Queen_Anne");
 		while (true) {
 			try {
 				Socket s = socket.accept();

@@ -1,0 +1,24 @@
+Ships: A ship is a CONSTRUCT on the Server side. The ship stores its position and velocity and checks Players to see if they are Within its bounds (see below)
+
+
+                   _
+                  | |
+                 _| |_
+                |     |
+               _|     |_
+              |         |
+              |         |
+              |         | - Crude outline of ship. In short, a Player
+              |         |   is “on a ship“ if it has coordinates within the 
+              |         |   ship’s hitbox. A ship’s hitbox extends infinitely
+              |         |   in the Y direction.
+              |         |
+              |         |
+              |         |
+              |         |
+              |         |
+              |         |
+              |_       _|
+                |_____|
+
+It calculates the individual velocities of each of its blocks relative to its center, and uses them to compensate for its movement (makes players on it move with it instead of being left behind.) In short, the ship is like another Server Daemon: it does whatever, whenever it wants. However, players can interact with it.

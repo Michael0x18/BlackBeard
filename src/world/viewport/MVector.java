@@ -8,9 +8,9 @@ package world.viewport;
  *
  */
 public class MVector {
-	public double x;
-	public double y;
-	public double z;
+	public double x = 0;
+	public double y = 0;
+	public double z = 0;
 	
 	public MVector(){
 		x=0;

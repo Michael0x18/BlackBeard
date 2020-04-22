@@ -172,18 +172,29 @@ public class Player extends Camera {
 
 			}
 		}
-		for (Ship s : Grid.ships)
+		for (Ship s : Grid.ships) {
+			MVector position = new MVector();
+			position.x = this.position.x;
+			position.z = this.position.z;
+			position.y = this.position.y;
+			position.x -= (s.x);
+			position.z -= (s.z);
+			double r = Math.sqrt(((position.x - (s.x)) * ((position.x - (s.x)))
+					+ (position.z - s.z) * (position.z - (s.z))));
+			if(Double.isNaN(r)) {
+				r = 0.1;
+			}
+			System.out.println(r);
+			
+			position.z += r * (Math.cos(Math.toRadians(s.rot)));
+			position.x -= r-r * (Math.sin(Math.toRadians(s.rot)));
+			//System.out.println((int)(position.x*100)/100.0+" "+(int)(s.x*100)/100.0);
+			
+			
 			for (Clippable b : s.blocks) {
 				if (b != null) {
 					// position is in the center of the so you have to add/substract
 					// its (dimension in axis)/2 to get the edges
-
-					MVector position = new MVector();
-					position.x = this.position.x;
-					position.z = this.position.z;
-					position.y = this.position.y;
-					position.x -= (s.x + 8);
-					position.z -= (s.z + 8);
 
 //					System.out.println(position.x);
 					double left = position.x - w / 2;
@@ -207,10 +218,12 @@ public class Player extends Camera {
 					double blockBottom = b.getY() - blockHeight / 2;
 					double blockFront = b.getZ() - blockSize / 2;
 					double blockBack = b.getZ() + blockSize / 2;
-					double r = Math.sqrt((position.x - b.getX()) * (position.x - b.getX())
-							+ (position.x - b.getY()) * (position.x - b.getY()));
-					position.x -= r * Math.PI + Math.cos(Math.toRadians(-s.rot));
-					position.z-= r * Math.PI + Math.sin(Math.toRadians(-s.rot));
+//					double r = Math.sqrt((position.x - (s.x - 8) * (position.x - (s.x - 8))
+//							+ (position.z - s.z) * (position.z - (s.z))));
+//					position.x += r * (Math.PI + Math.cos(Math.toRadians(-s.rot)));
+//					position.z += r * (Math.PI + Math.sin(Math.toRadians(-s.rot)));
+				//	System.out.println(position.x);
+					// System.out.println(b.getX());
 //				if (b.containsPoint(position.x, top, position.z)) {
 //					// move down
 //					if (vY > 0) {
@@ -227,13 +240,13 @@ public class Player extends Camera {
 					if (b.containsPoint(left, position.y, position.z)
 							|| b.containsPoint(left, bottom + h / 4, position.z)) {
 						// move right
-						this.position.x = blockRight + w / 2;
+						position.x = blockRight + w / 2;
 						// System.out.println("Hit left line 118");
 
 					} else if (b.containsPoint(right, position.y, position.z)
 							|| b.containsPoint(right, bottom + h / 4, position.z)) {
 						// move left
-						this.position.x = blockLeft - w / 2;
+						position.x = blockLeft - w / 2;
 						// System.out.println("Hit Right line 124");
 
 					}
@@ -241,7 +254,7 @@ public class Player extends Camera {
 					if (b.containsPoint(position.x, top, position.z)) {
 						// move down
 						if (vY > 0) {
-							this.position.y = blockBottom - h / 8;
+							position.y = blockBottom - h / 8;
 							vY = 0;
 							// vY += gravity;
 							// System.out.println("Hit: UP line 134");
@@ -250,7 +263,7 @@ public class Player extends Camera {
 					} else if (b.containsPoint(position.x, bottom, position.z)) {
 						// move up/grounded
 						if (vY < 0) {
-							this.position.y = blockTop + h / 2;
+							position.y = blockTop + h / 2;
 							vY = 0;
 							// System.out.println("Hit: DOWN line 142");
 							grounded = true;
@@ -258,27 +271,40 @@ public class Player extends Camera {
 						}
 					}
 
-					if (this.position.y <= -5) {
-						moveTo(2.5, 5, 2.5);
-						vY = 0;
-					}
+//					if (this.position.y <= -5) {
+//						moveTo(2.5, 5, 2.5);
+//						vY = 0;
+//					}
 
 					if (b.containsPoint(position.x, position.y, front)
 							|| b.containsPoint(position.x, bottom + h / 4, front)
 							|| b.containsPoint(position.x, top - h / 4, front)) {
 						// System.out.println("Hit Front line 155");
 						// move back
-						this.position.z = blockFront - d / 2;
+						position.z = blockFront - d / 2;
 					} else if (b.containsPoint(position.x, position.y, back)
 							|| b.containsPoint(position.x, bottom + h / 4, back)
 							|| b.containsPoint(position.x, top - h / 4, back)) {
 						// move forward
-						this.position.z = blockBack + d / 2;
+						position.z = blockBack + d / 2;
 						// System.out.println("Hit back Line 163");
 					}
 
 				}
+				
+				
 			}
+			//double r = Math.sqrt((position.x - (s.x - 8) * (position.x - (s.x - 8))
+//					+ (position.z - s.z) * (position.z - (s.z))));
+//			position.x += -r * (Math.PI + Math.cos(Math.toRadians(-s.rot)));
+//			position.z += -r * (Math.PI + Math.sin(Math.toRadians(-s.rot)));
+			
+			position.z -= -r * (Math.cos(Math.toRadians(s.rot)));
+			position.x += (r-r * (Math.sin(Math.toRadians(s.rot))));
+			position.x += s.x;
+			position.z += s.z;
+			this.position = position.copy();
+		}
 
 		// if (!grounded)
 		vY -= gravity;

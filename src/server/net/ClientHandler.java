@@ -95,6 +95,17 @@ public class ClientHandler extends Thread {
 //						inQueue.remove(str);
 //					}
 //				}
+				
+				Iterator<String> it = inQueue.iterator();
+				while(it.hasNext()) {
+					String str = (String) it.next();
+					if(str.startsWith("/coords ")) {
+						String s = str.substring(8);
+						it.remove();
+						Server.playerCoords.put(this.socket.getInetAddress().getHostAddress(),s);
+					}
+				}
+				
 				} catch (Exception e) {
 
 				}

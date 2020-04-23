@@ -15,6 +15,7 @@ public class Ship extends Daemon {
 	private double velocity = 0;
 	private String name;
 	private CopyOnWriteArrayList<String> players = new CopyOnWriteArrayList<>();
+	private double turned;
 
 	public Ship(String name) {
 		super();
@@ -23,10 +24,10 @@ public class Ship extends Daemon {
 	}
 
 	public void run() {
-		//velocity = 0.001;
-		
-		//x = 10;
-		//z = 10;
+		// velocity = 0.001;
+
+		// x = 10;
+		// z = 10;
 		while (!sunk) {
 			turnLeft(0.1);
 			velocity = 0.01;
@@ -34,12 +35,13 @@ public class Ship extends Daemon {
 				Thread.sleep(10);
 				players.clear();
 				for (String s : Server.playerCoords.keySet()) {
-					if (Server.playerCoords.get(s) != null) {
-						StringTokenizer st = new StringTokenizer(Server.playerCoords.get(s));
-						double a = Double.parseDouble(st.nextToken());
+					String a;
+					if ((a=Server.playerCoords.get(s)) != null) {
+						StringTokenizer st = new StringTokenizer(a);
+						double d = Double.parseDouble(st.nextToken());
 						double b = Double.parseDouble(st.nextToken());
 						double c = Double.parseDouble(st.nextToken());
-						if ((x - a) * (x - a) + (y - b) * (y - b) + (z - c) * (z - c) < 144) {
+						if ((x - d) * (x - d) + (z - c) * (z - c) < 144) {
 							players.add(s);
 						}
 					}
@@ -58,9 +60,14 @@ public class Ship extends Daemon {
 					for (String player : Server.clientList.keySet()) {
 						Server.clientList.get(player)
 								.addMessage(":ship " + name + " " + x + " " + y + " " + z + " " + bearing + " ");
-						//System.out.println(bearing);
+						// System.out.println(bearing);
 						// Server.clientList.get(player).addMessage(":ship YEET 0.0 0.0 0.0 0.0");
 					}
+				}
+				for (String player : this.players) {
+					if (Server.clientList.get(player) != null)
+						Server.clientList.get(player)
+								.addMessage(":delta " + velocity * Math.cos(rad) + " " + velocity * Math.sin(rad));
 				}
 
 			} catch (Exception e) {
@@ -75,10 +82,12 @@ public class Ship extends Daemon {
 
 	public void turnLeft(double degrees) {
 		bearing -= degrees;
+		turned -= degrees;
 	}
 
 	public void turnRight(double degrees) {
 		turnLeft(-degrees);
+		turned += degrees;
 	}
 
 }

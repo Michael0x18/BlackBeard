@@ -130,6 +130,14 @@ public class ServerListener extends Thread {
 			//Grid.ships.add(s);
 
 		}
+		if(msg.startsWith(":delta ")) {
+			String s = msg.substring(7);
+			StringTokenizer st = new StringTokenizer(s);
+			double dx = Double.parseDouble(st.nextToken());
+			double dy = Double.parseDouble(st.nextToken());
+			JoglPane.currentLoader.getC().getPosition().x+=dx;
+			JoglPane.currentLoader.getC().getPosition().z+=dy;
+		}
 
 	}
 

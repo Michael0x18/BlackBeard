@@ -173,24 +173,37 @@ public class Player extends Camera {
 			}
 		}
 		for (Ship s : Grid.ships) {
+			double rad = Math.toRadians(s.rot);
 			MVector position = new MVector();
 			position.x = this.position.x;
 			position.z = this.position.z;
 			position.y = this.position.y;
+			position.z = -position.z;
 			position.x -= (s.x);
 			position.z -= (s.z);
-			double r = Math.sqrt(((position.x - (s.x)) * ((position.x - (s.x)))
-					+ (position.z - s.z) * (position.z - (s.z))));
-			if(Double.isNaN(r)) {
+//			position.x = Math.cos(rad) * (position.x - s.x) - Math.sin(rad) * (position.z - s.z) + s.x;///////////////////////////////////
+//			position.z = Math.sin(rad) * (position.x - s.x) + Math.cos(rad) * (position.z - s.z) + s.z;////////////////////////////////
+
+			
+			double newx = position.x*Math.cos(rad)-position.z*Math.sin(-rad);
+			double newz = position.z*Math.cos(rad)+position.x*Math.sin(-rad);
+			position.x = newx;
+			position.z = newz;
+			
+			double r = Math
+					.sqrt(((position.x - (s.x)) * ((position.x - (s.x))) + (position.z - s.z) * (position.z - (s.z))));
+			if (Double.isNaN(r)) {
 				r = 0.1;
 			}
-			System.out.println(r);
-			
-			position.z += r * (Math.cos(Math.toRadians(s.rot)));
-			position.x -= r-r * (Math.sin(Math.toRadians(s.rot)));
-			//System.out.println((int)(position.x*100)/100.0+" "+(int)(s.x*100)/100.0);
-			
-			
+			//System.out.println(rad);
+
+//			position.z += r * (Math.sin(rad));
+//			position.x -= r * (Math.cos(rad));
+//			double x = position.z;
+//			position.z = -position.x;
+//			position.x = x;
+			// System.out.println((int)(position.x*100)/100.0+" "+(int)(s.x*100)/100.0);
+
 			for (Clippable b : s.blocks) {
 				if (b != null) {
 					// position is in the center of the so you have to add/substract
@@ -222,7 +235,7 @@ public class Player extends Camera {
 //							+ (position.z - s.z) * (position.z - (s.z))));
 //					position.x += r * (Math.PI + Math.cos(Math.toRadians(-s.rot)));
 //					position.z += r * (Math.PI + Math.sin(Math.toRadians(-s.rot)));
-				//	System.out.println(position.x);
+					// System.out.println(position.x);
 					// System.out.println(b.getX());
 //				if (b.containsPoint(position.x, top, position.z)) {
 //					// move down
@@ -291,18 +304,37 @@ public class Player extends Camera {
 					}
 
 				}
-				
-				
+
 			}
-			//double r = Math.sqrt((position.x - (s.x - 8) * (position.x - (s.x - 8))
+			// double r = Math.sqrt((position.x - (s.x - 8) * (position.x - (s.x - 8))
 //					+ (position.z - s.z) * (position.z - (s.z))));
 //			position.x += -r * (Math.PI + Math.cos(Math.toRadians(-s.rot)));
 //			position.z += -r * (Math.PI + Math.sin(Math.toRadians(-s.rot)));
+
+//			position.z -= -r * (Math.cos(Math.toRadians(s.rot)));
+//			position.x += (r-r * (Math.sin(Math.toRadians(s.rot))));
+//			position.x = (Math.cos(rad) * (position.x - s.x) - Math.sin(-rad) * (position.z - s.z)) + s.x;//////////////////////////////////
+//			position.z = (Math.sin(-rad) * (position.x - s.x) + Math.cos(rad) * (position.z - s.z)) + s.z;///////////////////////////////
+
+//			position.z -= r * (Math.sin(rad));
+//			position.x += r * (Math.cos(rad));
 			
-			position.z -= -r * (Math.cos(Math.toRadians(s.rot)));
-			position.x += (r-r * (Math.sin(Math.toRadians(s.rot))));
+//			x = position.x;
+//			position.x = -position.z;
+//			position.z = x;
+			
+			newx = position.x*Math.cos(rad)-position.z*Math.sin(rad);
+			newz = position.z*Math.cos(rad)+position.x*Math.sin(rad);
+			position.x = newx;
+			position.z = newz;
+			
 			position.x += s.x;
 			position.z += s.z;
+			position.z = -position.z;
+			
+			
+			
+//			
 			this.position = position.copy();
 		}
 

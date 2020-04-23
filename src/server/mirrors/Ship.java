@@ -24,12 +24,12 @@ public class Ship extends Daemon {
 
 	public void run() {
 		//velocity = 0.001;
-		turnLeft(45);
+		
 		//x = 10;
 		//z = 10;
 		while (!sunk) {
-//			turnLeft(0.1);
-//			velocity = 0.01;
+			turnLeft(0.1);
+			velocity = 0.01;
 			try {
 				Thread.sleep(10);
 				players.clear();

@@ -45,30 +45,73 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
  *
  */
 public class Server {
+	/**
+	 * Flag set to true if the Server should dump all the caught exceptions to the
+	 * shell.
+	 */
 	public static final boolean verbose = true;
+	/**
+	 * The port to use. 4444 is open in Shelby's room.
+	 */
 	public static final int port = 4444;
+	/**
+	 * The default port to use. 4444 is open in Shelby's room.
+	 */
 	public static final int defaultPort = 4444;
 	private static ServerWindow s;
+	/**
+	 * The console used for output to the GUI.
+	 */
 	public static final JTextArea console = new JTextArea();
 	private static ServerConnector connector;
 	private static boolean isRunning = false;
+	/**
+	 * Backend, used for the JList
+	 */
 	public static DefaultListModel<String> clientDisplayModel = new DefaultListModel<>();
+	/**
+	 * Display selector for clients.
+	 */
 	public static JList<String> clientDisplay = new JList<String>(clientDisplayModel);
+	/**
+	 * Holds all ClientHandler instances.
+	 */
 	public static final ConcurrentHashMap<String, ClientHandler> clientList = new ConcurrentHashMap<String, ClientHandler>();
+	/**
+	 * Server stdin.
+	 */
 	public static final JTextArea shell = new JTextArea();
+	/**
+	 * Holds all the banned players and ips.
+	 */
 	static File banned;
+	/**
+	 * Holds all the ExecutionListeners registered with this Server.
+	 */
 	@SuppressWarnings("deprecation")
 	public static final CopyOnWriteArrayList<ExecutionListener> eListeners = new CopyOnWriteArrayList<ExecutionListener>();
+	/**
+	 * Holds all the player coordinates.
+	 */
 	public static final ConcurrentHashMap<String, String> playerCoords = new ConcurrentHashMap<String, String>();
 	// public static final CopyOnWriteArrayList<SnowBall> shotsList = new
 	// CopyOnWriteArrayList<SnowBall>(); TODO move to mirrors
 	// public static final CopyOnWriteArrayList<Block> hitBlockList = new
 	// CopyOnWriteArrayList<Block>();
+	/**
+	 * Holds the temporarily banned player ips.
+	 */
 	public static final CopyOnWriteArrayList<String> bannedIPs = new CopyOnWriteArrayList<String>();
 
+	/**
+	 * writes to the banned file.
+	 */
 	public static BufferedWriter bannedWriter;
 	// public static OtherPlayer[] players;
 
+	/**
+	 * Performs all Server related setups.
+	 */
 	public static void launch() {
 
 		try {
@@ -105,6 +148,9 @@ public class Server {
 		// PlayerProcessor.launch();
 	}
 
+	/**
+	 * Initializes and starts the Server, and all related resources.
+	 */
 	public static void startServer() {
 		isRunning = true;
 		try {
@@ -121,6 +167,11 @@ public class Server {
 		}
 	}
 
+	/**
+	 * Adds the specified IP address to the list of banned players.
+	 * 
+	 * @param l
+	 */
 	public static void ban(List<String> l) {
 		for (String s : l) {
 			bannedIPs.add(s);
@@ -128,6 +179,11 @@ public class Server {
 		kill(l);
 	}
 
+	/**
+	 * Writes the specified IP address to a file to keep it across Server restarts.
+	 * 
+	 * @param l
+	 */
 	public static void permaBan(List<String> l) {
 		for (String s : l) {
 			try {
@@ -142,46 +198,87 @@ public class Server {
 		kill(l);
 	}
 
+	/**
+	 * prints to the Server, followed by a newline. No CR is used.
+	 * 
+	 * @param s
+	 */
 	public static void println(String s) {
 		console.setText((console.getText() + s + "\n"));
 	}
 
+	/**
+	 * prints to the Server console.
+	 * 
+	 * @param s
+	 */
 	public static void print(String s) {
 		console.setText((console.getText() + s));
 	}
 
+	/**
+	 * returns the state of the Server.
+	 * 
+	 * @return
+	 */
 	public static boolean getIsRunning() {
 		return isRunning;
 	}
 
+	/**
+	 * closes the socket associated with the given IP.
+	 * 
+	 * @param l
+	 */
 	public static void disconnect(List<String> l) {
 		for (String s : l) {
 			clientList.get(s).addMessage(":disc");
 		}
 	}
 
+	/**
+	 * kill -9
+	 * 
+	 * @param l
+	 */
 	public static void terminate(List<String> l) {
 		for (String s : l) {
 			clientList.get(s).halt();
 		}
 	}
 
+	/**
+	 * Prints a helpful message to the Clients.
+	 * 
+	 * @param l
+	 */
 	public static void yeet(List<String> l) {
 		for (String s : l) {
 			clientList.get(s).addMessage(":echo It is Time: To Yeet the Meat!!!!!");
 		}
 	}
 
+	/**
+	 * does nothing, looks sick. See Terry A. Davis's descriptions of CIA agents to
+	 * be very confused.
+	 */
 	public static void exec() {
 		println("Enter pressed");
 
 	}
 
+	/**
+	 * resets the shell
+	 */
 	public static void clearShell() {
 		shell.setText("");
 
 	}
 
+	/**
+	 * measures the ping of the plyaers.
+	 * @param l
+	 */
 	public static void ping(List<String> l) {
 		// Server.println("called");
 		for (String s : l) {
@@ -190,6 +287,10 @@ public class Server {
 
 	}
 
+	/**
+	 * standard kill
+	 * @param l
+	 */
 	public static void kill(List<String> l) {
 		for (String s : l) {
 			clientList.get(s).addMessage(":kill");

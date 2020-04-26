@@ -10,7 +10,6 @@ import com.jogamp.opengl.util.gl2.GLUT;
 
 import world.constructs.blocks.Block;
 import world.constructs.blocks.Clippable;
-import world.viewport.Grid;
 
 /**
  * Client sided mirror for a ship. It gets replaced very fast. Players check

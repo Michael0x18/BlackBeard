@@ -7,6 +7,14 @@ import com.jogamp.opengl.util.gl2.GLUT;
 
 import javafx.scene.paint.Color;
 
+/**
+ * unclippable block. Looks like a plant
+ * @author Michael Ferolito
+ * @version 2
+ * @since 2
+ * 
+ *
+ */
 public class BGBlock extends Block{
 	
 	public static BGBlock fromDoubleCoords(double x2, double y2, double z2) {
@@ -27,7 +35,7 @@ public class BGBlock extends Block{
 			return;
 		gl2.glTranslated(x, y, z);
 		gl2.glColor4d(Color.LAWNGREEN.getRed(), Color.LAWNGREEN.getGreen(), Color.LAWNGREEN.getBlue(),40);
-		gl2.glBegin(gl.GL_TRIANGLES);
+		gl2.glBegin(GL.GL_TRIANGLES);
 		gl2.glVertex3d(0.25, -0.25, 0.25);
 		gl2.glVertex3d(-0.25, -0.25, -0.25);
 		gl2.glVertex3d(0, 0.25, 0.05);

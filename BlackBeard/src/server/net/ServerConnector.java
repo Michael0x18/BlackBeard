@@ -26,6 +26,9 @@ public class ServerConnector extends Thread {
 	private ServerSocket socket;
 	private int port;
 	// private BufferedReader reader;
+	/**
+	 * banned ips.
+	 */
 	public static String[] BannedIPs;
 
 	/**

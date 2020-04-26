@@ -26,8 +26,14 @@ public class Client {
 	public static final boolean VerboseMode = true;
 
 	private static ClientConnector connector;
-	public static ServerListener listener;
-	public static boolean isBot = false;
+	/**
+	 * The sole instance of the ServerListener.
+	 */
+	static ServerListener listener;
+	/**
+	 * For debug purposes only
+	 */
+	static boolean isBot = false;
 
 	@SuppressWarnings("deprecation")
 	private static volatile LinkedList<ExecutionListener> eListeners = new LinkedList<ExecutionListener>();

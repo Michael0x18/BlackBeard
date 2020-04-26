@@ -10,6 +10,11 @@ package server.net;
  */
 public class ServerMain {
 
+	/**
+	 * ahoy!
+	 * @param args
+	 * @throws InterruptedException
+	 */
 	public static void main(String[] args) throws InterruptedException {
 
 		Server.launch();

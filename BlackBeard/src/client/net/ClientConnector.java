@@ -1,21 +1,17 @@
 package client.net;
 
 import java.awt.Color;
-import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
 import java.net.Socket;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JTextArea;
 
 /**
@@ -35,6 +31,9 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 	private JTextArea input;
 	private JLabel Title;
 	private JButton connectButton;
+	/**
+	 * The default port for incoming connections.
+	 */
 	public static final int defaultport = 59090;
 	private JMenuBar jmb = new JMenuBar();
 	// public static int port = 4444;

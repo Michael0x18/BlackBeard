@@ -4,8 +4,8 @@ package client.net;
  * 
  * @author mferolito676
  * @version 1
- * 
- * For events
+ * @deprecated as of version 2
+ * For events. Was used in project pre-alpha internally. Kept in the project for backwards compatibility.
  */
 public interface ExecutionListener {
 	

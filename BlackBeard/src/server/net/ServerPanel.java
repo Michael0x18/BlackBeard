@@ -9,7 +9,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-public class ServerPanel extends JPanel implements KeyListener{
+/**
+ * Exteinsion of JPanel used to create the Server GUI.
+ * 
+ * @author Michael Ferolito
+ * @version 2
+ * @since 1
+ *
+ */
+public class ServerPanel extends JPanel implements KeyListener {
 	/**
 	 * UID
 	 */
@@ -18,9 +26,14 @@ public class ServerPanel extends JPanel implements KeyListener{
 	private JLabel consoleLabel = new JLabel("Console");
 	private JScrollPane sc;
 	private JScrollPane listScroll;
-	
+
 	public static ServerPanel s;
-	
+
+	/**
+	 * Creates a ServerPanel instance on the specified parent class.
+	 * 
+	 * @param parent
+	 */
 	public ServerPanel(ServerWindow parent) {
 		super();
 		s = this;
@@ -28,7 +41,7 @@ public class ServerPanel extends JPanel implements KeyListener{
 		this.setBackground(Color.BLACK);
 		this.setLayout(null);
 		this.parent = parent;
-		//ServerPaneServer.console.setBounds(0,10,800,200);
+		// ServerPaneServer.console.setBounds(0,10,800,200);
 		sc = new JScrollPane(Server.console);
 		sc.setAutoscrolls(true);
 		Server.console.setAutoscrolls(true);
@@ -37,45 +50,59 @@ public class ServerPanel extends JPanel implements KeyListener{
 		Server.console.setEditable(false);
 		Server.console.setAutoscrolls(true);
 		Server.shell.setLineWrap(true);
-		Server.shell.setBounds(0,0,this.getWidth(),200);
+		Server.shell.setBounds(0, 0, this.getWidth(), 200);
 		this.add(Server.shell);
 		Server.shell.addKeyListener(this);
-		//this.add(Server.console);
+		// this.add(Server.console);
 		this.add(sc);
 		this.add(consoleLabel);
-		Server.clientDisplay.setBounds(10, 10, this.getWidth()-20, this.getHeight()-300);
+		Server.clientDisplay.setBounds(10, 10, this.getWidth() - 20, this.getHeight() - 300);
 		listScroll = new JScrollPane(Server.clientDisplay);
 		this.add(listScroll);
-		//this.add(Server.clientDisplay);
-		
+		// this.add(Server.clientDisplay);
+
 	}
-	
+
+	/**
+	 * Important implementation note: paintComponent is called before the repaint
+	 * methods of the individual components; if you want to draw on top of them
+	 * please override paint.
+	 * @param g
+	 */
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.BLACK);
-		//Server.clientDisplay = new JList<Object>(Server.clientList.keySet().toArray());
-		
-		//Server.clientDisplay.setBounds(10, 10, this.getWidth()-20, this.getHeight()-300);
+		// Server.clientDisplay = new
+		// JList<Object>(Server.clientList.keySet().toArray());
+
+		// Server.clientDisplay.setBounds(10, 10, this.getWidth()-20,
+		// this.getHeight()-300);
 		g.fillRect(0, 0, parent.getWidth(), parent.getHeight());
-		//Server.console.setBounds(10,parent.getHeight()-320,parent.getWidth()-40,200);
-		sc.setBounds(10,parent.getHeight()-320,parent.getWidth()-40,200);
-		Server.shell.setBounds(10,sc.getY()+200,this.getWidth()-20,30);
-		this.consoleLabel.setBounds(10,sc.getY()-60,100,100);
+		// Server.console.setBounds(10,parent.getHeight()-320,parent.getWidth()-40,200);
+		sc.setBounds(10, parent.getHeight() - 320, parent.getWidth() - 40, 200);
+		Server.shell.setBounds(10, sc.getY() + 200, this.getWidth() - 20, 30);
+		this.consoleLabel.setBounds(10, sc.getY() - 60, 100, 100);
 		this.consoleLabel.setForeground(Color.GREEN);
 		Server.shell.setForeground(Color.GREEN);
 		Server.shell.setBackground(Color.DARK_GRAY);
-		this.listScroll.setBounds(10, 10, this.getWidth()-20, this.getHeight()-300);
-		//this.setBackground(Color.black);
-		//Server.println("It is time to yeet the meat");
-		
+		this.listScroll.setBounds(10, 10, this.getWidth() - 20, this.getHeight() - 300);
+		// this.setBackground(Color.black);
+		// Server.println("It is time to yeet the meat");
+
 	}
 
 	@Override
+	/**
+	 * Senses a keypress
+	 */
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
+	/**
+	 * senses a character like the gets function in c.
+	 */
 	public void keyPressed(KeyEvent e) {
 //		if(Server.shell.getText().length() < 3) {
 //			Server.shell.setText(">>>>");
@@ -83,12 +110,16 @@ public class ServerPanel extends JPanel implements KeyListener{
 	}
 
 	@Override
+	/**
+	 * senses a key release.
+	 * @since version 1 does nothing.
+	 */
 	public void keyReleased(KeyEvent e) {
-		if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+		if (e.getKeyChar() == KeyEvent.VK_ENTER) {
 			Server.exec();
 			Server.clearShell();
 		}
-		
+
 	}
 
 }

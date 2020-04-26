@@ -10,6 +10,14 @@ import java.util.LinkedList;
 import java.util.Queue;
 //import java.util.Scanner;
 
+/**
+ * The workhorse of the Server backend, the ClientHandler is the class that
+ * almost exclusively talks to the client. It implements an atomic style of
+ * threading. See the thicck paragraph on the Server doc for more informaion.
+ * 
+ * @author Michael Ferolito
+ *
+ */
 public class ClientHandler extends Thread {
 	private Socket socket;
 	private PrintWriter out;
@@ -24,9 +32,16 @@ public class ClientHandler extends Thread {
 	private int missedPings = 0;
 	private int runTime = 0;
 	// public static synchronized nextOtherPlayer
-	private boolean printCoords;
+	// private boolean printCoords;
 	private int playerHP;
 
+	/**
+	 * Called by ServerConnector. Sets up the ClientHandler, which sticks itself
+	 * into the Server infastructure.
+	 * 
+	 * @param s
+	 * @throws IOException
+	 */
 	public ClientHandler(Socket s) throws IOException {
 		socket = s;
 		Server.clientList.put(s.getInetAddress().getHostAddress(), this);
@@ -38,6 +53,9 @@ public class ClientHandler extends Thread {
 
 	}
 
+	/**
+	 * Main cyclic process.
+	 */
 	public void run() {
 		while (true) {
 			try {
@@ -95,17 +113,17 @@ public class ClientHandler extends Thread {
 //						inQueue.remove(str);
 //					}
 //				}
-				
-				Iterator<String> it = inQueue.iterator();
-				while(it.hasNext()) {
-					String str = (String) it.next();
-					if(str.startsWith("/coords ")) {
-						String s = str.substring(8);
-						it.remove();
-						Server.playerCoords.put(this.socket.getInetAddress().getHostAddress(),s);
+
+					Iterator<String> it = inQueue.iterator();
+					while (it.hasNext()) {
+						String str = (String) it.next();
+						if (str.startsWith("/coords ")) {
+							String s = str.substring(8);
+							it.remove();
+							Server.playerCoords.put(this.socket.getInetAddress().getHostAddress(), s);
+						}
 					}
-				}
-				
+
 				} catch (Exception e) {
 
 				}
@@ -118,7 +136,8 @@ public class ClientHandler extends Thread {
 							this.stopped = true;
 						}
 						if (msg.startsWith(":echo")) {
-							printCoords = true;
+							// printCoords = true;
+							System.out.println(msg.substring(5));
 						}
 					}
 				}
@@ -136,6 +155,9 @@ public class ClientHandler extends Thread {
 		}
 	}
 
+	/**
+	 * Kills the running process and terminates the socket.
+	 */
 	private void quit() {
 		Server.clientList.remove(this.socket.getInetAddress().getHostAddress());
 		Server.clientDisplayModel.removeElement(this.socket.getInetAddress().getHostAddress());
@@ -150,29 +172,55 @@ public class ClientHandler extends Thread {
 		}
 	}
 
+	/**
+	 * Adds a message to output Queue, which is dumped into the output stream on
+	 * next cycle.
+	 * 
+	 * @param e
+	 */
 	public void addMessage(String e) {
 		messageQueue.add(e);
 	}
 
+	/**
+	 * returns the last measured ping value.
+	 * 
+	 * @return
+	 */
 	public String getPing() {
 		return "" + this.ping;
 	}
 
+	/**
+	 * stops the ClientHandler.
+	 */
 	public void halt() {
 		this.stopped = true;
 
 	}
 
+	/**
+	 * Ensures the ClientHandler is not null. A similar process may be achieved by
+	 * using Unsafe to check for initialized instances.
+	 */
 	public void check() {
 		return;
 
 	}
 
+	/**
+	 * @deprecated since version 2
+	 * @param e
+	 */
 	public void sendEvent(ExecutionEvent e) {
 		this.addMessage(e.getMessage());
 
 	}
 
+	/**
+	 * CliencHandlers hold the Hp of the player. This causes the hp to decrease. It
+	 * kills the player if the HP is less than or equal to 0;
+	 */
 	public void hit() {
 		playerHP--;
 		if (playerHP <= 0) {
@@ -180,6 +228,10 @@ public class ClientHandler extends Thread {
 		}
 	}
 
+	/**
+	 * Should be overridden in subclasses. Provides infastructure for handling
+	 * events drawn from the queues that do not need to be immediately dealt with.
+	 */
 	public void processEvents() {
 		// add code for handling front-end interactions here and here only.
 		// use the Runtime millisecond counter eg: %15.

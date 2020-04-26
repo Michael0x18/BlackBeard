@@ -1,4 +1,4 @@
-package world.constructs.blocks;
+package world.constructs;
 
 import java.util.StringTokenizer;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -8,14 +8,29 @@ import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.gl2.GLUT;
 
+import world.constructs.blocks.Block;
+import world.constructs.blocks.Clippable;
 import world.viewport.Grid;
 
+/**
+ * Client sided mirror for a ship. It gets replaced very fast. Players check
+ * their coordinate relative to it using Michael's fancy rotation matrix.
+ * 
+ * @author Michael Ferolito
+ * @version 2
+ * @version 1
+ * 
+ *
+ */
 public class Ship {
 	public double x = 0;
 	public double y = 0;
 	public double z = 0;
 	public double rot = 0;
 
+	/**
+	 * Arr! Shiver me timbers! This be our ship, boys!
+	 */
 	public static final String ship = "Wood		0	0	0\n" + "Wood		1	0	0\n" + "Wood		2	0	0\n"
 			+ "Wood		3	0	0\n" + "Wood		4	0	0\n" + "Wood		5	0	0\n" + "Wood		6	0	0\n"
 			+ "Wood		7	0	0\n" + "Wood		8	0	0\n" + "Wood		9	0	0\n" + "Wood		10	0	0\n"
@@ -168,9 +183,19 @@ public class Ship {
 			+ "Wood		12	9	1\n" + "Wood		12	9	2\n" + "Wood		12	9	3\n" + "Wood		12	9	4\n"
 			+ "Wood		12	9	-1\n" + "Wood		12	9	-2\n" + "Wood		12	9	-3\n" + "Wood		12	9	-4";
 
+	/**
+	 * contains the blocks present in this Ship
+	 */
 	public CopyOnWriteArrayList<Clippable> blocks;
+	/**
+	 * the ship's name and unique identifier.
+	 */
 	public String name;
 
+	/**
+	 * Creates a new ship instance with the specified name.
+	 * @param name
+	 */
 	public Ship(String name) {
 		blocks = new CopyOnWriteArrayList<Clippable>();
 		String[] arr = ship.split("\n");
@@ -187,7 +212,7 @@ public class Ship {
 				double c = Double.parseDouble(st.nextToken()) / 2;
 				double d = Double.parseDouble(st.nextToken()) / 2;
 				double e = Double.parseDouble(st.nextToken()) / 2;
-				b.moveTo(c-4, d, e);
+				b.moveTo(c - 4, d, e);
 				blocks.add(b);
 			}
 
@@ -195,15 +220,27 @@ public class Ship {
 		this.name = name;
 	}
 
+	/**
+	 * equivalent of the Ship clippable method.
+	 * @param glut
+	 * @param glu
+	 * @param gl
+	 * @param gl2
+	 */
 	public void draw(GLUT glut, GLU glu, GL gl, GL2 gl2) {
 		gl2.glTranslated(x, y, z);
-		for(Clippable c : blocks) {
+		for (Clippable c : blocks) {
 			c.draw(glut, glu, gl, gl2);
 		}
 		gl2.glTranslated(-x, -y, -z);
 
 	}
 
+	/**
+	 * classloader from file/string. ignores executions.
+	 * @param whichClass
+	 * @return
+	 */
 	private static Block loadClass(String whichClass) {
 		try {
 			Class<?> clazz = Class.forName(whichClass);
@@ -230,13 +267,23 @@ public class Ship {
 //			b.movex(-0.2);
 //		}
 //	}
-	
+
+	/**
+	 * translate
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
 	public void moveTo(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
-	
+
+	/**
+	 * used for parsing.
+	 * @param bearing
+	 */
 	public void turn(double bearing) {
 		this.rot = bearing;
 	}

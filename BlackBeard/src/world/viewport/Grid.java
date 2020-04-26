@@ -12,7 +12,7 @@ import world.constructs.blocks.Clay;
 import world.constructs.blocks.Clippable;
 import world.constructs.blocks.Null;
 import world.constructs.blocks.Obsidian;
-import world.constructs.blocks.Ship;
+import world.constructs.Ship;
 import world.constructs.blocks.Stone;
 import world.constructs.blocks.Teapot;
 import world.io.FileWrapper;

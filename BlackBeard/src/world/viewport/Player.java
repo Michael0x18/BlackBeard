@@ -4,7 +4,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import world.constants.declaration.MConstants;
 import world.constructs.blocks.Clippable;
-import world.constructs.blocks.Ship;
+import world.constructs.Ship;
 
 public class Player extends Camera {
 	private double w, h, d;

@@ -1,8 +1,19 @@
 package server.net;
 
-
+/**
+ * 
+ * @author Michael Ferolito
+ *
+ * @since version 1
+ * @version 1
+ * 
+ * This is an old class. It 'picks up the pieces' of crashed Threads by flushing all related buffers. It performs cleaup operations every 100 milliseconds.
+ */
 public class ServerDaemon extends Daemon {
 
+	/**
+	 * Standard bufferRun.
+	 */
 	public void run() {
 		while (true) {
 			try {

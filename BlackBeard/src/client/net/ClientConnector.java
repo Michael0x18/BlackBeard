@@ -22,8 +22,10 @@ import javax.swing.JTextArea;
  * Class ClientConnector extens JFrame implements KeyListener, ActionListener
  * 
  * @author mferolito676
- * @version 1 window title is "Connection Utility" provides a stripped-down gui
- *          for connections by explicit IP.
+ * @version 2.0 window title is "Connection Utility" provides a stripped-down
+ *          GUI for connections by explicit IP. The window is a widget based GUI
+ *          made using swing. It contains extra functionality for plugins later
+ *          to the project launcher.
  */
 public class ClientConnector extends JFrame implements KeyListener, ActionListener {
 	/**
@@ -42,7 +44,7 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 	 */
 	public ClientConnector() {
 		super();
-		//PlayList.launch();
+		// PlayList.launch();
 		this.setTitle("GENESIS::Launcher");
 		this.getContentPane().setBackground(Color.BLACK);
 		this.setLayout(null);

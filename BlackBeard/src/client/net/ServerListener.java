@@ -12,7 +12,7 @@ import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import world.constructs.blocks.Ship;
+import world.constructs.Ship;
 import world.viewport.Grid;
 import world.viewport.JoglPane;
 import world.viewport.Player;
@@ -20,12 +20,14 @@ import world.viewport.Player;
 /**
  * 
  * @author mferolito676
- * @version 1
+ * @version 2
  * 
  *          Client-sided equivalent of ClientHandler on Server end. Handles most
  *          of the communications between the Server and Client using a Queue
  *          and two streams. Does most of the heavy lifting during TCP
  *          communications and any lag can be blamed on this class.
+ * @since version 1
+ * 
  */
 public class ServerListener extends Thread {
 	private Socket socket;
@@ -69,7 +71,7 @@ public class ServerListener extends Thread {
 						p.println("-ping");
 						// System.out.println("Ping response");
 					} else if (msg.equals(":bce")) {
-						throw (new BigChodeException());
+						throw (new BCException());
 					} else if (msg.startsWith(":echo ")) {
 						System.out.println(msg.substring(5));
 						// PRINT TO SHELL
@@ -135,8 +137,8 @@ public class ServerListener extends Thread {
 			StringTokenizer st = new StringTokenizer(s);
 			double dx = Double.parseDouble(st.nextToken());
 			double dy = Double.parseDouble(st.nextToken());
-			JoglPane.currentLoader.getC().getPosition().x+=dx;
-			JoglPane.currentLoader.getC().getPosition().z+=dy;
+			JoglPane.currentLoader.getC().getVelocity().x+=dx;
+			JoglPane.currentLoader.getC().getVelocity().z+=dy;
 		}
 
 	}

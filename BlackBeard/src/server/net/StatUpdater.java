@@ -1,8 +1,16 @@
 package server.net;
 
-
+/**
+ * Yet another cleanup Daemon
+ * @author Michael Ferolito
+ * @since version 1
+ * @version 1
+ */
 public class StatUpdater extends Daemon {
 
+	/**
+	 * Not a user called class.
+	 */
 	public void run() {
 		try {
 		try {

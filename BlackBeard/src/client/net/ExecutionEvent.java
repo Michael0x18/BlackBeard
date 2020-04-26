@@ -4,6 +4,7 @@ package client.net;
  * 
  * @author mferolito676
  * @version 1
+ * @deprecated as of version 2
  * Class for sending events to Server following a specific format.
  */
 public class ExecutionEvent {

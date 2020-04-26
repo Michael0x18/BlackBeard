@@ -15,9 +15,18 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+/**
+ * Represents a Server GUI instance. Owned only by the Server, this provides
+ * basic menus for navigation and Server management. Each menu is coupled to a
+ * Server command of the same name.
+ * 
+ * @author Michael Ferolito
+ * @version 2
+ * 
+ */
 public class ServerWindow extends JFrame implements KeyListener, MouseListener, ActionListener {
 	/**
-	 * 
+	 * UID
 	 */
 	private static final long serialVersionUID = -8554734233573634283L;
 	private ServerPanel panel;

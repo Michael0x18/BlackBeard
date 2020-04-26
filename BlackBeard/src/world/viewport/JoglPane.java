@@ -22,7 +22,7 @@ import com.jogamp.opengl.util.gl2.GLUT; // for drawing the sample teapot
 
 import world.constructs.blocks.Clippable;
 import world.constructs.blocks.SensorBlock;
-import world.constructs.blocks.Ship;
+import world.constructs.Ship;
 import world.io.FileWrapper;
 import world.io.Printer;
 import world.ui.JoglMenu;

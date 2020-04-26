@@ -14,7 +14,36 @@ import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
-
+/**
+ * Represents the main centralized location of the Server. The Server implements
+ * a CAS Erlang type thread model. In other words, it contains a bunch of
+ * threads that each do their own thing. There are few, if any, synchronized
+ * blocks. Instead, Threads measure the value of something they are attempting
+ * to change, and try to change it until their operation succeeds. When reading
+ * and writing concurrently, Atomic operations are used to ensure the accurate
+ * measurement from multiple Thread pools. The erlang part fo the Server is as
+ * follows. BEAM is cleaner than the JVM, but its threading is more... Involved.
+ * Here is the philosophy: If a client is sending malicious input to the Server
+ * in the hopes of causing a buffer overflow, it does happen. The part of the
+ * Server that deals with that client is specific only to that client. That
+ * Thread crashes due to the buffer, and the malicious client is kicked out. If
+ * the intent was only to fool the Server, the Thread crashes, picks itself
+ * up(the entire Run method is inside of a try catch block in the
+ * ClientHandlers, which this Server owns) and continues execution. Any sketch
+ * input is dropped after causing an exception, and the Server pretends that
+ * nothing has happened. This makes whoever is trying to break the Server have a
+ * lot of lag (try catch takes a really long time) and possibly get kicked if
+ * the lag reaches over three seconds. CAS is the underlying concept of Atomic
+ * classes in the Concurrent package, as well as CopyOnWriteArrayList and
+ * ConcurrentHashMap. This type of programming can also be considered
+ * Relativistic Programming, a special subset of parallel programming where
+ * events happen in an indistinct order.
+ * 
+ * @author Michael Ferolito
+ * @since Version 1
+ * @version 2
+ *
+ */
 public class Server {
 	public static final boolean verbose = true;
 	public static final int port = 4444;
@@ -28,14 +57,17 @@ public class Server {
 	public static final ConcurrentHashMap<String, ClientHandler> clientList = new ConcurrentHashMap<String, ClientHandler>();
 	public static final JTextArea shell = new JTextArea();
 	static File banned;
+	@SuppressWarnings("deprecation")
 	public static final CopyOnWriteArrayList<ExecutionListener> eListeners = new CopyOnWriteArrayList<ExecutionListener>();
 	public static final ConcurrentHashMap<String, String> playerCoords = new ConcurrentHashMap<String, String>();
-	//public static final CopyOnWriteArrayList<SnowBall> shotsList = new CopyOnWriteArrayList<SnowBall>(); TODO move to mirrors
-	//public static final CopyOnWriteArrayList<Block> hitBlockList = new CopyOnWriteArrayList<Block>();
+	// public static final CopyOnWriteArrayList<SnowBall> shotsList = new
+	// CopyOnWriteArrayList<SnowBall>(); TODO move to mirrors
+	// public static final CopyOnWriteArrayList<Block> hitBlockList = new
+	// CopyOnWriteArrayList<Block>();
 	public static final CopyOnWriteArrayList<String> bannedIPs = new CopyOnWriteArrayList<String>();
 
 	public static BufferedWriter bannedWriter;
-	//public static OtherPlayer[] players;
+	// public static OtherPlayer[] players;
 
 	public static void launch() {
 
@@ -64,12 +96,13 @@ public class Server {
 		Server.console.setText("");
 
 		s.check();
-		ExecutionHandler.launch();
+
+		// ExecutionHandler.launch();
 		ServerDaemon sd = new ServerDaemon();
 		sd.setDaemon(true);
 		sd.start();
-		//MapCreator.createMap();  TODO- generate dynamic map
-		//PlayerProcessor.launch();
+		// MapCreator.createMap(); TODO- generate dynamic map
+		// PlayerProcessor.launch();
 	}
 
 	public static void startServer() {
@@ -163,6 +196,10 @@ public class Server {
 		}
 	}
 
+	/**
+	 * @deprecated since version 2. ExecutionEvents have been replaced with CAS.
+	 * @param e
+	 */
 	public static void sendExecutionEvent(ExecutionEvent e) {
 		for (ExecutionListener l : eListeners) {
 			l.execute(e);
@@ -170,10 +207,21 @@ public class Server {
 
 	}
 
+	/**
+	 * @deprecated since version 2. ExecutionEvents have been replaced with CAS.
+	 * @param e
+	 */
 	public static void addExecutionListener(ExecutionListener e) {
 		eListeners.add(e);
 	}
 
+	/**
+	 * Sends an exception if the string matches the formatted key. Only for internal
+	 * use.
+	 * 
+	 * @param l
+	 * @param key
+	 */
 	public static void sendException(List<String> l, String key) {
 		if (key.equals("%%8D%%")) {
 			for (String s : l) {

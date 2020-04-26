@@ -2,12 +2,20 @@ package client.net;
 
 import javax.swing.JFrame;
 
-public class Loader extends JFrame{
+/**
+ * 
+ * @author Michael Ferolito
+ * @version 2
+ * @since Version 2 Represents a loader, which will display a loading animation
+ *        to the user while JoglPane gldriver sets up the graphics server
+ *
+ */
+public class Loader extends JFrame {
 
 	public Loader() {
 		super();
 		this.setUndecorated(true);
-		this.setBounds(0,0,400,200);
+		this.setBounds(0, 0, 400, 200);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}

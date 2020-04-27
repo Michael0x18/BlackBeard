@@ -104,15 +104,17 @@ public class Ship extends Daemon {
 				synchronized (this) {
 					for (String player : Server.clientList.keySet()) {
 						Server.clientList.get(player)
-								.addMessage(":ship " + name + " " + x + " " + y + " " + z + " " + bearing + " ");
+								.addMessage(":ship " + name + " " + x + " " + y + " " + z + " " + bearing + " "+velocity);
 						// System.out.println(bearing);
 						// Server.clientList.get(player).addMessage(":ship YEET 0.0 0.0 0.0 0.0");
 					}
 				}
 				for (String player : this.players) {
-					if (Server.clientList.get(player) != null)
-						Server.clientList.get(player)
-								.addMessage(":delta " + velocity * Math.cos(rad) + " " + velocity * Math.sin(rad));
+					if (Server.clientList.get(player) != null) {
+						
+					}
+//						Server.clientList.get(player)
+//								.addMessage(":delta " + velocity * Math.cos(rad) + " " + velocity * Math.sin(rad));
 				}
 
 			} catch (Exception e) {

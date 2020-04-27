@@ -25,7 +25,9 @@ public class OffHeapArray {
 	private long address;
 
 	/**
-	 * Creates a new OffHeapArray instance. Calls native routine malloc through Unsafe reflective access to allocate a bin size of 1 byte per bin.
+	 * Creates a new OffHeapArray instance. Calls native routine malloc through
+	 * Unsafe reflective access to allocate a bin size of 1 byte per bin.
+	 * 
 	 * @param size
 	 * @throws NoSuchFieldException
 	 * @throws IllegalAccessException
@@ -37,6 +39,7 @@ public class OffHeapArray {
 
 	/**
 	 * Creates a new OffHeapArray instance with specified bin size.
+	 * 
 	 * @param size
 	 * @param bin
 	 * @throws IllegalAccessException
@@ -50,6 +53,7 @@ public class OffHeapArray {
 
 	/**
 	 * Internal- crashes if Unsafe cannot be accessed.
+	 * 
 	 * @return
 	 * @throws IllegalAccessException
 	 * @throws NoSuchFieldException
@@ -62,6 +66,7 @@ public class OffHeapArray {
 
 	/**
 	 * mutator method, puts byte in the bin.
+	 * 
 	 * @param i
 	 * @param value
 	 * @throws NoSuchFieldException
@@ -70,19 +75,52 @@ public class OffHeapArray {
 	public void setByte(long i, byte value) throws NoSuchFieldException, IllegalAccessException {
 		getUnsafe().putByte(address + i * bin, value);
 	}
-	
+
+	/**
+	 * see setByte
+	 * 
+	 * @param i
+	 * @param value
+	 * @throws NoSuchFieldException
+	 * @throws IllegalAccessException
+	 */
 	public void setChar(long i, char value) throws NoSuchFieldException, IllegalAccessException {
 		getUnsafe().putChar(address + i * bin, value);
 	}
-	
+
+	/**
+	 * see setByte
+	 * 
+	 * @param i
+	 * @param value
+	 * @throws NoSuchFieldException
+	 * @throws IllegalAccessException
+	 */
 	public void setShort(long i, int value) throws NoSuchFieldException, IllegalAccessException {
 		getUnsafe().putInt(address + i * bin, value);
 	}
-	
+
+	/**
+	 * see setByte
+	 * 
+	 * @param i
+	 * @param value
+	 * @throws NoSuchFieldException
+	 * @throws IllegalAccessException
+	 */
 	public void setLong(long i, long value) throws NoSuchFieldException, IllegalAccessException {
 		getUnsafe().putLong(address + i * bin, value);
 	}
-	
+
+	/**
+	 * Object Must implement Serializable for byte array.
+	 * 
+	 * @param i
+	 * @param value
+	 * @throws NoSuchFieldException
+	 * @throws IllegalAccessException
+	 * @throws IOException
+	 */
 	public void setObject(long i, Serializable value) throws NoSuchFieldException, IllegalAccessException, IOException {
 		ByteArrayOutputStream bs = new ByteArrayOutputStream();
 		ObjectOutputStream os = new ObjectOutputStream(bs);
@@ -90,42 +128,97 @@ public class OffHeapArray {
 		os.flush();
 		Unsafe u = getUnsafe();
 		byte[] b = bs.toByteArray();
-		for(int j = 0; j < b.length; j++) {
-			u.putByte(i+j, b[j]);
+		for (int j = 0; j < b.length; j++) {
+			u.putByte(i + j, b[j]);
 		}
-		//getUnsafe().putObject(address + i * bin, value);
+		// getUnsafe().putObject(address + i * bin, value);
 	}
 
+	/**
+	 * ~
+	 * 
+	 * @param idx
+	 * @return
+	 * @throws NoSuchFieldException
+	 * @throws IllegalAccessException
+	 */
 	public byte getByte(long idx) throws NoSuchFieldException, IllegalAccessException {
 		return getUnsafe().getByte(address + idx * bin);
 	}
-	
+
+	/**
+	 * ~
+	 * 
+	 * @param idx
+	 * @return
+	 * @throws NoSuchFieldException
+	 * @throws IllegalAccessException
+	 */
 	public int getInt(long idx) throws NoSuchFieldException, IllegalAccessException {
 		return getUnsafe().getInt(address + idx * bin);
 	}
-	
+
+	/**
+	 * ~
+	 * 
+	 * @param idx
+	 * @return
+	 * @throws NoSuchFieldException
+	 * @throws IllegalAccessException
+	 */
 	public char getChar(long idx) throws NoSuchFieldException, IllegalAccessException {
 		return getUnsafe().getChar(address + idx * bin);
 	}
 
+	/**
+	 * ~
+	 * 
+	 * @param idx
+	 * @return
+	 * @throws NoSuchFieldException
+	 * @throws IllegalAccessException
+	 */
 	public long getLong(long idx) throws NoSuchFieldException, IllegalAccessException {
 		return getUnsafe().getLong(address + idx * bin);
 	}
-	
+
+	/**
+	 * ~
+	 * 
+	 * @param idx
+	 * @return
+	 * @throws NoSuchFieldException
+	 * @throws IllegalAccessException
+	 */
 	public short getShort(long idx) throws NoSuchFieldException, IllegalAccessException {
 		return getUnsafe().getShort(address + idx * bin);
 	}
-	
+
+	/**
+	 * Returns the length of this Array.
+	 * 
+	 * @return
+	 */
 	public long size() {
 		return size;
 	}
-	
+
+	/**
+	 * Returns the actual memory location of this Array.
+	 * 
+	 * @return
+	 */
 	public long getPointer() {
 		return address;
 	}
-	
-	
 
+	/**
+	 * Frees the memory associated with this Array. Attemptng to read after free may
+	 * produce undefined behavior.
+	 * 
+	 * @throws NoSuchFieldException
+	 * @throws IllegalAccessException
+	 */
 	public void freeMemory() throws NoSuchFieldException, IllegalAccessException {
 		getUnsafe().freeMemory(address);
 	}

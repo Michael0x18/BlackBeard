@@ -190,6 +190,7 @@ public class Ship {
 	 * the ship's name and unique identifier.
 	 */
 	public String name;
+	public double velocity;
 
 	/**
 	 * Creates a new ship instance with the specified name.
@@ -285,6 +286,11 @@ public class Ship {
 	 */
 	public void turn(double bearing) {
 		this.rot = bearing;
+	}
+
+	public void setVelocity(String v) {
+		this.velocity = Double.parseDouble(v);
+		
 	}
 
 }

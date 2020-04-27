@@ -1,6 +1,5 @@
 package world.viewport;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.StringTokenizer;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -20,7 +19,7 @@ import world.io.FileWrapper;
 /**
  * Holds world
  * 
- * @author mf
+ * @author Michael Ferolito
  *
  */
 public class Grid {
@@ -28,6 +27,9 @@ public class Grid {
 	public static CopyOnWriteArrayList<Ship> ships = new CopyOnWriteArrayList<Ship>();
 	public static CopyOnWriteArrayList<Ship> newShips = new CopyOnWriteArrayList<Ship>();
 
+	/**
+	 * Loads a simple preset grid.
+	 */
 	public static void loadTemple() {
 		for (int i = 0; i < 100; i++) {
 			for (int j = 0; j < 100; j++) {
@@ -40,6 +42,11 @@ public class Grid {
 		Grid.world.add(Clay.fromDoubleCoords(50, 1, 51));
 	}
 
+	/**
+	 * Loads a Grid from a file.
+	 * 
+	 * @param filename
+	 */
 	public static void load(String filename) {
 		Grid.world.clear();
 		FileWrapper fw;
@@ -70,6 +77,12 @@ public class Grid {
 
 	}
 
+	/**
+	 * Classloader stuff.
+	 * 
+	 * @param whichClass
+	 * @return
+	 */
 	private static Block loadClass(String whichClass) {
 		try {
 			Class<?> clazz = Class.forName(whichClass);
@@ -84,6 +97,10 @@ public class Grid {
 		return null;
 	}
 
+	/**
+	 * Loads a crummy testing thingy that Michael used to debug the camera. It was
+	 * left in because left is left.
+	 */
 	public static void loadTowerOfBabel() {
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {

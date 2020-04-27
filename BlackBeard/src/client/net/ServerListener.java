@@ -121,6 +121,7 @@ public class ServerListener extends Thread {
 			s.moveTo(Double.parseDouble(st.nextToken()), Double.parseDouble(st.nextToken()),
 					Double.parseDouble(st.nextToken()));
 			s.turn(Double.parseDouble(st.nextToken()));
+			s.setVelocity(st.nextToken());
 			for (Ship sh : Grid.ships) {
 				if (sh.name.equals(str)) {
 					Grid.ships.remove(sh);
@@ -133,14 +134,14 @@ public class ServerListener extends Thread {
 			//Grid.ships.add(s);
 
 		}
-		if(msg.startsWith(":delta ")) {
-			String s = msg.substring(7);
-			StringTokenizer st = new StringTokenizer(s);
-			double dx = Double.parseDouble(st.nextToken());
-			double dy = Double.parseDouble(st.nextToken());
-			JoglPane.currentLoader.getC().getVelocity().x+=dx;
-			JoglPane.currentLoader.getC().getVelocity().z+=dy;
-		}
+//		if(msg.startsWith(":delta ")) {
+//			String s = msg.substring(7);
+//			StringTokenizer st = new StringTokenizer(s);
+//			double dx = Double.parseDouble(st.nextToken());
+//			double dy = Double.parseDouble(st.nextToken());
+//			JoglPane.currentLoader.getC().getVelocity().x+=dx;
+//			JoglPane.currentLoader.getC().getVelocity().z+=dy;
+//		}
 
 	}
 

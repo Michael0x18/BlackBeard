@@ -1,20 +1,14 @@
 package world.viewport;
 
-import com.jogamp.newt.opengl.GLWindow;
 import com.jogamp.opengl.GL2;
-import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.glu.GLU;
 
 import world.constants.declaration.MConstants;
 
 import java.awt.AWTException;
-import java.awt.Component;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Robot;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -29,31 +23,93 @@ import javax.swing.JPanel;
  * direction will be expanded if necessary to match the aspect ratio of the
  * screen. And the view volume extends from -10 to 10 along the z-axis. Only the
  * default constructor exists. Non-default properties must be set by calling
- * methods. The camera comes along with a simulated trackball that lets the user
- * rotate the view by dragging on the drawing surface. See the
- * installTrackball() method.
+ * methods.
  */
 public class Camera {
+	/**
+	 * Represents whether the Camera should experience a downward force.
+	 */
 	protected boolean gravityOn = true;
-
+	/**
+	 * The x component for zero friction vector.
+	 */
+	double x0 = 0;
+	/**
+	 * The z component for zero friction vector
+	 */
+	double z0 = 0;
+	/**
+	 * Viewport statistics representing the position the center of the viewport.
+	 */
 	protected double eyex, eyey, eyez = 30;
+	/**
+	 * Viewport statistics representing the viewport directional components.
+	 */
 	protected double refx, refy, refz;
+	/**
+	 * Viewport statistics representing the upward reference vector components.
+	 */
 	protected double upx, upy = 1, upz;
 
+	/**
+	 * Viewport statistics for the requested minimun and maximum of the viewport
+	 * range.
+	 */
 	protected double xminRequested = -5, xmaxRequested = 5;
+	/**
+	 * Viewport statistics for the requested minimun and maximum of the viewport
+	 * range.
+	 */
 	protected double yminRequested = -5, ymaxRequested = 5;
+	/**
+	 * Minimum and maximum BASE render rances
+	 */
 	protected double zmin = -10, zmax = 10;
+	/**
+	 * Suggests that the Camera preserve the size of objects without frustums.
+	 */
 	protected boolean orthographic;
+	/**
+	 * Suggests that the Camera avoid distortions at the edge of the viewport.
+	 */
 	protected boolean preserveAspect = true;
 
+	/**
+	 * In contrast to the requested values, which may not be valid, these values
+	 * represent the real viewport parameters.
+	 */
 	protected double xminActual, xmaxActual, yminActual, ymaxActual;
+	/**
+	 * The GLU object used to transforms.
+	 */
 	protected GLU glu = new GLU();
 
+	/**
+	 * Set to true if the Camera has experienced a change in position within the
+	 * last cycle.
+	 */
 	public volatile static boolean hasMoved = false;
+	/**
+	 * The Robot used to lock the mouse within the confines of the viewport.
+	 */
 	protected Robot robot;
+	/**
+	 * The center vector is representative of the viewport center. The right vector
+	 * is the right velocity vector. The forward vector is the forward velocity
+	 * vector.
+	 */
 	protected volatile MVector center, right, forward;
+	/**
+	 * The position vector holds the Camera's position from the origin vector.
+	 */
 	protected volatile MVector position;
+	/**
+	 * The main velocity vector, which applies to all planes except y.
+	 */
 	protected volatile MVector velocity;
+	/**
+	 * Trackball components, used for moving the camera.
+	 */
 	protected double speed, xSensitivity, ySensitivity, pan, friction, fov, viewDistance;
 	double tilt;
 	protected Point mouse, pMouse;
@@ -70,6 +126,17 @@ public class Camera {
 		this(.1, 0.5, 0.5, .999, MConstants.PI / 3, 1000, jp);
 	}
 
+	/**
+	 * Sets up a camera with the given patameters.
+	 * 
+	 * @param speed
+	 * @param xSensitivity
+	 * @param ySensitivity
+	 * @param friction
+	 * @param d
+	 * @param viewDistance
+	 * @param jp
+	 */
 	public Camera(double speed, double xSensitivity, double ySensitivity, double friction, double d,
 			double viewDistance, JoglPane jp) {
 		try {
@@ -93,6 +160,11 @@ public class Camera {
 		tilt = 0;
 	}
 
+	/**
+	 * Returns true if orthographic mode is enabled.
+	 * 
+	 * @return
+	 */
 	public boolean getOrthographic() {
 		return orthographic;
 	}
@@ -108,6 +180,11 @@ public class Camera {
 		this.orthographic = orthographic;
 	}
 
+	/**
+	 * Returns the current state of the aspect preservation.
+	 * 
+	 * @return
+	 */
 	public boolean getPreserveAspect() {
 		return preserveAspect;
 	}
@@ -115,6 +192,8 @@ public class Camera {
 	/**
 	 * Determine whether the xy-limits should be adjusted to match the aspect ratio
 	 * of the display area. The default is true.
+	 * 
+	 * @param preserveAspect set to true for preservation and false for not.
 	 */
 	public void setPreserveAspect(boolean preserveAspect) {
 		this.preserveAspect = preserveAspect;
@@ -143,6 +222,11 @@ public class Camera {
 		this.zmax = zmax;
 	}
 
+	/**
+	 * Returns the robot
+	 * 
+	 * @return robot
+	 */
 	public Robot getRobot() {
 		return this.robot;
 	}
@@ -195,6 +279,14 @@ public class Camera {
 		upz = viewUpZ;
 	}
 
+	/**
+	 * Moves only the eye position and not any of the other vectors. Used for hard
+	 * resets.
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
 	public void move(double x, double y, double z) {
 		eyex += x;
 		eyey += y;
@@ -206,6 +298,7 @@ public class Camera {
 
 	/**
 	 * Returns the view information -- the 9 parameters of lookAt(), in an array.
+	 * The array can be used as a matrix for spacial transformations.
 	 */
 	public double[] getViewParameters() {
 		return new double[] { eyex, eyey, eyez, refx, refy, refz, upx, upy, upz };
@@ -218,6 +311,8 @@ public class Camera {
 	 * represented by the camera. This method is meant to be called at the begining
 	 * of the display method and should replace any other means of setting the
 	 * projection and view.
+	 * 
+	 * This method relies on gluLookAt.
 	 */
 	public void apply(GL2 gl) {
 		eyex = position.x;
@@ -272,10 +367,21 @@ public class Camera {
 		glu.gluLookAt(eyex, eyey, eyez, refx, refy, refz, upx, upy, upz);
 	}
 
+	/**
+	 * Returns the position vector.
+	 * 
+	 * @return
+	 */
 	public MVector getPosition() {
 		return position;
 	}
 
+	/**
+	 * Returns the normalised form of a vector held in a double matrix.
+	 * 
+	 * @param v
+	 * @return
+	 */
 	protected double norm(double[] v) {
 		double norm2 = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
 		if (Double.isNaN(norm2) || Double.isInfinite(norm2) || norm2 == 0)
@@ -283,6 +389,11 @@ public class Camera {
 		return Math.sqrt(norm2);
 	}
 
+	/**
+	 * Normalises a vector held in a double matrix.
+	 * 
+	 * @param v
+	 */
 	protected void normalize(double[] v) {
 		double norm = norm(v);
 		v[0] /= norm;
@@ -290,6 +401,13 @@ public class Camera {
 		v[2] /= norm;
 	}
 
+	/**
+	 * applies a transvection from e1 to e2. Processing originally did this behind
+	 * the scenes, but since we're not using processing at all, this is necessary.
+	 * 
+	 * @param e1
+	 * @param e2
+	 */
 	protected void applyTransvection(double[] e1, double[] e2) {
 		// rotate vector e1 onto e2; must be 3D *UNIT* vectors.
 		double[] zDirection = new double[] { eyex - refx, eyey - refy, eyez - refz };
@@ -324,6 +442,14 @@ public class Camera {
 		upz = upLength * yDirection[2];
 	}
 
+	/**
+	 * Reflects the given vector around the given axis vector. the source vector is
+	 * left unchanged, and the new values are stored in destination.
+	 * 
+	 * @param axis
+	 * @param source
+	 * @param destination
+	 */
 	protected void reflectInAxis(double[] axis, double[] source, double[] destination) {
 		double s = 2 * (axis[0] * source[0] + axis[1] * source[1] + axis[2] * source[2]);
 		destination[0] = s * axis[0] - source[0];
@@ -449,7 +575,11 @@ public class Camera {
 			pMouse = new Point(mouse.x, mouse.y);
 
 			// account for friction
+			velocity.x -= x0;
+			velocity.z -= z0;
 			velocity.mult(friction);
+			velocity.x += x0;
+			velocity.z += z0;
 			// use velocity to find out location of new position
 			if (sprinting) {
 				MVector v2 = velocity.copy();
@@ -504,6 +634,10 @@ public class Camera {
 		// velocity.x+=speed*dir*-1;
 	}
 
+	/**
+	 * Returns the major plane of the velocity vector.
+	 * @return
+	 */
 	public MVector getVelocity() {
 		return this.velocity;
 	}
@@ -525,16 +659,27 @@ public class Camera {
 		velocity.y = f;
 	}
 
+	/**
+	 * Resets the captured mouse statistics.
+	 */
 	public void clearMouseStats() {
 		mouse = MouseInfo.getPointerInfo().getLocation();
 		pMouse = mouse;
 
 	}
 
+	/**
+	 * returns the raw tilt value.
+	 * @return
+	 */
 	public double getTilt() {
 		return this.tilt;
 	}
 
+	/**
+	 * returns the raw pan value.
+	 * @return
+	 */
 	public double getPan() {
 		return this.pan;
 	}

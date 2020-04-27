@@ -22,8 +22,5 @@ public class Handle {
 		return UnsafeWrapper.getUnsafe();
 	}
 	
-	public void test() {
-		Unsafe u = getUnsafe();
-	}
 
 }

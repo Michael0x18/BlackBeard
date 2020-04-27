@@ -3,8 +3,6 @@ package world.viewport;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.*;
@@ -12,7 +10,6 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
-import com.jogamp.opengl.GL2ES3;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLEventListener;
@@ -21,30 +18,32 @@ import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.gl2.GLUT; // for drawing the sample teapot
 
 import world.constructs.blocks.Clippable;
-import world.constructs.blocks.SensorBlock;
 import world.constructs.Ship;
-import world.io.FileWrapper;
-import world.io.Printer;
 import world.ui.JoglMenu;
 import javafx.scene.paint.Color;
 
 /**
- * REEEEEREEEEEEEEEtard
+ * Represents a panel for drawing. The bulk of the graphics is done here.
  */
 public class JoglPane extends JPanel
 		implements GLEventListener, KeyListener, MouseListener, MouseMotionListener, ActionListener {
 	/**
-	 * UID-no use
+	 * UID- for dumping this into an off heap array??????
 	 */
 	private static final long serialVersionUID = 6999533994092038855L;
 	private static JFrame window;
 	private static Cursor blankCursor;
-	private static JPanel pl;
+//	private static JPanel pl;
 	private CopyOnWriteArrayList<Integer> Keys = new CopyOnWriteArrayList<Integer>();
 	private GLU glu = new GLU();
-	private boolean isFullScreen;
+//	private boolean isFullScreen;
 	public static JoglPane currentLoader;
 
+	/**
+	 * Called as if a main method.
+	 * 
+	 * @param flags
+	 */
 	public static void _driver_start(String[] flags) {
 		try {
 			UIManager.setLookAndFeel(new NimbusLookAndFeel());
@@ -52,10 +51,10 @@ public class JoglPane extends JPanel
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//Grid.loadTowerOfBabel();
+		// Grid.loadTowerOfBabel();
 		Grid.load("TEMPLE.GRID");
 //		Ship sh = new Ship();
-		
+
 		window = new JFrame("JOGL");
 		JoglPane j = new JoglPane();
 //		pl = new JPanel() {
@@ -85,10 +84,16 @@ public class JoglPane extends JPanel
 
 	}
 
+	/**
+	 * yeets the cursor into oblivion
+	 */
 	public void cursorOff() {
 		this.setCursor(blankCursor);
 	}
 
+	/**
+	 * gets back your mouse
+	 */
 	public void cursorOn() {
 		this.setCursor(new Cursor(Cursor.MOVE_CURSOR));
 	}
@@ -98,10 +103,16 @@ public class JoglPane extends JPanel
 	private float rotateX, rotateY; // rotation amounts about axes, controlled
 									// by keyboard
 	private Player c;
-	private SensorBlock sb;
+//	private SensorBlock sb;
 	private JMenuBar jmb;
 	private JMenu file;
 
+	/**
+	 * returns the player associated with this object. Weird dependencies are ok, as
+	 * are multiple JVM's.
+	 * 
+	 * @return
+	 */
 	public Player getC() {
 		return c;
 	}
@@ -112,25 +123,25 @@ public class JoglPane extends JPanel
 //	g.fillRect(0, 0, 100, 100);
 //	 }
 
-	public JoglPane() {
+	/**
+	 * new JoglPane. Really only should be used from within this class.
+	 */
+	JoglPane() {
 		currentLoader = this;
 		GLCapabilities caps = new GLCapabilities(null);
 		display = new GLJPanel(caps);
-		display.setPreferredSize(new Dimension(600, 600)); // TODO: set display
-															// size here
+		display.setPreferredSize(new Dimension(600, 600));
+		// size here
 		display.addGLEventListener(this);
 		setLayout(new BorderLayout());
 		add(display, BorderLayout.CENTER);
-		// TODO: Other components could be added to the main panel.
 
 		rotateX = 0; // initialize some variables used in the drawing.
 		rotateY = 0;
 
-		// TODO: Uncomment the next two lines to enable keyboard event handling
 		requestFocusInWindow();
 		display.addKeyListener(this);
 
-		// TODO: Uncomment the next one or two lines to enable mouse event
 		// handling
 		display.addMouseListener(this);
 		display.addMouseMotionListener(this);
@@ -139,16 +150,15 @@ public class JoglPane extends JPanel
 		// c.setScale(3);
 		// c.installTrackball(this);
 		// c.setScale(3);
-		//Ship sh = new Ship();
-		//c = new Player(this,sh);
+		// Ship sh = new Ship();
+		// c = new Player(this,sh);
 		c = new Player(this);
 		c.setScale(0.6);
 		c.moveTo(0, 5, 0);
-		sb = new SensorBlock(c,1,0,0);
+//		sb = new SensorBlock(c, 1, 0, 0);
 		jmb = JoglMenu.applyMenu(window);
 		file = new JMenu("File");
 		jmb.add(file);
-		// TODO: Uncomment the following line to start the animation
 		startAnimation();
 
 	}
@@ -157,6 +167,9 @@ public class JoglPane extends JPanel
 
 	private GLUT glut = new GLUT(); // for drawing the teapot
 	private double xt;
+	/**
+	 * true if escape has been pressed.
+	 */
 	boolean disabled;
 	private boolean fullscreen;
 
@@ -172,7 +185,7 @@ public class JoglPane extends JPanel
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		//
-		// gl.glMatrixMode(GL2.GL_PROJECTION); // TODO: Set up a better
+		// gl.glMatrixMode(GL2.GL_PROJECTION); //
 		// projection?
 		// gl.glEnable(GL2.GL_PERSPECTIVE_CORRECTION_HINT);
 		//
@@ -206,20 +219,20 @@ public class JoglPane extends JPanel
 //		}
 //		Grid.ships = Grid.newShips;
 //		Grid.newShips = new CopyOnWriteArrayList<Ship>();
-		for(Ship s : Grid.ships) {
+		for (Ship s : Grid.ships) {
 			gl.glRotated(s.rot, 0, 1, 0);
 			gl.glTranslated(s.x, s.y, s.z);
-			for(Clippable c : s.blocks) {
+			for (Clippable c : s.blocks) {
 				c.draw(glut, glu, gl, gl2);
 			}
 			gl.glTranslated(s.x, s.y, s.z);
-			gl.glRotated(-s.rot, 0,1, 0);
+			gl.glRotated(-s.rot, 0, 1, 0);
 		}
 //		sb.draw(glut, glu, gl, gl2);
 		gl.glEnable(GL2.GL_LIGHTING);
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_NORMALIZE);
-		//c.ship.draw(glut, glu, gl, gl2);
+		// c.ship.draw(glut, glu, gl, gl2);
 		//
 		// // float[] ambientLight = { 0.1f, 0.f, 0.f,0f }; // weak RED ambient
 		// // gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_AMBIENT, ambientLight, 0);
@@ -230,7 +243,8 @@ public class JoglPane extends JPanel
 		//
 
 		float[] position = { 0, 20, 0, 1 };
-		//float[] position = {(float) c.getPosition().x,(float) c.getPosition().y,(float) c.getPosition().z,1};
+		// float[] position = {(float) c.getPosition().x,(float)
+		// c.getPosition().y,(float) c.getPosition().z,1};
 		gl2.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, position, 0);
 
 		gl2.glEnable(GL2.GL_LIGHT0);
@@ -306,8 +320,8 @@ public class JoglPane extends JPanel
 	 * Called when the user presses any key.
 	 */
 	public void keyPressed(KeyEvent e) {
-		
-		if(e.getModifiersEx() != 0)
+
+		if (e.getModifiersEx() != 0)
 			return;
 		Keys.add(Integer.valueOf(e.getKeyCode()));
 		repaint();
@@ -318,11 +332,11 @@ public class JoglPane extends JPanel
 	 * Called when the user types a character.
 	 */
 	public void keyTyped(KeyEvent e) {
-		char ch = e.getKeyChar(); // Which character was typed.
+		// char ch = e.getKeyChar(); // Which character was typed.
 	}
 
 	public void keyReleased(KeyEvent e) {
-		
+
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			c.getRobot().mouseMove(window.getX() + this.getBounds().width / 2,
 					window.getY() + this.getBounds().height / 2);
@@ -352,9 +366,8 @@ public class JoglPane extends JPanel
 				window.setJMenuBar(jmb);
 				window.setVisible(true);
 			}
-		}
-		else if (e.getKeyCode() == KeyEvent.VK_G)
-				c.toggleGravity();
+		} else if (e.getKeyCode() == KeyEvent.VK_G)
+			c.toggleGravity();
 		while (Keys.contains(Integer.valueOf(e.getKeyCode())))
 			Keys.remove(Integer.valueOf(e.getKeyCode()));
 		repaint();
@@ -362,18 +375,23 @@ public class JoglPane extends JPanel
 
 	// --------------------------- animation support ---------------------------
 
-	private int frameNumber = 0;
+	int frameNumber = 0;
 
 	private boolean animating;
 
+	/**
+	 * called each frame.
+	 */
 	private void updateFrame() {
 		// window.setLayout(null);
-		// TODO: add any other updating required for the next frame.
 		frameNumber++;
 		// this.setBounds(-300,-300,window.getWidth()+600,window.getHeight()+600);
 
 	}
 
+	/**
+	 * starts the animation timer
+	 */
 	public void startAnimation() {
 		if (!animating) {
 			if (animationTimer == null) {
@@ -384,6 +402,9 @@ public class JoglPane extends JPanel
 		}
 	}
 
+	/**
+	 * stops the animation timer
+	 */
 	public void pauseAnimation() {
 		if (animating) {
 			animationTimer.stop();
@@ -391,9 +412,12 @@ public class JoglPane extends JPanel
 		}
 	}
 
+	/**
+	 * NO CALL!
+	 */
 	public void actionPerformed(ActionEvent evt) {
 		updateFrame();
-		int i;
+		int i = 0;
 		for (Integer key : Keys) {
 			// System.out.println(e);
 			if (key == KeyEvent.VK_LEFT)
@@ -420,9 +444,9 @@ public class JoglPane extends JPanel
 				c.jump();
 			else if (key == KeyEvent.VK_R)
 				Grid.load("TEMPLE.GRID");
-			
-			
-
+			if (i == 1) {
+				break;
+			}
 		}
 		display.repaint();
 		repaint();
@@ -432,7 +456,9 @@ public class JoglPane extends JPanel
 
 	private boolean dragging; // is a drag operation in progress?
 
+	@SuppressWarnings("unused")
 	private int startX, startY; // starting location of mouse during drag
+	@SuppressWarnings("unused")
 	private int prevX, prevY; // previous location of mouse during drag
 
 	/**
@@ -444,7 +470,6 @@ public class JoglPane extends JPanel
 		}
 		int x = evt.getX();
 		int y = evt.getY();
-		// TODO: respond to mouse click at (x,y)
 		dragging = true; // might not always be correct!
 		prevX = startX = x;
 		prevY = startY = y;
@@ -460,8 +485,7 @@ public class JoglPane extends JPanel
 			return;
 		}
 		dragging = false;
-		
-		// TODO: finish drag (generally nothing to do here)
+
 	}
 
 	/**
@@ -479,10 +503,16 @@ public class JoglPane extends JPanel
 		display.repaint();
 	}
 
+	/**
+	 * Don't call.
+	 */
 	public void mouseMoved(MouseEvent evt) { // System.out.println("moved");
-		//c.ship.sail();
+		// c.ship.sail();
 	}
 
+	/**
+	 * Dont call
+	 */
 	public void mouseClicked(MouseEvent evt) {
 //		try {
 //			FileWrapper fr = new FileWrapper("TEMPLE.GRID");
@@ -503,9 +533,15 @@ public class JoglPane extends JPanel
 //		}
 	}
 
+	/**
+	 * dont call
+	 */
 	public void mouseEntered(MouseEvent evt) {
 	}
 
+	/**
+	 * don't cal;
+	 */
 	public void mouseExited(MouseEvent evt) {
 		// c.getRobot().mouseMove(window.getX()+getWidth()/2,
 		// window.getY()+getWidth()/2);

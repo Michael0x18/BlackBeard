@@ -5,6 +5,11 @@ import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.gl2.GLUT;
 
+/**
+ * Clippable, but unseen. Stops players from walking off map.
+ * @author Michael Ferolito
+ *
+ */
 public class Null extends Barrier{
 	
 	public static Null fromDoubleCoords(double x2, double y2, double z2) {

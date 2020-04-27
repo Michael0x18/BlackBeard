@@ -10,7 +10,6 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 import world.constructs.Ship;
 import world.viewport.Grid;
@@ -33,8 +32,9 @@ public class ServerListener extends Thread {
 	private Socket socket;
 	private BufferedReader s;
 	private PrintWriter p;
+	@SuppressWarnings("deprecation")
 	private Queue<ExecutionEvent> outE = new LinkedList<ExecutionEvent>();
-	private boolean printCoords = false;
+//	private boolean printCoords = false;
 	private Player matchedPlayer;
 
 	/**
@@ -61,6 +61,7 @@ public class ServerListener extends Thread {
 	/**
 	 * Overrides Thread.run Main cyclic process
 	 */
+	@SuppressWarnings("deprecation")
 	public void run() {
 		while (true) {
 			try {
@@ -145,7 +146,7 @@ public class ServerListener extends Thread {
 
 	/**
 	 * Rarely used
-	 * 
+	 * @deprecated as of Version 2
 	 * @param executionEvent event to send
 	 */
 	public void addEvent(ExecutionEvent executionEvent) {

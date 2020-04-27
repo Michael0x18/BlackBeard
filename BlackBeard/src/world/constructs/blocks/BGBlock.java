@@ -8,7 +8,7 @@ import com.jogamp.opengl.util.gl2.GLUT;
 import javafx.scene.paint.Color;
 
 /**
- * unclippable block. Looks like a plant
+ * unclippable block. Looks like a plant.
  * @author Michael Ferolito
  * @version 2
  * @since 2
@@ -17,19 +17,38 @@ import javafx.scene.paint.Color;
  */
 public class BGBlock extends Block{
 	
+	/**
+	 * See Block.fromDoubleCoords
+	 * @param x2
+	 * @param y2
+	 * @param z2
+	 * @return
+	 */
 	public static BGBlock fromDoubleCoords(double x2, double y2, double z2) {
 		return new BGBlock(x2/2,y2/2,z2/2);
 		
 	}
 
+	/**
+	 * see Block default constructor
+	 */
 	public BGBlock() {
 		super();
 	}
 	
+	/**
+	 * See Block parameterized constructor.
+	 * @param a
+	 * @param b
+	 * @param c
+	 */
 	public BGBlock(double a, double b, double c) {
 		super(a,b,c);
 	}
 	
+	/**
+	 * Displays two uneven triangles.
+	 */
 	public void draw(GLUT glut, GLU glu, GL gl, GL2 gl2) {
 		if(outOfRange())
 			return;
@@ -47,6 +66,9 @@ public class BGBlock extends Block{
 		
 	}
 	
+	/**
+	 * returns false because this should never experience a collision.
+	 */
 	public boolean containsPoint(double x, double y, double z) {
 		return false;
 	}

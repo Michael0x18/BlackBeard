@@ -25,7 +25,7 @@ public class Ship extends Daemon {
 	private double velocity = 0;
 	private String name;
 	private CopyOnWriteArrayList<String> players = new CopyOnWriteArrayList<>();
-	private double turned;
+	double turned;
 
 	/**
 	 * Standard Ship constructor. Names are the valid identifier that facilitates
@@ -84,7 +84,7 @@ public class Ship extends Daemon {
 					if ((a = Server.playerCoords.get(s)) != null) {
 						StringTokenizer st = new StringTokenizer(a);
 						double d = Double.parseDouble(st.nextToken());
-						double b = Double.parseDouble(st.nextToken());
+						//double b = Double.parseDouble(st.nextToken());
 						double c = Double.parseDouble(st.nextToken());
 						if ((x - d) * (x - d) + (z - c) * (z - c) < 144) {
 							players.add(s);

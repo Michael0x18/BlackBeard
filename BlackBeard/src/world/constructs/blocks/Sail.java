@@ -6,24 +6,47 @@ import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.gl2.GLUT;
 
 import javafx.scene.paint.Color;
-import world.viewport.JoglPane;
-import world.viewport.MVector;
 
+/**
+ * For use on ships. Sail color is javafx.scene.paint.Color.GhostWhite
+ * @author Michael Ferolito
+ *
+ */
 public class Sail extends Block {
 	
+	/**
+	 * see super
+	 * @param x2
+	 * @param y2
+	 * @param z2
+	 * @return
+	 */
 	public static Sail fromDoubleCoords(double x2, double y2, double z2) {
 		return new Sail(x2/2,y2/2,z2/2);
 		
 	}
 
+	/**
+	 * see super
+	 */
 	public Sail() {
 		super();
 	}
 
+	/**
+	 * see super
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
 	public Sail(double x, double y, double z) {
 		super(x, y, z);
 	}
 	
+	/**
+	 * see super.
+	 * white color.
+	 */
 	public void draw(GLUT glut, GLU glu, GL gl, GL2 gl2) {
 		if(outOfRange())
 			return;

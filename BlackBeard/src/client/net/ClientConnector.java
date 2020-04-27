@@ -135,7 +135,7 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 //		NoServer.add(youcan);
 //		NoServer.add(leviathan);
 //		NoServer.add(egress);
-//		this.setJMenuBar(jmb);		
+		this.setJMenuBar(jmb);		
 		this.setVisible(true);
 		input.addKeyListener(this);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

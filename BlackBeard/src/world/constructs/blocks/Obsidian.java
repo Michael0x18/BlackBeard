@@ -5,6 +5,11 @@ import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.gl2.GLUT;
 
+/**
+ * Pure black block. see Block.
+ * @author Michael Ferolito
+ *
+ */
 public class Obsidian extends Stone {
 
 	public static Obsidian fromDoubleCoords(double x2, double y2, double z2) {

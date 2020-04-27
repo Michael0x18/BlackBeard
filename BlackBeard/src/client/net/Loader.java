@@ -12,6 +12,11 @@ import javax.swing.JFrame;
  */
 public class Loader extends JFrame {
 
+	/**
+	 * UIS
+	 */
+	private static final long serialVersionUID = 1198480779643014032L;
+
 	public Loader() {
 		super();
 		this.setUndecorated(true);

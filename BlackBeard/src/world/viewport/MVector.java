@@ -108,7 +108,11 @@ public class MVector {
 	public MVector copy() {
 		return new MVector(x, y, z);
 	}
-
+	
+	public double[] getPosition() {
+		return new double[](x,y,z};
+	}
+	
 	/**
 	 * adds the two and returns da result.
 	 * @param u

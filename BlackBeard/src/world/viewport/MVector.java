@@ -110,7 +110,7 @@ public class MVector {
 	}
 	
 	public double[] getPosition() {
-		return new double[](x,y,z};
+		return new double[] {x,y,z};
 	}
 	
 	/**

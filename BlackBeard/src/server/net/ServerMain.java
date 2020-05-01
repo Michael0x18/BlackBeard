@@ -16,11 +16,13 @@ public class ServerMain {
 	 * @throws InterruptedException
 	 */
 	public static void main(String[] args) throws InterruptedException {
-
+		//System.out.println(System.getProperty("os.name"));
+		
 		Server.launch();
 		Thread.sleep(1000);
 		Server.startServer();
-		// client.Client.launch();
+		
+		
 	}
 
 }

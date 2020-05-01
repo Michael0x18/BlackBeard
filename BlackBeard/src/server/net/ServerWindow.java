@@ -15,6 +15,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+
 /**
  * Represents a Server GUI instance. Owned only by the Server, this provides
  * basic menus for navigation and Server management. Each menu is coupled to a
@@ -49,7 +50,7 @@ public class ServerWindow extends JFrame implements KeyListener, MouseListener, 
 	private JMenuItem suspAll;
 	private JMenuItem ping;
 	private JMenuItem yeet;
-	private ImageIcon icon = new ImageIcon("Server/Build/net.png");
+	private ImageIcon icon = new ImageIcon("Server/Build/Server.png");
 	private JMenuItem permaBan;
 	private JMenuItem exc;
 

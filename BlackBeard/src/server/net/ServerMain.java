@@ -1,5 +1,6 @@
 package server.net;
 
+
 /**
  * Originally contained a license.
  * 
@@ -17,12 +18,29 @@ public class ServerMain {
 	 */
 	public static void main(String[] args) throws InterruptedException {
 		//System.out.println(System.getProperty("os.name"));
-		
+		if(System.getProperty("os.name").contains("Mac")) {
+			MacSetup ms = (MacSetup)loadClass("server.net.MacSetup");
+			ms.run();
+		}
 		Server.launch();
 		Thread.sleep(1000);
 		Server.startServer();
 		
 		
+	}
+	
+	private static Object loadClass(String whichClass) {
+		try {
+			Class<?> clazz = Class.forName(whichClass);
+			return clazz.newInstance();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

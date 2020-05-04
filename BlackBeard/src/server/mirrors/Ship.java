@@ -18,9 +18,9 @@ import server.net.Server;
  */
 public class Ship extends Daemon {
 	private boolean sunk = false;
-	private double x = 0;
-	private double y = 0;
-	private double z = 0;
+	public double x = 0;
+	public double y = 0;
+	public double z = 0;
 	private double bearing = 0;
 	private double velocity = 0;
 	private String name;
@@ -77,7 +77,7 @@ public class Ship extends Daemon {
 			turnLeft(0.1);
 			velocity = 0.01;
 			try {
-				Thread.sleep(10);
+				Thread.sleep(30);
 				players.clear();
 				for (String s : Server.playerCoords.keySet()) {
 					String a;
@@ -109,14 +109,14 @@ public class Ship extends Daemon {
 						// Server.clientList.get(player).addMessage(":ship YEET 0.0 0.0 0.0 0.0");
 					}
 				}
-				for (String player : this.players) {
-					if (Server.clientList.get(player) != null) {
-						
-					}
-//						Server.clientList.get(player)
-//								.addMessage(":delta " + velocity * Math.cos(rad) + " " + velocity * Math.sin(rad));
-				}
-
+//				for (String player : this.players) {
+//					if (Server.clientList.get(player) != null) {
+//						
+//					}
+////						Server.clientList.get(player)
+////								.addMessage(":delta " + velocity * Math.cos(rad) + " " + velocity * Math.sin(rad));
+//				}
+//				System.out.println(Server.clientList.keySet().size());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

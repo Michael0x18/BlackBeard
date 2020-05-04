@@ -31,10 +31,11 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 	private JTextArea input;
 	private JLabel Title;
 	private JButton connectButton;
+	public static final int port = 50000;
 	/**
 	 * The default port for incoming connections.
 	 */
-	public static final int defaultport = 59090;
+	public static final int defaultport = 4444;
 	private JMenuBar jmb = new JMenuBar();
 	// public static int port = 4444;
 
@@ -152,7 +153,7 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 			if (codes.length > 1) {
 				this.connect(codes[0], Integer.parseInt(codes[1]));
 			} else {
-				this.connect("", 4444);
+				this.connect("", port);
 			}
 			this.setVisible(false);
 		}
@@ -167,9 +168,9 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 		if (codes.length == 2) {
 			this.connect(codes[0], Integer.parseInt(codes[2]));
 		} else if (codes.length == 1) {
-			this.connect(codes[0], 4444);
+			this.connect(codes[0], port);
 		} else {
-			this.connect("", 444);
+			this.connect("", port);
 		}
 	}
 

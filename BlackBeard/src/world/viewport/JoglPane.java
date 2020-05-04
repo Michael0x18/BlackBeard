@@ -22,6 +22,28 @@ import world.constructs.Ship;
 import world.ui.JoglMenu;
 import javafx.scene.paint.Color;
 
+/*glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
+glMatrixMode(GL_PROJECTION );
+glLoadIdentity();
+glOrtho(0,1,0,1,-1,1);
+glDisable(GL_DEPTH_TEST);
+glDisable(GL_LIGHTING);
+glDepthMask(GL_FALSE);
+glMatrixMode(GL_MODELVIEW);
+glLoadIdentity();
+//draw 2D image
+glDepthMask(GL_TRUE);
+glEnable(GL_DEPTH_TEST);
+glEnable(GL_LIGHTING);
+glMatrixMode(GL_PROJECTION);
+glLoadIdentity();
+gluPerspective(45.0, (GLfloat) W_WIDTH / (GLfloat) W_HEIGHT, 0.1, 1000.0);
+glMatrixMode(GL_MODELVIEW);
+glLoadIdentity();
+
+
+
+
 /**
  * Represents a panel for drawing. The bulk of the graphics is done here.
  */
@@ -177,27 +199,13 @@ public class JoglPane extends JPanel
 	 * This method is called when the OpenGL display needs to be redrawn.
 	 */
 	public void display(GLAutoDrawable drawable) {
-		// called when the panel needs to be drawn
 
 		GL2 gl = drawable.getGL().getGL2();
-		gl.glClearColor((float) Color.DEEPSKYBLUE.getRed(), (float) Color.DEEPSKYBLUE.getGreen(),
-				(float) Color.DEEPSKYBLUE.getBlue(), 40);
+		gl.glClearColor((float) Color.LIGHTSKYBLUE.getRed(), (float) Color.LIGHTSKYBLUE.getGreen(),
+				(float) Color.LIGHTSKYBLUE.getBlue(), 0);
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
-		//
-		// gl.glMatrixMode(GL2.GL_PROJECTION); //
-		// projection?
-		// gl.glEnable(GL2.GL_PERSPECTIVE_CORRECTION_HINT);
-		//
-		// gl.glLoadIdentity();
-		// gl.glOrtho(-1, 1, -1, 1, -2, 2);
-		// GLU glu = new GLU();
-		// glu.gluPerspective(5, 5, 0.1, 1000.0);
-		// gl.glMatrixMode(GL2.GL_MODELVIEW);
-		//
 		gl.glLoadIdentity(); // Set up modelview transform.
-		// c.setOrthographic(true);
-		// c.apply(gl);
 		c.act(Grid.world);
 		c.draw(gl, this, window);
 		gl.glTranslated(xt, 0, 0);
@@ -209,79 +217,20 @@ public class JoglPane extends JPanel
 		for (Clippable c : Grid.world) {
 			c.draw(glut, glu, gl, gl.getGL2());
 		}
-//		for(Ship s : Grid.newShips) {
-//			for(Ship sh : Grid.ships) {
-//				if(sh.name.equals(s.name)) {
-//					Grid.ships.remove(sh);
-//				}
-//			}
-//			Grid.newShips.add(s);
-//		}
-//		Grid.ships = Grid.newShips;
-//		Grid.newShips = new CopyOnWriteArrayList<Ship>();
+		gl.glColor4d(Color.ROYALBLUE.getRed(), Color.ROYALBLUE.getGreen(), Color.ROYALBLUE.getBlue(), 0.5);
+		gl.glTranslated(0, -50.5, 0);
+		glut.glutSolidCube(100);
+		gl.glTranslated(0, 50.5, 0);
 		for (Ship s : Grid.ships) {
-			gl.glRotated(s.rot, 0, 1, 0);
-			gl.glTranslated(s.x, s.y, s.z);
-			for (Clippable c : s.blocks) {
-				c.draw(glut, glu, gl, gl2);
-			}
-			gl.glTranslated(s.x, s.y, s.z);
-			gl.glRotated(-s.rot, 0, 1, 0);
+			s.draw(glut, glu, gl, gl2);
 		}
-//		sb.draw(glut, glu, gl, gl2);
 		gl.glEnable(GL2.GL_LIGHTING);
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_NORMALIZE);
-		// c.ship.draw(glut, glu, gl, gl2);
-		//
-		// // float[] ambientLight = { 0.1f, 0.f, 0.f,0f }; // weak RED ambient
-		// // gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_AMBIENT, ambientLight, 0);
-		//
-		// float[] diffuseLight = { 1f,2f,1f,0f }; // multicolor diffuse
-		// gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, diffuseLight, 0);
-
-		//
-
 		float[] position = { 0, 20, 0, 1 };
-		// float[] position = {(float) c.getPosition().x,(float)
-		// c.getPosition().y,(float) c.getPosition().z,1};
 		gl2.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, position, 0);
 
 		gl2.glEnable(GL2.GL_LIGHT0);
-		// glu.glutSwapBuffers();
-		// gl.glPushMatrix();
-//		gl.glPushAttrib(1);
-//		gl2.glMatrixMode(gl2.GL_MODELVIEW);
-//		gl2.glLoadIdentity();
-//		gl2.glMatrixMode(gl2.GL_PROJECTION);
-//		gl2.glLoadIdentity();
-//		glu.gluOrtho2D(-100, 100, -100, 100);
-//		gl.glDisable(gl.GL_DEPTH_TEST);
-//		gl.glDisable(gl.GL_CULL_FACE);
-//		gl.glDisable(gl2.GL_TEXTURE_2D);
-//		gl.glDisable(gl2.GL_LIGHTING);
-//		gl2.glColor3f(1, 1, 1);
-//		gl2.glPushMatrix();
-//		gl2.glBegin(gl2.GL_QUADS);
-//		gl2.glVertex3f(-1.0f, 5.0f, 0.0f);
-//		gl2.glVertex3f(-1.0f, -5.0f, 0.0f);
-//		gl2.glVertex3f(1.0f, -5.0f, 0.0f);
-//		gl2.glVertex3f(1.0f, 5.0f, 0.0f);
-//		gl2.glEnd();
-//		gl2.glBegin(gl2.GL_QUADS);
-//		gl2.glVertex3f(-5.0f, 1.0f, 0.0f);
-//		gl2.glVertex3f(-5.0f, -1.0f, 0.0f);
-//		gl2.glVertex3f(5.0f, -1.0f, 0.0f);
-//		gl2.glVertex3f(5.0f, 1.0f, 0.0f);
-//		gl2.glEnd();
-//		gl2.glEnable(gl2.GL_DEPTH_TEST);
-//		gl.glPopAttrib();
-
-//		gl2.glMatrixMode(gl.GL_PROJECTION);
-//		gl2.glLoadIdentity();
-//		glu.gluPerspective(60, (float)window.getWidth()/window.getHeight(), 0.01f, 100.0f);
-		// gl.glPopMatrix();
-
 	}
 
 	/**
@@ -420,17 +369,8 @@ public class JoglPane extends JPanel
 		int i = 0;
 		for (Integer key : Keys) {
 			// System.out.println(e);
-			if (key == KeyEvent.VK_LEFT)
-				rotateY -= 5;
-			else if (key == KeyEvent.VK_RIGHT)
-				rotateY += 5;
-			else if (key == KeyEvent.VK_DOWN)
-				rotateX += 5;
-			else if (key == KeyEvent.VK_UP)
-				rotateX -= 5;
-			else if (key == KeyEvent.VK_HOME)
-				rotateX = rotateY = 0;
-			else if (key == KeyEvent.VK_W)
+			
+			 if (key == KeyEvent.VK_W)
 				c.moveZ(1);
 			else if (key == KeyEvent.VK_S)
 				c.moveZ(-1);

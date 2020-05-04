@@ -81,7 +81,7 @@ public class ClientHandler extends Thread {
 					pingCounter = 0;
 					if (pinging) {
 						missedPings++;
-						System.out.println("ping missed");
+						Server.println("ping missed: "+this.socket.getInetAddress().getHostAddress());
 					}
 					if (missedPings >= 3) {
 						Server.println("Client disconnected:");
@@ -125,7 +125,8 @@ public class ClientHandler extends Thread {
 					}
 
 				} catch (Exception e) {
-
+					if(Server.verbose)
+						e.printStackTrace();
 				}
 
 				while (messageQueue.size() > 0) { // Send all messages
@@ -149,6 +150,7 @@ public class ClientHandler extends Thread {
 					e.printStackTrace();
 			}
 			if (this.stopped) {
+				Server.println("Exiting on signal 15");
 				this.quit();
 				return;
 			}

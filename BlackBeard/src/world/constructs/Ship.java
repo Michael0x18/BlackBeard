@@ -229,9 +229,11 @@ public class Ship {
 	 */
 	public void draw(GLUT glut, GLU glu, GL gl, GL2 gl2) {
 		gl2.glTranslated(x, y, z);
+		gl2.glRotated(-rot, 0, 1, 0);
 		for (Clippable c : blocks) {
 			c.draw(glut, glu, gl, gl2);
 		}
+		gl2.glRotated(rot, 0, 1, 0);
 		gl2.glTranslated(-x, -y, -z);
 
 	}

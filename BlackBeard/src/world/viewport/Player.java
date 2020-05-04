@@ -3,8 +3,8 @@ package world.viewport;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import world.constants.declaration.MConstants;
-import world.constructs.blocks.Clippable;
 import world.constructs.Ship;
+import world.constructs.blocks.Clippable;
 
 /**
  * The player, extension of camera for collisions.
@@ -210,7 +210,7 @@ public class Player extends Camera {
 			position.x = this.position.x;
 			position.z = this.position.z;
 			position.y = this.position.y;
-			position.z = -position.z;
+			//position.z = -position.z;
 			position.x -= (s.x);
 			position.z -= (s.z);
 //			position.x = Math.cos(rad) * (position.x - s.x) - Math.sin(rad) * (position.z - s.z) + s.x;///////////////////////////////////
@@ -367,7 +367,7 @@ public class Player extends Camera {
 
 			position.x += s.x;
 			position.z += s.z;
-			position.z = -position.z;
+//			position.z = -position.z;
 
 			this.position = position.copy();
 			if (hit) {

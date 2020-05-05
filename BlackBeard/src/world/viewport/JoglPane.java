@@ -17,6 +17,7 @@ import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.gl2.GLUT; // for drawing the sample teapot
 
+import client.net.Client;
 import world.constructs.blocks.Clippable;
 import world.constructs.Ship;
 import world.ui.JoglMenu;
@@ -97,7 +98,7 @@ public class JoglPane extends JPanel
 		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 
 		// Create a new blank cursor.
-		blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0, 0), "blank cursor");
+		blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new java.awt.Point(0, 0), "blank cursor");
 
 		// Set the blank cursor to the JFrame.
 		j.setCursor(blankCursor);
@@ -121,7 +122,7 @@ public class JoglPane extends JPanel
 	}
 
 	private GLJPanel display;
-	private Timer animationTimer;
+	Timer animationTimer;
 	private float rotateX, rotateY; // rotation amounts about axes, controlled
 									// by keyboard
 	private Player c;
@@ -224,13 +225,16 @@ public class JoglPane extends JPanel
 		for (Ship s : Grid.ships) {
 			s.draw(glut, glu, gl, gl2);
 		}
+		
 		gl.glEnable(GL2.GL_LIGHTING);
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_NORMALIZE);
-		float[] position = { 0, 20, 0, 1 };
+		//float[] position = { 0, 20, 0, 1 };
+		float[] position = {(float)c.getPosition().x,(float)c.getPosition().y,(float)c.getPosition().z,1};
 		gl2.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, position, 0);
 
 		gl2.glEnable(GL2.GL_LIGHT0);
+		
 	}
 
 	/**
@@ -270,10 +274,16 @@ public class JoglPane extends JPanel
 	 */
 	public void keyPressed(KeyEvent e) {
 
-		if (e.getModifiersEx() != 0)
-			return;
-		Keys.add(Integer.valueOf(e.getKeyCode()));
+//		if (e.getModifiersEx() !=0)
+//			return;
+		//Keys.add(Integer.valueOf(e.getKeyCode()));
+		if (!Keys.contains(e.getKeyCode())) {
+			Keys.add(Integer.valueOf(e.getKeyCode()));
+		}
 		repaint();
+		
+		
+		
 
 	}
 
@@ -369,8 +379,11 @@ public class JoglPane extends JPanel
 		int i = 0;
 		for (Integer key : Keys) {
 			// System.out.println(e);
+			if(key == KeyEvent.VK_ESCAPE) {
+				break;
+			}
 			
-			 if (key == KeyEvent.VK_W)
+			if (key == KeyEvent.VK_W)
 				c.moveZ(1);
 			else if (key == KeyEvent.VK_S)
 				c.moveZ(-1);
@@ -384,6 +397,24 @@ public class JoglPane extends JPanel
 				c.jump();
 			else if (key == KeyEvent.VK_R)
 				Grid.load("TEMPLE.GRID");
+			else if (key == KeyEvent.VK_LEFT) {
+				if(c.lastShip != null)
+					Client.listener.sendMessafe(":port "+c.lastShip.name);
+			}
+			else if (key == KeyEvent.VK_RIGHT) {
+				if(c.lastShip != null)
+					Client.listener.sendMessafe(":star "+c.lastShip.name);
+			}
+			else if (key == KeyEvent.VK_UP) {
+				if(c.lastShip != null)
+					Client.listener.sendMessafe(":acel "+c.lastShip.name);
+			}
+			else if (key == KeyEvent.VK_DOWN) {
+				if(c.lastShip != null)
+					Client.listener.sendMessafe(":deac "+c.lastShip.name);
+			}
+			
+			
 			if (i == 1) {
 				break;
 			}

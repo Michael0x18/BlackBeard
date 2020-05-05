@@ -1,7 +1,10 @@
 package world.viewport;
 
 import java.util.concurrent.CopyOnWriteArrayList;
+import static java.lang.Math.sin;
 
+
+import static java.lang.Math.cos;
 import world.constants.declaration.MConstants;
 import world.constructs.Ship;
 import world.constructs.blocks.Clippable;
@@ -35,7 +38,9 @@ public class Player extends Camera {
 	 * DONT USE For internal use only
 	 */
 	boolean allowJump = true;
-	private double VCT = 0.01;
+	private double VCT = 0.025;
+	private int time = 0;
+	public Ship lastShip = null;
 
 	// private boolean gravityOn = true;
 
@@ -90,7 +95,7 @@ public class Player extends Camera {
 //			velocity.z *= 2.5;
 		}
 		if (!gravityOn) {
-			position.y += 0.01;
+			position.y += 0.05;
 		}
 	}
 
@@ -105,7 +110,11 @@ public class Player extends Camera {
 		// if ((int)Math.abs(c.getC1() - position.z / 32) == 0 &&
 		// (int)Math.abs(c.getC2() - position.x / 32) == 0)
 		// selectedChunk = c;
-
+		--time;
+		if(time < 0) {
+			time = 0;
+			lastShip = null;
+		}
 		grounded = false;
 
 		for (Clippable b : t) {
@@ -209,7 +218,7 @@ public class Player extends Camera {
 			MVector position = new MVector();
 			position.x = this.position.x;
 			position.z = this.position.z;
-			position.y = this.position.y;
+			position.y = this.position.y-0.1;
 			//position.z = -position.z;
 			position.x -= (s.x);
 			position.z -= (s.z);
@@ -367,10 +376,16 @@ public class Player extends Camera {
 
 			position.x += s.x;
 			position.z += s.z;
+			position.y += 0.1;
 //			position.z = -position.z;
 
 			this.position = position.copy();
-			if (hit) {
+			if(hit) {
+				lastShip = s;
+				time = 200;
+			}
+			if (hit || lastShip == s) {
+				//time = 1000;
 				this.velocity.x += s.velocity * Math.cos(rad) * (1.0 / friction);
 				this.velocity.z += s.velocity * Math.sin(rad) * (1.0 / friction);
 				if (Math.abs(this.velocity.x - s.velocity * Math.cos(rad)) < VCT ) {
@@ -379,6 +394,13 @@ public class Player extends Camera {
 				if (Math.abs(this.velocity.z - s.velocity * Math.sin(rad)) < VCT) {
 					this.velocity.z = s.velocity * Math.sin(rad) / friction;
 				}
+				Point p = new Point(this.position.x, this.position.z);
+				System.out.println(s.lastrot);
+				this.rotate_point((float)s.x, (float)(s.z), (float)(Math.toRadians(s.lastrot))*4f, p);
+				this.pan += (float)(Math.toRadians(s.lastrot))*4f;
+				this.position.x = p.x;
+				this.position.z = p.y;
+				
 
 //				this.position.x -= s.x;
 //				this.position.z -= s.z;
@@ -482,6 +504,25 @@ public class Player extends Camera {
 	 */
 	public double getDepth() {
 		return d;
+	}
+	
+	Point rotate_point(float cx,float cy,float angle,Point p)
+	{
+	  float s = (float) sin(angle);
+	  float c = (float) cos(angle);
+
+	  // translate point back to origin:
+	  p.x -= cx;
+	  p.y -= cy;
+
+	  // rotate point
+	  double xnew = p.x * c - p.y * s;
+	  double ynew = p.x * s + p.y * c;
+
+	  // translate point back:
+	  p.x = (xnew + cx);
+	  p.y = (ynew + cy);
+	  return p;
 	}
 
 	/**

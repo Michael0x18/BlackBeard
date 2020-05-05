@@ -14,6 +14,8 @@ import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
+import server.mirrors.Ship;
+
 /**
  * Represents the main centralized location of the Server. The Server implements
  * a CAS Erlang type thread model. In other words, it contains a bunch of
@@ -108,6 +110,9 @@ public class Server {
 	 */
 	public static BufferedWriter bannedWriter;
 	// public static OtherPlayer[] players;
+	
+	public static CopyOnWriteArrayList<Ship> ships = new CopyOnWriteArrayList<Ship>();
+	public static ConcurrentHashMap<String,Ship> shipQuick = new ConcurrentHashMap<String,Ship>();
 
 	/**
 	 * Performs all Server related setups.

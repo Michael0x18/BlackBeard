@@ -122,6 +122,7 @@ public class ServerListener extends Thread {
 					Double.parseDouble(st.nextToken()));
 			s.turn(Double.parseDouble(st.nextToken()));
 			s.setVelocity(st.nextToken());
+			s.lastrot = Double.parseDouble(st.nextToken());
 			for (Ship sh : Grid.ships) {
 				if (sh.name.equals(str)) {
 					Grid.ships.remove(sh);
@@ -153,6 +154,10 @@ public class ServerListener extends Thread {
 	public void addEvent(ExecutionEvent executionEvent) {
 		outE.add(executionEvent);
 
+	}
+	
+	public void sendMessafe(String s) {
+		p.println(s);
 	}
 
 }

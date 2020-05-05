@@ -31,7 +31,7 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 	private JTextArea input;
 	private JLabel Title;
 	private JButton connectButton;
-	public static final int port = 50000;
+	public static final int port = 4444;
 	/**
 	 * The default port for incoming connections.
 	 */

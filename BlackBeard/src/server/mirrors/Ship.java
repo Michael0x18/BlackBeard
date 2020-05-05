@@ -26,6 +26,11 @@ public class Ship extends Daemon {
 	private String name;
 	private CopyOnWriteArrayList<String> players = new CopyOnWriteArrayList<>();
 	double turned;
+	//double lastrot;
+	private volatile int counter = 0;
+	private volatile double v = 0;
+	
+	public static final double µk = .9;
 
 	/**
 	 * Standard Ship constructor. Names are the valid identifier that facilitates
@@ -37,6 +42,8 @@ public class Ship extends Daemon {
 		super();
 		this.name = name;
 		this.start();
+		Server.ships.add(this);
+		Server.shipQuick.put(name, this);
 	}
 
 	/**
@@ -62,6 +69,8 @@ public class Ship extends Daemon {
 		this.z = dz;
 		this.bearing = bearing;
 		this.velocity = velocity;
+		Server.ships.add(this);
+		Server.shipQuick.put(name, this);
 	}
 
 	/**
@@ -74,17 +83,28 @@ public class Ship extends Daemon {
 		// x = 10;
 		// z = 10;
 		while (!sunk) {
-			turnLeft(0.1);
-			velocity = 0.01;
+			turnLeft(v);
+			//v=0;
+//			++counter;
+//			if(counter == 100) {
+//				velocity = 0;
+//			}
+			//turnLeft(0.1);
+//			counter ++;
+//			if(counter > 1000) {
+//				turnLeft(180);
+//				counter = 0;
+//			}
+//			velocity = 0.01;
 			try {
-				Thread.sleep(30);
+				Thread.sleep(10);
 				players.clear();
 				for (String s : Server.playerCoords.keySet()) {
 					String a;
 					if ((a = Server.playerCoords.get(s)) != null) {
 						StringTokenizer st = new StringTokenizer(a);
 						double d = Double.parseDouble(st.nextToken());
-						//double b = Double.parseDouble(st.nextToken());
+						// double b = Double.parseDouble(st.nextToken());
 						double c = Double.parseDouble(st.nextToken());
 						if ((x - d) * (x - d) + (z - c) * (z - c) < 144) {
 							players.add(s);
@@ -101,14 +121,15 @@ public class Ship extends Daemon {
 				x += velocity * Math.cos(rad);
 				z += velocity * Math.sin(rad);
 				// System.out.println(x);
-				synchronized (this) {
-					for (String player : Server.clientList.keySet()) {
-						Server.clientList.get(player)
-								.addMessage(":ship " + name + " " + x + " " + y + " " + z + " " + bearing + " "+velocity);
-						// System.out.println(bearing);
-						// Server.clientList.get(player).addMessage(":ship YEET 0.0 0.0 0.0 0.0");
-					}
+				// synchronized (this) {
+				for (String player : Server.clientList.keySet()) {
+					Server.clientList.get(player).addMessage(":ship " + name + " " + x + " " + y + " " + z + " "
+							+ bearing + " " + velocity + " " + turned);
+					// System.out.println(bearing);
+					// Server.clientList.get(player).addMessage(":ship YEET 0.0 0.0 0.0 0.0");
 				}
+				// }
+				turned = 0;
 //				for (String player : this.players) {
 //					if (Server.clientList.get(player) != null) {
 //						
@@ -120,6 +141,7 @@ public class Ship extends Daemon {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			//velocity *= µk;
 		}
 	}
 
@@ -136,7 +158,7 @@ public class Ship extends Daemon {
 	 * 
 	 * @param degrees
 	 */
-	public void turnLeft(double degrees) {
+	public synchronized void turnLeft(double degrees) {
 		bearing -= degrees;
 		turned -= degrees;
 	}
@@ -146,9 +168,34 @@ public class Ship extends Daemon {
 	 * 
 	 * @param degrees
 	 */
-	public void turnRight(double degrees) {
+	public synchronized void turnRight(double degrees) {
 		turnLeft(-degrees);
 		turned += degrees;
 	}
+	
+	public synchronized void accelerate(double a) {
+		//velocity += a;
+		velocity += a;
+		if(velocity > 0.01) {
+			velocity = 0.01;
+		}
+		if(velocity < -0.01) {
+			velocity = -0.01;
+		}
+		//counter = 0;
+	}
+	
+	public synchronized void aceleft(double a) {
+		v += a;
+		if(v > 0.2) {
+			v = 0.2;
+		}
+	}
 
+	public synchronized void aceright(double a) {
+		v -= a;
+		if(v < -0.2) {
+			v = -0.2;
+		}
+	}
 }

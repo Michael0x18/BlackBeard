@@ -29,7 +29,7 @@ public class Client {
 	/**
 	 * The sole instance of the ServerListener.
 	 */
-	static ServerListener listener;
+	public static ServerListener listener;
 	/**
 	 * For debug purposes only
 	 */

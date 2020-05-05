@@ -26,11 +26,12 @@ public class Ship {
 	public double y = 0;
 	public double z = 0;
 	public double rot = 0;
+	public double lastrot = 0;
 
 	/**
 	 * Arr! Shiver me timbers! This be our ship, boys!
 	 */
-	public static final String ship = "Wood		0	0	0\n" + "Wood		1	0	0\n" + "Wood		2	0	0\n"
+	public static final String ship = "Stone		0	0	0\n" + "Wood		1	0	0\n" + "Wood		2	0	0\n"
 			+ "Wood		3	0	0\n" + "Wood		4	0	0\n" + "Wood		5	0	0\n" + "Wood		6	0	0\n"
 			+ "Wood		7	0	0\n" + "Wood		8	0	0\n" + "Wood		9	0	0\n" + "Wood		10	0	0\n"
 			+ "Wood		11	0	0\n" + "Wood		12	0	0\n" + "Wood		13	0	0\n" + "Wood		14	0	0\n"
@@ -194,6 +195,7 @@ public class Ship {
 
 	/**
 	 * Creates a new ship instance with the specified name.
+	 * 
 	 * @param name
 	 */
 	public Ship(String name) {
@@ -222,6 +224,7 @@ public class Ship {
 
 	/**
 	 * equivalent of the Ship clippable method.
+	 * 
 	 * @param glut
 	 * @param glu
 	 * @param gl
@@ -240,6 +243,7 @@ public class Ship {
 
 	/**
 	 * classloader from file/string. ignores executions.
+	 * 
 	 * @param whichClass
 	 * @return
 	 */
@@ -272,6 +276,7 @@ public class Ship {
 
 	/**
 	 * translate
+	 * 
 	 * @param x
 	 * @param y
 	 * @param z
@@ -284,6 +289,7 @@ public class Ship {
 
 	/**
 	 * used for parsing.
+	 * 
 	 * @param bearing
 	 */
 	public void turn(double bearing) {
@@ -292,7 +298,7 @@ public class Ship {
 
 	public void setVelocity(String v) {
 		this.velocity = Double.parseDouble(v);
-		
+
 	}
 
 }

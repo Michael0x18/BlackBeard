@@ -244,8 +244,22 @@ public class ClientHandler extends Thread {
 			if (msg.startsWith("/coords")) {
 				// System.out.println(msg);
 				Server.playerCoords.put(this.socket.getInetAddress().getHostAddress(), msg.substring(7));
+				
+			}
+			if(msg.startsWith(":port")) {
+				Server.shipQuick.get(msg.split(" ")[1]).aceleft(0.1);
+			}
+			if(msg.startsWith(":star")) {
+				Server.shipQuick.get(msg.split(" ")[1]).aceright(0.1);
+			}
+			if(msg.startsWith(":acel")) {
+				Server.shipQuick.get(msg.split(" ")[1]).accelerate(0.01);
+			}
+			if(msg.startsWith(":deac")) {
+				Server.shipQuick.get(msg.split(" ")[1]).accelerate(-0.01);
 			}
 		}
+		
 	}
 
 }

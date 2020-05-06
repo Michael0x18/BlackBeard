@@ -380,11 +380,15 @@ public class Player extends Camera {
 //			position.z = -position.z;
 
 			this.position = position.copy();
-			if(hit) {
+			boolean hit2 = false;
+			if(Math.abs(this.position.x-s.x) <= 2 && Math.abs(this.position.z-s.z) <= 12) {
+				hit2 = true;
+			}
+			if(hit2) {
 				lastShip = s;
 				time = 200;
 			}
-			if (hit || lastShip == s) {
+			if (hit2 || lastShip == s) {
 				//time = 1000;
 				this.velocity.x += s.velocity * Math.cos(rad) * (1.0 / friction);
 				this.velocity.z += s.velocity * Math.sin(rad) * (1.0 / friction);

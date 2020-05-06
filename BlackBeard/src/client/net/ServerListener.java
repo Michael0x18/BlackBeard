@@ -107,12 +107,12 @@ public class ServerListener extends Thread {
 	 * Same functionality as Server.
 	 */
 	public void processEvents(String msg) {
-		if ((matchedPlayer != null) && msg.equals(":coords")) {
+		if ((matchedPlayer != null) && msg.equals(":getcoords")) {
 			// System.out.println("ok");
 			p.println("/coords " + matchedPlayer.getPosition().x + " " + matchedPlayer.getPosition().y + " "
 					+ matchedPlayer.getPosition().z);
 		}
-		if (msg.startsWith(":ship")) {
+		else if (msg.startsWith(":ship")) {
 			msg = msg.substring(5);
 			StringTokenizer st = new StringTokenizer(msg);
 			String str = st.nextToken();
@@ -134,6 +134,27 @@ public class ServerListener extends Thread {
 			
 			//Grid.ships.add(s);
 
+		}
+		else if(msg.startsWith(":coords")) {
+			String[] playerData = msg.split("|");
+			new Thread() {
+				public void run() {
+					for(int i = 1; i < playerData.length; i++) {
+						try {
+						StringTokenizer st = new StringTokenizer(playerData[i]);
+						String ip = st.nextToken();
+						int px = Integer.parseInt(st.nextToken());
+						int py = Integer.parseInt(st.nextToken());
+						int pz = Integer.parseInt(st.nextToken());
+						
+						}
+						catch(Exception e) {
+							e.printStackTrace();
+						}
+						
+					}
+				}
+			};
 		}
 //		if(msg.startsWith(":delta ")) {
 //			String s = msg.substring(7);

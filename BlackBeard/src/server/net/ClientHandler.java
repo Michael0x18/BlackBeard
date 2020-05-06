@@ -113,6 +113,16 @@ public class ClientHandler extends Thread {
 //						inQueue.remove(str);
 //					}
 //				}
+					if(runTime % 15 == 0) {
+						messageQueue.add(":getcoords");
+					}
+					String otherCoords = "";
+					for(String s : Server.playerCoords.keySet()) {
+						if(!s.equals(this.socket.getInetAddress().getHostAddress()) && Server.playerCoords.get(s) != null) {
+							otherCoords += "|" + s+" "+Server.playerCoords.get(s);
+						}
+					}
+					messageQueue.add(":coords"+otherCoords);
 
 					Iterator<String> it = inQueue.iterator();
 					while (it.hasNext()) {

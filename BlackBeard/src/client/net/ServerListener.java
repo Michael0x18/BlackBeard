@@ -8,10 +8,12 @@ import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JOptionPane;
 
 import world.constructs.Ship;
+import world.constructs.StructPlayer;
 import world.viewport.Grid;
 import world.viewport.JoglPane;
 import world.viewport.Player;
@@ -139,6 +141,7 @@ public class ServerListener extends Thread {
 			String[] playerData = msg.split("|");
 			new Thread() {
 				public void run() {
+					CopyOnWriteArrayList<StructPlayer> sp = new CopyOnWriteArrayList<StructPlayer>();
 					for(int i = 1; i < playerData.length; i++) {
 						try {
 						StringTokenizer st = new StringTokenizer(playerData[i]);
@@ -146,15 +149,17 @@ public class ServerListener extends Thread {
 						int px = Integer.parseInt(st.nextToken());
 						int py = Integer.parseInt(st.nextToken());
 						int pz = Integer.parseInt(st.nextToken());
-						
+						StructPlayer p = new StructPlayer(px,py,pz,ip);
+						sp.add(p);
 						}
 						catch(Exception e) {
 							e.printStackTrace();
 						}
 						
 					}
+					Grid.players = sp;
 				}
-			};
+			}.start();
 		}
 //		if(msg.startsWith(":delta ")) {
 //			String s = msg.substring(7);

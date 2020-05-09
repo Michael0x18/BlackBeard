@@ -3,6 +3,8 @@ package world.viewport;
 import java.util.concurrent.CopyOnWriteArrayList;
 import static java.lang.Math.sin;
 
+import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 
 import static java.lang.Math.cos;
 import world.constants.declaration.MConstants;
@@ -110,11 +112,11 @@ public class Player extends Camera {
 		// if ((int)Math.abs(c.getC1() - position.z / 32) == 0 &&
 		// (int)Math.abs(c.getC2() - position.x / 32) == 0)
 		// selectedChunk = c;
-		--time;
-		if(time < 0) {
-			time = 0;
-			lastShip = null;
-		}
+//		--time;
+//		if(time < 0) {
+//			time = 0;
+//			lastShip = null;
+//		}
 		grounded = false;
 
 		for (Clippable b : t) {
@@ -211,6 +213,7 @@ public class Player extends Camera {
 			}
 		}
 		for (Ship s : Grid.ships) {
+			boolean hit2 = false;
 			boolean hit = false;
 			z0 = 0;
 			x0 = 0;
@@ -244,6 +247,10 @@ public class Player extends Camera {
 //			position.x = x;
 			// System.out.println((int)(position.x*100)/100.0+" "+(int)(s.x*100)/100.0);
 
+			
+			if(Math.abs(this.position.z-s.z) <= 2 && Math.abs(this.position.x-s.x) <= 14) {
+				hit2 = true;
+			}
 			for (Clippable b : s.blocks) {
 				if (b != null) {
 					// position is in the center of the so you have to add/substract
@@ -380,18 +387,25 @@ public class Player extends Camera {
 //			position.z = -position.z;
 
 			this.position = position.copy();
-			boolean hit2 = false;
-			if(Math.abs(this.position.x-s.x) <= 2 && Math.abs(this.position.z-s.z) <= 12) {
-				hit2 = true;
-			}
-			if(hit2) {
+			
+			
+//			Rectangle rect = new Rectangle((int)(s.x-2)*100,(int)s.y-16*100,400,3200);
+//			int x = (int)this.position.x * 100;
+//			int y = (int)this.position.y * 100;
+//			int z = (int)this.position.z * 100;
+			
+			
+//			if(hit2) {
+//				lastShip = s;
+//				time = 200;
+//			}
+			//lastShip = s;
+			if (hit2) {
+				System.out.println("true");
 				lastShip = s;
-				time = 200;
-			}
-			if (hit2 || lastShip == s) {
 				//time = 1000;
-				this.velocity.x += s.velocity * Math.cos(rad) * (1.0 / friction);
-				this.velocity.z += s.velocity * Math.sin(rad) * (1.0 / friction);
+				this.velocity.x = this.velocity.x + (s.velocity * Math.cos(rad)) * (1.0 / friction);
+				this.velocity.z = this.velocity.z + (s.velocity * Math.sin(rad)) * (1.0 / friction);
 				if (Math.abs(this.velocity.x - s.velocity * Math.cos(rad)) < VCT ) {
 					this.velocity.x = s.velocity * Math.cos(rad) / friction;
 				}
@@ -399,7 +413,6 @@ public class Player extends Camera {
 					this.velocity.z = s.velocity * Math.sin(rad) / friction;
 				}
 				Point p = new Point(this.position.x, this.position.z);
-				System.out.println(s.lastrot);
 				this.rotate_point((float)s.x, (float)(s.z), (float)(Math.toRadians(s.lastrot))*4f, p);
 				this.pan += (float)(Math.toRadians(s.lastrot))*4f;
 				this.position.x = p.x;

@@ -19,7 +19,9 @@ import com.jogamp.opengl.util.gl2.GLUT; // for drawing the sample teapot
 
 import client.net.Client;
 import world.constructs.blocks.Clippable;
+import world.constructs.OtherPlayer;
 import world.constructs.Ship;
+import world.constructs.StructPlayer;
 import world.ui.JoglMenu;
 import javafx.scene.paint.Color;
 
@@ -224,6 +226,9 @@ public class JoglPane extends JPanel
 		gl.glTranslated(0, 50.5, 0);
 		for (Ship s : Grid.ships) {
 			s.draw(glut, glu, gl, gl2);
+		}
+		for(StructPlayer p : Grid.players) {
+			OtherPlayer.draw(p, glut, glu, gl, gl2);
 		}
 		
 		gl.glEnable(GL2.GL_LIGHTING);

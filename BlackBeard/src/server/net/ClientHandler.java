@@ -81,7 +81,7 @@ public class ClientHandler extends Thread {
 					pingCounter = 0;
 					if (pinging) {
 						missedPings++;
-						Server.println("ping missed: "+this.socket.getInetAddress().getHostAddress());
+						Server.println("ping missed: " + this.socket.getInetAddress().getHostAddress());
 					}
 					if (missedPings >= 3) {
 						Server.println("Client disconnected:");
@@ -113,16 +113,22 @@ public class ClientHandler extends Thread {
 //						inQueue.remove(str);
 //					}
 //				}
-					if(runTime % 15 == 0) {
+					if (runTime % 15 == 0) {
 						messageQueue.add(":getcoords");
 					}
-					String otherCoords = "";
-					for(String s : Server.playerCoords.keySet()) {
-						if(!s.equals(this.socket.getInetAddress().getHostAddress()) && Server.playerCoords.get(s) != null) {
-							otherCoords += "|" + s+" "+Server.playerCoords.get(s);
+					if (runTime % 15 == 0) {
+						String otherCoords = "";
+						for (String s : Server.playerCoords.keySet()) {
+							if (!s.equals(this.socket.getInetAddress().getHostAddress())
+									&& Server.playerCoords.get(s) != null) {
+								otherCoords += "|" + s + " " + Server.playerCoords.get(s);
+							}
+						}
+						if (otherCoords.length() > 0) {
+							System.out.println(otherCoords);
+							messageQueue.add(":coords" + otherCoords);
 						}
 					}
-					messageQueue.add(":coords"+otherCoords);
 
 					Iterator<String> it = inQueue.iterator();
 					while (it.hasNext()) {
@@ -135,7 +141,7 @@ public class ClientHandler extends Thread {
 					}
 
 				} catch (Exception e) {
-					if(Server.verbose)
+					if (Server.verbose)
 						e.printStackTrace();
 				}
 
@@ -254,22 +260,22 @@ public class ClientHandler extends Thread {
 			if (msg.startsWith("/coords")) {
 				// System.out.println(msg);
 				Server.playerCoords.put(this.socket.getInetAddress().getHostAddress(), msg.substring(7));
-				
+
 			}
-			if(msg.startsWith(":port")) {
+			if (msg.startsWith(":port")) {
 				Server.shipQuick.get(msg.split(" ")[1]).aceleft(0.1);
 			}
-			if(msg.startsWith(":star")) {
+			if (msg.startsWith(":star")) {
 				Server.shipQuick.get(msg.split(" ")[1]).aceright(0.1);
 			}
-			if(msg.startsWith(":acel")) {
+			if (msg.startsWith(":acel")) {
 				Server.shipQuick.get(msg.split(" ")[1]).accelerate(0.01);
 			}
-			if(msg.startsWith(":deac")) {
+			if (msg.startsWith(":deac")) {
 				Server.shipQuick.get(msg.split(" ")[1]).accelerate(-0.01);
 			}
 		}
-		
+
 	}
 
 }

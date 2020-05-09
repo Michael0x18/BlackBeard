@@ -12,6 +12,7 @@ import world.constructs.blocks.Clippable;
 import world.constructs.blocks.Null;
 import world.constructs.blocks.Obsidian;
 import world.constructs.Ship;
+import world.constructs.StructPlayer;
 import world.constructs.blocks.Stone;
 import world.constructs.blocks.Teapot;
 import world.io.FileWrapper;
@@ -26,6 +27,7 @@ public class Grid {
 	public static CopyOnWriteArrayList<Clippable> world = new CopyOnWriteArrayList<Clippable>();
 	public static CopyOnWriteArrayList<Ship> ships = new CopyOnWriteArrayList<Ship>();
 	public static CopyOnWriteArrayList<Ship> newShips = new CopyOnWriteArrayList<Ship>();
+	public static CopyOnWriteArrayList<StructPlayer> players = new CopyOnWriteArrayList<StructPlayer>();
 
 	/**
 	 * Loads a simple preset grid.

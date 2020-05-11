@@ -11,6 +11,7 @@ import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureIO;
 
 public class ObjectLoaderV_C {
+	static boolean loaded = false;
 	static CopyOnWriteArrayList<String> loadHandles = new CopyOnWriteArrayList<String>();
 	public static ConcurrentHashMap<String,Texture> loaderHash = new ConcurrentHashMap<String,Texture>();
 
@@ -29,9 +30,11 @@ public class ObjectLoaderV_C {
 		         e.printStackTrace();
 		      }
 		}
+		loaded = true;
 	}
 	
 	public static synchronized int addLoaderHandleInstance(String filePath) {
+		System.out.println("CALLED!!!!!");
 		loadHandles.add(filePath);
 		return loadHandles.indexOf(filePath);
 	}

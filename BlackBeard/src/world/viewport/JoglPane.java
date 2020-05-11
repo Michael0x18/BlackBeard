@@ -202,7 +202,9 @@ public class JoglPane extends JPanel
 	 * This method is called when the OpenGL display needs to be redrawn.
 	 */
 	public void display(GLAutoDrawable drawable) {
-
+		if(!ObjectLoaderV_C.loaded) {
+			return;
+		}
 		GL2 gl = drawable.getGL().getGL2();
 		gl.glClearColor((float) Color.LIGHTSKYBLUE.getRed(), (float) Color.LIGHTSKYBLUE.getGreen(),
 				(float) Color.LIGHTSKYBLUE.getBlue(), 0);
@@ -249,12 +251,13 @@ public class JoglPane extends JPanel
 	public void init(GLAutoDrawable drawable) {
 		// called when the panel is created
 		GL2 gl = drawable.getGL().getGL2();
+		ObjectLoaderV_C.load(gl);
 		gl.glClearColor(0.8F, 0.8F, 0.8F, 1.0F);
 		gl.glEnable(GL.GL_DEPTH_TEST);
 		gl.glEnable(GL2.GL_LIGHTING);
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_COLOR_MATERIAL);
-		ObjectLoaderV_C.load(gl);
+		
 
 	}
 

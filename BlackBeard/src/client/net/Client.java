@@ -4,6 +4,8 @@ import java.util.LinkedList;
 
 //import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
+
+import world.constructs.blocks.TexLoader;
 //import javax.swing.plaf.metal.MetalLookAndFeel;
 //import javax.swing.plaf.multi.MultiLookAndFeel;
 //import javax.swing.plaf.nimbus.NimbusLookAndFeel;
@@ -50,7 +52,7 @@ public class Client {
 		} catch (Exception e) {
 
 		}
-
+		TexLoader.runtimeExec = new TexLoader();
 		isBot = b;
 
 		connector = new ClientConnector();

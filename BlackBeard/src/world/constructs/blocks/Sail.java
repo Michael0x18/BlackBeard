@@ -6,6 +6,7 @@ import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.gl2.GLUT;
 
 import javafx.scene.paint.Color;
+import world.viewport.ObjectLoaderV_C;
 
 /**
  * For use on ships. Sail color is javafx.scene.paint.Color.GhostWhite
@@ -52,47 +53,88 @@ public class Sail extends Block {
 			return;
 		gl2.glTranslated(x, y, z);
 		// glut.glutSolidCube((float) 0.5);
-		gl2.glColor4d(Color.GHOSTWHITE.getRed(), Color.GHOSTWHITE.getGreen(), Color.GHOSTWHITE.getBlue(),4);
-		
-		if(TESSELATION_ON) {
-		gl2.glTranslated(0.125, 0.125, 0.125);
-		glut.glutSolidCube(0.25f);
-		gl2.glTranslated(-0.125, -0.125, -0.125);
-		
-		gl2.glTranslated(-0.125, 0.125, 0.125);
-		glut.glutSolidCube(0.25f);
-		gl2.glTranslated(0.125, -0.125, -0.125);
-		
-		gl2.glTranslated(0.125, -0.125, 0.125);
-		glut.glutSolidCube(0.25f);
-		gl2.glTranslated(-0.125, 0.125, -0.125);
-		
-		gl2.glTranslated(0.125, 0.125, -0.125);
-		glut.glutSolidCube(0.25f);
-		gl2.glTranslated(-0.125, -0.125, 0.125);
-		
-		gl2.glTranslated(-0.125, -0.125, -0.125);
-		glut.glutSolidCube(0.25f);
-		gl2.glTranslated(0.125, 0.125, 0.125);
-		
-		gl2.glTranslated(-0.125, -0.125, 0.125);
-		glut.glutSolidCube(0.25f);
-		gl2.glTranslated(0.125, 0.125, -0.125);
-		
-		gl2.glTranslated(0.125, -0.125, -0.125);
-		glut.glutSolidCube(0.25f);
-		gl2.glTranslated(-0.125, 0.125, 0.125);
-		
-		gl2.glTranslated(-0.125, 0.125, -0.125);
-		glut.glutSolidCube(0.25f);
-		gl2.glTranslated(0.125, -0.125, 0.125);
-		}else {
-			glut.glutSolidCube(0.5f);
-		}
+//		gl2.glColor4d(Color.GHOSTWHITE.getRed(), Color.GHOSTWHITE.getGreen(), Color.GHOSTWHITE.getBlue(),4);
+//		
+//		if(TESSELATION_ON) {
+//		gl2.glTranslated(0.125, 0.125, 0.125);
+//		glut.glutSolidCube(0.25f);
+//		gl2.glTranslated(-0.125, -0.125, -0.125);
+//		
+//		gl2.glTranslated(-0.125, 0.125, 0.125);
+//		glut.glutSolidCube(0.25f);
+//		gl2.glTranslated(0.125, -0.125, -0.125);
+//		
+//		gl2.glTranslated(0.125, -0.125, 0.125);
+//		glut.glutSolidCube(0.25f);
+//		gl2.glTranslated(-0.125, 0.125, -0.125);
+//		
+//		gl2.glTranslated(0.125, 0.125, -0.125);
+//		glut.glutSolidCube(0.25f);
+//		gl2.glTranslated(-0.125, -0.125, 0.125);
+//		
+//		gl2.glTranslated(-0.125, -0.125, -0.125);
+//		glut.glutSolidCube(0.25f);
+//		gl2.glTranslated(0.125, 0.125, 0.125);
+//		
+//		gl2.glTranslated(-0.125, -0.125, 0.125);
+//		glut.glutSolidCube(0.25f);
+//		gl2.glTranslated(0.125, 0.125, -0.125);
+//		
+//		gl2.glTranslated(0.125, -0.125, -0.125);
+//		glut.glutSolidCube(0.25f);
+//		gl2.glTranslated(-0.125, 0.125, 0.125);
+//		
+//		gl2.glTranslated(-0.125, 0.125, -0.125);
+//		glut.glutSolidCube(0.25f);
+//		gl2.glTranslated(0.125, -0.125, 0.125);
+//		}else {
+//			glut.glutSolidCube(0.5f);
+//		}
 		
 		//gl2.glColor3d(0, .5, 0);
 		//glut.glutWireCube(0.5001f);
 
+		gl.glBindTexture(GL2.GL_TEXTURE_2D, ObjectLoaderV_C.loaderHash.get("Client/Resources/Sailcloth/Sailcloth.png").getTextureObject(gl));
+	      gl2.glBegin(GL2.GL_QUADS);
+
+	      // Front Face
+	      gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f(-1.0f, -1.0f, 1.0f);
+	      gl2.glTexCoord2f(1.0f, 0.0f); gl2.glVertex3f( 1.0f, -1.0f, 1.0f);
+	      gl2.glTexCoord2f(1.0f, 1.0f); gl2.glVertex3f( 1.0f, 1.0f, 1.0f);
+	      gl2.glTexCoord2f(0.0f, 1.0f); gl2.glVertex3f(-1.0f, 1.0f, 1.0f);
+
+	      // Back Face
+	      gl2.glTexCoord2f(1.0f, 0.0f); gl2.glVertex3f(-1.0f, -1.0f, -1.0f);
+	      gl2.glTexCoord2f(1.0f, 1.0f); gl2.glVertex3f(-1.0f, 1.0f, -1.0f);
+	      gl2.glTexCoord2f(0.0f, 1.0f); gl2.glVertex3f( 1.0f, 1.0f, -1.0f);
+	      gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f( 1.0f, -1.0f, -1.0f);
+
+	      // Top Face
+	      gl2.glTexCoord2f(0.0f, 1.0f); gl2.glVertex3f(-1.0f, 1.0f, -1.0f);
+	      gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f(-1.0f, 1.0f, 1.0f);
+	      gl2.glTexCoord2f(1.0f, 0.0f); gl2.glVertex3f( 1.0f, 1.0f, 1.0f);
+	      gl2.glTexCoord2f(1.0f, 1.0f); gl2.glVertex3f( 1.0f, 1.0f, -1.0f);
+
+	      // Bottom Face
+	      gl2.glTexCoord2f(1.0f, 1.0f); gl2.glVertex3f(-1.0f, -1.0f, -1.0f);
+	      gl2.glTexCoord2f(0.0f, 1.0f); gl2.glVertex3f( 1.0f, -1.0f, -1.0f);
+	      gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f( 1.0f, -1.0f, 1.0f);
+	      gl2.glTexCoord2f(1.0f, 0.0f); gl2.glVertex3f(-1.0f, -1.0f, 1.0f);
+
+	      // Right face
+	      gl2.glTexCoord2f(1.0f, 0.0f); gl2.glVertex3f( 1.0f, -1.0f, -1.0f);
+	      gl2.glTexCoord2f(1.0f, 1.0f); gl2.glVertex3f( 1.0f, 1.0f, -1.0f);
+	      gl2.glTexCoord2f(0.0f, 1.0f); gl2.glVertex3f( 1.0f, 1.0f, 1.0f);
+	      gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f( 1.0f, -1.0f, 1.0f);
+
+	      // Left Face
+	      gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f(-1.0f, -1.0f, -1.0f);
+	      gl2.glTexCoord2f(1.0f, 0.0f); gl2.glVertex3f(-1.0f, -1.0f, 1.0f);
+	      gl2.glTexCoord2f(1.0f, 1.0f); gl2.glVertex3f(-1.0f, 1.0f, 1.0f);
+	      gl2.glTexCoord2f(0.0f, 1.0f); gl2.glVertex3f(-1.0f, 1.0f, -1.0f);
+	      gl2.glEnd();
+	      gl2.glFlush();
+		
 		gl2.glTranslated(-x, -y, -z);
 
 	}

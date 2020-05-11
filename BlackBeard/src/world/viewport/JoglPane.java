@@ -254,6 +254,7 @@ public class JoglPane extends JPanel
 		gl.glEnable(GL2.GL_LIGHTING);
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_COLOR_MATERIAL);
+		ObjectLoaderV_C.load(gl);
 
 	}
 

@@ -248,7 +248,7 @@ public class Player extends Camera {
 			// System.out.println((int)(position.x*100)/100.0+" "+(int)(s.x*100)/100.0);
 
 			
-			if(Math.abs(this.position.z-s.z) <= 2 && Math.abs(this.position.x-s.x) <= 14) {
+			if(Math.abs(this.position.x-s.x) <= 2 && Math.abs(this.position.z-s.z) <= 14) {
 				hit2 = true;
 			}
 			for (Clippable b : s.blocks) {

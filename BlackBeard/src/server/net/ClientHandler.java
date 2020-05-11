@@ -121,7 +121,7 @@ public class ClientHandler extends Thread {
 						for (String s : Server.playerCoords.keySet()) {
 							if (!s.equals(this.socket.getInetAddress().getHostAddress())
 									&& Server.playerCoords.get(s) != null) {
-								otherCoords += "|" + s + " " + Server.playerCoords.get(s);
+								otherCoords += "`" + s + " " + Server.playerCoords.get(s);
 							}
 						}
 						if (otherCoords.length() > 0) {

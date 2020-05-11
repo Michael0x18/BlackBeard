@@ -138,13 +138,14 @@ public class ServerListener extends Thread {
 
 		}
 		else if(msg.startsWith(":coords")) {
-			String[] playerData = msg.split("|");
+			String[] playerData = msg.split("`");
 			new Thread() {
 				public void run() {
 					CopyOnWriteArrayList<StructPlayer> sp = new CopyOnWriteArrayList<StructPlayer>();
 					for(int i = 1; i < playerData.length; i++) {
 						try {
 						StringTokenizer st = new StringTokenizer(playerData[i]);
+						System.out.println(playerData[i]);
 						String ip = st.nextToken();
 						int px = Integer.parseInt(st.nextToken());
 						int py = Integer.parseInt(st.nextToken());

@@ -147,9 +147,12 @@ public class ServerListener extends Thread {
 						StringTokenizer st = new StringTokenizer(playerData[i]);
 						System.out.println(playerData[i]);
 						String ip = st.nextToken();
-						int px = Integer.parseInt(st.nextToken());
-						int py = Integer.parseInt(st.nextToken());
-						int pz = Integer.parseInt(st.nextToken());
+						double px = Double.parseDouble(st.nextToken());
+						double py = Double.parseDouble(st.nextToken());
+						double pz = Double.parseDouble(st.nextToken());
+						if(Math.abs(px-(int)(px)) < 0.001) {
+							px = (int) px;
+						}
 						StructPlayer p = new StructPlayer(px,py,pz,ip);
 						sp.add(p);
 						}

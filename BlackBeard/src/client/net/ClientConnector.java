@@ -37,7 +37,7 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 	private JLabel Title;
 	private JButton connectButton;
 	public static final int port = 4444;
-	public static Image bgGif = new ImageIcon("Client/Resources/BG/source.gif").getImage();
+	public static Image bgGif = new ImageIcon("Client/Resources/BG/2.gif").getImage();
 	/**
 	 * The default port for incoming connections.
 	 */
@@ -62,7 +62,7 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 
 			public void paintComponent(Graphics g) {
 				this.setBackground(Color.BLACK);
-				g.setColor(new Color(0,0,0,120));
+				g.setColor(new Color(0,0,0,200));
 				g.drawImage(bgGif,0,0,800,600,null);
 				g.fillRect(0, 0, 800, 600);
 //				if(i < 120);
@@ -84,7 +84,7 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 		this.setAlwaysOnTop(true);
 		this.setAutoRequestFocus(true);
 		Title.setFont(new Font("Monospaced", 1, 100));
-		Title.setForeground(new Color(0,200,200));
+		Title.setForeground(new Color(40,60,60));
 		Title.setBounds(120, 0, 800, 400);
 		this.add(input);
 		this.add(Title);

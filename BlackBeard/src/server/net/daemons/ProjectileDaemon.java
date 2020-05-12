@@ -24,7 +24,7 @@ public class ProjectileDaemon extends Daemon{
 			Thread.sleep(20);
 			String s = "";
 			for(Projectile p : Server.shots) {
-				s+="/";
+				s+=";";
 				s+=p.getSerialInfo();
 			}
 			for(String ip : Server.clientList.keySet()) {

@@ -113,9 +113,9 @@ public class Server {
 	 */
 	public static BufferedWriter bannedWriter;
 	// public static OtherPlayer[] players;
-	
+
 	public static CopyOnWriteArrayList<Ship> ships = new CopyOnWriteArrayList<Ship>();
-	public static ConcurrentHashMap<String,Ship> shipQuick = new ConcurrentHashMap<String,Ship>();
+	public static ConcurrentHashMap<String, Ship> shipQuick = new ConcurrentHashMap<String, Ship>();
 	public static CopyOnWriteArrayList<Projectile> shots = new CopyOnWriteArrayList<Projectile>();
 
 	/**
@@ -288,6 +288,7 @@ public class Server {
 
 	/**
 	 * measures the ping of the plyaers.
+	 * 
 	 * @param l
 	 */
 	public static void ping(List<String> l) {
@@ -300,6 +301,7 @@ public class Server {
 
 	/**
 	 * standard kill
+	 * 
 	 * @param l
 	 */
 	public static void kill(List<String> l) {
@@ -309,7 +311,8 @@ public class Server {
 	}
 
 	/**
-	 * @deprecated since version 2. ExecutionEvents have been replaced with CAS.
+	 * @deprecated since version 2. ExecutionEvents have been replaced with Compare
+	 *             and Swap architecture.
 	 * @param e
 	 */
 	public static void sendExecutionEvent(ExecutionEvent e) {

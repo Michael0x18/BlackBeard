@@ -164,6 +164,11 @@ public class ServerListener extends Thread {
 					Grid.players = sp;
 				}
 			}.start();
+		}else if(msg.startsWith(":shots")) {
+			String[] shots = msg.split(";");
+			for(int i = 0; i < shots.length; i++) {
+				
+			}
 		}
 //		if(msg.startsWith(":delta ")) {
 //			String s = msg.substring(7);

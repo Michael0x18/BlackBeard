@@ -15,6 +15,7 @@ import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import server.mirrors.Ship;
+import server.mirrors.projectiles.Projectile;
 
 /**
  * Represents the main centralized location of the Server. The Server implements
@@ -113,6 +114,7 @@ public class Server {
 	
 	public static CopyOnWriteArrayList<Ship> ships = new CopyOnWriteArrayList<Ship>();
 	public static ConcurrentHashMap<String,Ship> shipQuick = new ConcurrentHashMap<String,Ship>();
+	public static CopyOnWriteArrayList<Projectile> shots = new CopyOnWriteArrayList<Projectile>();
 
 	/**
 	 * Performs all Server related setups.

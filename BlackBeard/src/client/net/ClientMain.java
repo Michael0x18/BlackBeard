@@ -3,6 +3,7 @@ package client.net;
 
 import server.net.MacSetup;
 import world.fx.SoundClip;
+import world.fx._Mixer;
 
 /**
  * Originally contained a license. This class is the server launcher for the Mac
@@ -30,6 +31,7 @@ public class ClientMain {
 			MacSetup ms = (MacSetup)loadClass("server.net.MacSetup");
 			ms.run();
 		}
+		_Mixer._beginRoutine();
 		Client.launch(false);
 		//SoundClip c = new SoundClip("Client/Resources/Sounds/OnTheHighSeas.wav");
 		

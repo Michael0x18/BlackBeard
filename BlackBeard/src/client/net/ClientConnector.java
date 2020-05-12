@@ -2,17 +2,22 @@ package client.net;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.Socket;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.Timer;
 
 /**
  * Class ClientConnector extens JFrame implements KeyListener, ActionListener
@@ -32,11 +37,14 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 	private JLabel Title;
 	private JButton connectButton;
 	public static final int port = 4444;
+	public static Image bgGif = new ImageIcon("Client/Resources/BG/source.gif").getImage();
 	/**
 	 * The default port for incoming connections.
 	 */
 	public static final int defaultport = 4444;
 	private JMenuBar jmb = new JMenuBar();
+	Timer t = new Timer(10,this);
+	int i = 0;
 	// public static int port = 4444;
 
 	/**
@@ -45,29 +53,49 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 	public ClientConnector() {
 		super();
 		// PlayList.launch();
-		this.setTitle("GENESIS::Launcher");
-		this.getContentPane().setBackground(Color.BLACK);
+		this.setTitle("BlackBeard");
+		JPanel j = (new JPanel() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -6248704706106532221L;
+
+			public void paintComponent(Graphics g) {
+				this.setBackground(Color.BLACK);
+				g.setColor(new Color(0,0,0,120));
+				g.drawImage(bgGif,0,0,800,600,null);
+				g.fillRect(0, 0, 800, 600);
+//				if(i < 120);
+//				Title.setBackground(new Color(i++));
+			}
+			
+		});
+		this.setContentPane(j);
+		//this.getContentPane().add(j);
+		j.setBackground(Color.BLACK);
 		this.setLayout(null);
+		j.setBounds(0,0,800,600);
 		this.setBounds(10, 10, 800, 600);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		input = new JTextArea();
 		input.setBounds(205, 400, 270, 30);
-		Title = new JLabel("GENESIS");
+		Title = new JLabel("BlackBeard");
 		this.setAlwaysOnTop(true);
 		this.setAutoRequestFocus(true);
 		Title.setFont(new Font("Monospaced", 1, 100));
-		Title.setForeground(Color.DARK_GRAY);
-		Title.setBounds(180, 0, 800, 400);
+		Title.setForeground(new Color(0,200,200));
+		Title.setBounds(120, 0, 800, 400);
 		this.add(input);
 		this.add(Title);
 		input.setBackground(Color.LIGHT_GRAY);
-		input.setToolTipText("Enter the IP address of a GENESIS server");
+		input.setToolTipText("Enter the IP address of a running BlackBeard server");
 		input.setForeground(Color.decode("#400040"));
 		connectButton = new JButton("Connect");
 		this.add(connectButton);
 		connectButton.setBounds(485, 400, 100, 30);
 		connectButton.addActionListener(this); // CANCER
+		t.start();
 //		JMenu File = new JMenu("File");
 //		JMenu NoServer = new JMenu("No Server?");
 //		JMenu Help = new JMenu("Help!");
@@ -142,6 +170,8 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
+	
+	
 
 	@Override
 	/**
@@ -255,6 +285,11 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 				this.connect("", 4444);
 			}
 			this.setVisible(false);
+		}
+		if(e.getSource().equals(t)) {
+//			if(i < 120)
+//			Title.setBackground(new Color(90,90,90));
+			this.getContentPane().repaint();
 		}
 
 	}

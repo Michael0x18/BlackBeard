@@ -154,7 +154,7 @@ public class Server {
 		sd.setDaemon(true);
 		sd.start();
 		ProjectileDaemon pd = new ProjectileDaemon();
-		pd.start();
+		//pd.start();
 		// MapCreator.createMap(); TODO- generate dynamic map
 		// PlayerProcessor.launch();
 	}

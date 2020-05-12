@@ -10,7 +10,7 @@ public class MusketShot extends Projectile{
 
 	@Override
 	public String getSerialInfo() {
-		return "MusketShot`"+x()+" "+y()+" "+z();
+		return "MusketShot`"+x()+"`"+y()+"`"+z();
 	}
 
 }

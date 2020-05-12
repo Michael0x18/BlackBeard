@@ -401,7 +401,7 @@ public class Player extends Camera {
 //			}
 			//lastShip = s;
 			if (hit2) {
-				System.out.println("true");
+				//System.out.println("true");
 				lastShip = s;
 				//time = 1000;
 				this.velocity.x = this.velocity.x + (s.velocity * Math.cos(rad)) * (1.0 / friction);

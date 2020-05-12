@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 
 import world.constructs.Ship;
 import world.constructs.StructPlayer;
+import world.constructs.projectiles.MeesenMeister;
+import world.constructs.projectiles.Projectile;
 import world.viewport.Grid;
 import world.viewport.JoglPane;
 import world.viewport.Player;
@@ -107,12 +109,12 @@ public class ServerListener extends Thread {
 
 	/**
 	 * Same functionality as Server.
-	 */
+	 */ 
 	public void processEvents(String msg) {
 		if ((matchedPlayer != null) && msg.equals(":getcoords")) {
 			// System.out.println("ok");
 			p.println("/coords " + matchedPlayer.getPosition().x + " " + matchedPlayer.getPosition().y + " "
-					+ matchedPlayer.getPosition().z);
+					+ matchedPlayer.getPosition().z+ " "+matchedPlayer.getAngle() + " "+matchedPlayer.getAngle2());
 		}
 		else if (msg.startsWith(":ship")) {
 			msg = msg.substring(5);
@@ -165,10 +167,12 @@ public class ServerListener extends Thread {
 				}
 			}.start();
 		}else if(msg.startsWith(":shots")) {
+			CopyOnWriteArrayList<Projectile> sh2 = new CopyOnWriteArrayList<Projectile>();
 			String[] shots = msg.split(";");
-			for(int i = 0; i < shots.length; i++) {
-				
+			for(int i = 1; i < shots.length; i++) {
+				sh2.add(MeesenMeister.yeet(shots[i]));
 			}
+			Grid.shots = sh2;
 		}
 //		if(msg.startsWith(":delta ")) {
 //			String s = msg.substring(7);

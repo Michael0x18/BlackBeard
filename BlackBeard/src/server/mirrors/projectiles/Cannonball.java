@@ -13,7 +13,7 @@ public class Cannonball extends Projectile{
 	 * Returns a string containing minimal information necessary to replicate this object.
 	 */
 	public String getSerialInfo() {
-		return "CannonBall`"+x()+" "+y()+" "+z();
+		return "CannonBall`"+x()+"`"+y()+"`"+z();
 	}
 
 }

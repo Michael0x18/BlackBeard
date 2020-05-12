@@ -35,9 +35,9 @@ public class ClientHandler extends Thread {
 	private boolean pinging = false;
 	private int missedPings = 0;
 	private int runTime = 0;
-	private int myX = 0;
-	private int myY = 0;
-	private int myZ = 0;
+	private double myX = 0;
+	private double myY = 0;
+	private double myZ = 0;
 	// public static synchronized nextOtherPlayer
 	// private boolean printCoords;
 	private int playerHP;
@@ -267,12 +267,12 @@ public class ClientHandler extends Thread {
 		for (String msg : inQueue) {
 			if (msg.startsWith("/coords")) {
 				// System.out.println(msg);
-				System.out.println(msg);
+				//System.out.println(msg);
 				StringTokenizer st = new StringTokenizer(msg);
 				st.nextToken();
-				myX = Integer.parseInt(st.nextToken());
-				myY = Integer.parseInt(st.nextToken());
-				myZ = Integer.parseInt(st.nextToken());
+				myX = Double.parseDouble(st.nextToken());
+				myY = Double.parseDouble(st.nextToken());
+				myZ = Double.parseDouble(st.nextToken());
 				Server.playerCoords.put(this.socket.getInetAddress().getHostAddress(), msg.substring(7));
 
 			}
@@ -289,6 +289,7 @@ public class ClientHandler extends Thread {
 				Server.shipQuick.get(msg.split(" ")[1]).accelerate(-0.01);
 			}
 			if(msg.startsWith(":shootEvent")) {
+				System.out.println("Registered On Server");
 				Server.shots.add(new MusketShot(new MVector(myX,myY,myZ), new MVector()));
 			}
 		}

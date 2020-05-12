@@ -19,6 +19,7 @@ import com.jogamp.opengl.util.gl2.GLUT; // for drawing the sample teapot
 
 import client.net.Client;
 import world.constructs.blocks.Clippable;
+import world.constructs.projectiles.Projectile;
 import world.constructs.OtherPlayer;
 import world.constructs.Ship;
 import world.constructs.StructPlayer;
@@ -232,6 +233,9 @@ public class JoglPane extends JPanel
 		}
 		for (StructPlayer p : Grid.players) {
 			OtherPlayer.draw(p, glut, glu, gl, gl2);
+		}
+		for(Projectile p : Grid.shots) {
+			p.draw(glut, glu, gl, gl2);
 		}
 
 		gl.glEnable(GL2.GL_LIGHTING);

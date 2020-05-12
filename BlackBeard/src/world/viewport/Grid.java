@@ -15,6 +15,7 @@ import world.constructs.Ship;
 import world.constructs.StructPlayer;
 import world.constructs.blocks.Stone;
 import world.constructs.blocks.Teapot;
+import world.constructs.projectiles.Projectile;
 import world.io.FileWrapper;
 
 /**
@@ -28,6 +29,7 @@ public class Grid {
 	public static CopyOnWriteArrayList<Ship> ships = new CopyOnWriteArrayList<Ship>();
 	public static CopyOnWriteArrayList<Ship> newShips = new CopyOnWriteArrayList<Ship>();
 	public static CopyOnWriteArrayList<StructPlayer> players = new CopyOnWriteArrayList<StructPlayer>();
+	public static CopyOnWriteArrayList<Projectile> shots = new CopyOnWriteArrayList<Projectile>();
 
 	/**
 	 * Loads a simple preset grid.

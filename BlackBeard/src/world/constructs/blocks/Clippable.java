@@ -89,6 +89,5 @@ public interface Clippable {
 	 */
 	public abstract void movez(double d);
 	
-	public abstract void select(boolean b);
 
 }

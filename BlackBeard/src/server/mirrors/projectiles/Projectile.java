@@ -16,9 +16,24 @@ public abstract class Projectile extends Thread {
 		this.start();
 	}
 
+	/**
+	 * Don't call directly, doing so results in IllegalThreadStateException, as Thread is already started and cycling. 
+	 */
 	public void run() {
+		try {
 		while (!killed) {
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			position.add(velocity);
+		}
+		}catch(Exception e) {
+			System.err.println("Segmentation fault in Bullet thread: exiting on signal 15.");
+		}finally {
+			System.out.println("Waiting (max 60 seconds) for Thread buffSpaceDaemon to stop.");
 		}
 	}
 
@@ -32,18 +47,35 @@ public abstract class Projectile extends Thread {
 		}
 	}
 
+	/**
+	 * returns the x coordinate of the position vector.
+	 * @return
+	 */
 	public double x() {
 		return position.x;
 	}
 
+	/**
+	 * Returns the y coordinate fo the position vector
+	 * @return
+	 */
 	public double y() {
 		return position.y;
 	}
 
+	/**
+	 * Returns the z coordinate of the position vector.
+	 * @return
+	 */
 	public double z() {
 		return position.z;
 	}
 	
+	/**
+	 * Intended to return a string containing the minimal information necessary to replicate this object.
+	 * It is also required to have an identifier.
+	 * @return
+	 */
 	public abstract String getSerialInfo();
 
 }

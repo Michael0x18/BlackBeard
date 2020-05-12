@@ -16,6 +16,8 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import server.mirrors.Ship;
 import server.mirrors.projectiles.Projectile;
+import server.net.daemons.ProjectileDaemon;
+import server.net.daemons.ServerDaemon;
 
 /**
  * Represents the main centralized location of the Server. The Server implements
@@ -151,6 +153,8 @@ public class Server {
 		ServerDaemon sd = new ServerDaemon();
 		sd.setDaemon(true);
 		sd.start();
+		ProjectileDaemon pd = new ProjectileDaemon();
+		pd.start();
 		// MapCreator.createMap(); TODO- generate dynamic map
 		// PlayerProcessor.launch();
 	}

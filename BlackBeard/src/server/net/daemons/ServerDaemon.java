@@ -1,4 +1,6 @@
-package server.net;
+package server.net.daemons;
+
+import server.net.Server;
 
 /**
  * 

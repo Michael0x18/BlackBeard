@@ -1,5 +1,7 @@
 package server.net;
 
+import server.net.daemons.Daemon;
+
 /**
  * Yet another cleanup Daemon
  * @author Michael Ferolito

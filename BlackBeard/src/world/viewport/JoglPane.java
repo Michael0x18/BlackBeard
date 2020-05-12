@@ -100,7 +100,8 @@ public class JoglPane extends JPanel
 		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 
 		// Create a new blank cursor.
-		blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new java.awt.Point(0, 0), "blank cursor");
+		blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new java.awt.Point(0, 0),
+				"blank cursor");
 
 		// Set the blank cursor to the JFrame.
 		j.setCursor(blankCursor);
@@ -202,7 +203,7 @@ public class JoglPane extends JPanel
 	 * This method is called when the OpenGL display needs to be redrawn.
 	 */
 	public void display(GLAutoDrawable drawable) {
-		if(!ObjectLoaderV_C.loaded) {
+		if (!ObjectLoaderV_C.loaded) {
 			return;
 		}
 		GL2 gl = drawable.getGL().getGL2();
@@ -229,19 +230,19 @@ public class JoglPane extends JPanel
 		for (Ship s : Grid.ships) {
 			s.draw(glut, glu, gl, gl2);
 		}
-		for(StructPlayer p : Grid.players) {
+		for (StructPlayer p : Grid.players) {
 			OtherPlayer.draw(p, glut, glu, gl, gl2);
 		}
-		
+
 		gl.glEnable(GL2.GL_LIGHTING);
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_NORMALIZE);
-		//float[] position = { 0, 20, 0, 1 };
-		float[] position = {(float)c.getPosition().x,(float)c.getPosition().y,(float)c.getPosition().z,1};
+		// float[] position = { 0, 20, 0, 1 };
+		float[] position = { (float) c.getPosition().x, (float) c.getPosition().y, (float) c.getPosition().z, 1 };
 		gl2.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, position, 0);
 
 		gl2.glEnable(GL2.GL_LIGHT0);
-		
+
 	}
 
 	/**
@@ -257,7 +258,6 @@ public class JoglPane extends JPanel
 		gl.glEnable(GL2.GL_LIGHTING);
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_COLOR_MATERIAL);
-		
 
 	}
 
@@ -285,14 +285,11 @@ public class JoglPane extends JPanel
 
 //		if (e.getModifiersEx() !=0)
 //			return;
-		//Keys.add(Integer.valueOf(e.getKeyCode()));
+		// Keys.add(Integer.valueOf(e.getKeyCode()));
 		if (!Keys.contains(e.getKeyCode())) {
 			Keys.add(Integer.valueOf(e.getKeyCode()));
 		}
 		repaint();
-		
-		
-		
 
 	}
 
@@ -388,10 +385,10 @@ public class JoglPane extends JPanel
 		int i = 0;
 		for (Integer key : Keys) {
 			// System.out.println(e);
-			if(key == KeyEvent.VK_ESCAPE) {
+			if (key == KeyEvent.VK_ESCAPE) {
 				break;
 			}
-			
+
 			if (key == KeyEvent.VK_W)
 				c.moveZ(1);
 			else if (key == KeyEvent.VK_S)
@@ -407,23 +404,19 @@ public class JoglPane extends JPanel
 			else if (key == KeyEvent.VK_R)
 				Grid.load("TEMPLE.GRID");
 			else if (key == KeyEvent.VK_LEFT) {
-				if(c.lastShip != null)
-					Client.listener.sendMessafe(":port "+c.lastShip.name);
+				if (c.lastShip != null)
+					Client.listener.sendMessafe(":port " + c.lastShip.name);
+			} else if (key == KeyEvent.VK_RIGHT) {
+				if (c.lastShip != null)
+					Client.listener.sendMessafe(":star " + c.lastShip.name);
+			} else if (key == KeyEvent.VK_UP) {
+				if (c.lastShip != null)
+					Client.listener.sendMessafe(":acel " + c.lastShip.name);
+			} else if (key == KeyEvent.VK_DOWN) {
+				if (c.lastShip != null)
+					Client.listener.sendMessafe(":deac " + c.lastShip.name);
 			}
-			else if (key == KeyEvent.VK_RIGHT) {
-				if(c.lastShip != null)
-					Client.listener.sendMessafe(":star "+c.lastShip.name);
-			}
-			else if (key == KeyEvent.VK_UP) {
-				if(c.lastShip != null)
-					Client.listener.sendMessafe(":acel "+c.lastShip.name);
-			}
-			else if (key == KeyEvent.VK_DOWN) {
-				if(c.lastShip != null)
-					Client.listener.sendMessafe(":deac "+c.lastShip.name);
-			}
-			
-			
+
 			if (i == 1) {
 				break;
 			}
@@ -494,6 +487,9 @@ public class JoglPane extends JPanel
 	 * Dont call
 	 */
 	public void mouseClicked(MouseEvent evt) {
+		if (evt.getButton() == (MouseEvent.BUTTON1)) {
+			Client.listener.sendMessafe(":shootEvent");
+		}
 //		try {
 //			FileWrapper fr = new FileWrapper("TEMPLE.GRID");
 //			String str = "";

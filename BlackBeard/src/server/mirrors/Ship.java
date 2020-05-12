@@ -3,8 +3,8 @@ package server.mirrors;
 import java.util.StringTokenizer;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import server.net.Daemon;
 import server.net.Server;
+import server.net.daemons.Daemon;
 
 /**
  * 

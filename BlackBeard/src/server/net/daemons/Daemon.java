@@ -1,4 +1,4 @@
-package server.net;
+package server.net.daemons;
 
 /**
  * 

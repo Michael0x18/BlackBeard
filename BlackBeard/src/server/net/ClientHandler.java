@@ -9,6 +9,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 //import java.util.Scanner;
+import java.util.StringTokenizer;
+
+import server.mirrors.projectiles.MusketShot;
+import server.util.MVector;
 
 /**
  * The workhorse of the Server backend, the ClientHandler is the class that
@@ -31,6 +35,9 @@ public class ClientHandler extends Thread {
 	private boolean pinging = false;
 	private int missedPings = 0;
 	private int runTime = 0;
+	private int myX = 0;
+	private int myY = 0;
+	private int myZ = 0;
 	// public static synchronized nextOtherPlayer
 	// private boolean printCoords;
 	private int playerHP;
@@ -255,10 +262,17 @@ public class ClientHandler extends Thread {
 		// use the Runtime millisecond counter eg: %15.
 		if (runTime % 15 == 0) {
 			messageQueue.add(":coords");
+			//messageQueue.add("")
 		}
 		for (String msg : inQueue) {
 			if (msg.startsWith("/coords")) {
 				// System.out.println(msg);
+				System.out.println(msg);
+				StringTokenizer st = new StringTokenizer(msg);
+				st.nextToken();
+				myX = Integer.parseInt(st.nextToken());
+				myY = Integer.parseInt(st.nextToken());
+				myZ = Integer.parseInt(st.nextToken());
 				Server.playerCoords.put(this.socket.getInetAddress().getHostAddress(), msg.substring(7));
 
 			}
@@ -273,6 +287,9 @@ public class ClientHandler extends Thread {
 			}
 			if (msg.startsWith(":deac")) {
 				Server.shipQuick.get(msg.split(" ")[1]).accelerate(-0.01);
+			}
+			if(msg.startsWith(":shootEvent")) {
+				Server.shots.add(new MusketShot(new MVector(myX,myY,myZ), new MVector()));
 			}
 		}
 

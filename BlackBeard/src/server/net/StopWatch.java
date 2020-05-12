@@ -1,5 +1,7 @@
 package server.net;
 
+import server.net.daemons.Daemon;
+
 /**
  * A CAS Daemon used by the ClientHandlers to manage ping.
  * @author Michael Ferolito

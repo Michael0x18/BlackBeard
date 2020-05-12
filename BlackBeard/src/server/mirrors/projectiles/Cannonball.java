@@ -9,9 +9,11 @@ public class Cannonball extends Projectile{
 	}
 
 	@Override
+	/**
+	 * Returns a string containing minimal information necessary to replicate this object.
+	 */
 	public String getSerialInfo() {
-		// TODO Auto-generated method stub
-		return null;
+		return ":shot`CannonBall`"+x()+" "+y()+" "+z();
 	}
 
 }

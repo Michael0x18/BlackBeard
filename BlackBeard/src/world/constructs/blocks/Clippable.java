@@ -88,5 +88,7 @@ public interface Clippable {
 	 * @param d
 	 */
 	public abstract void movez(double d);
+	
+	public abstract void select(boolean b);
 
 }

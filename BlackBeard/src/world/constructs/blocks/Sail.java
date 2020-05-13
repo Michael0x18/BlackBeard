@@ -96,45 +96,45 @@ public class Sail extends Block {
 
 		gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
 		gl.glBindTexture(GL2.GL_TEXTURE_2D, ObjectLoaderV_C.loaderHash.get("Client/Resources/Sailcloth/Sailcloth.png").getTextureObject(gl));
-	      gl2.glBegin(GL2.GL_QUADS);
+	    gl2.glBegin(GL2.GL_QUADS);
 
-	      // Front Face
-	      gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f(-0.25f, -0.25f, 0.25f);
-	      gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f( 0.25f, -0.25f, 0.25f);
-	      gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f( 0.25f, 0.25f, 0.25f);
-	      gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f(-0.25f, 0.25f, 0.25f);
+	    // Front Face
+	    gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f(-0.25f, -0.25f, 0.25f);
+	    gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f( 0.25f, -0.25f, 0.25f);
+	    gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f( 0.25f, 0.25f, 0.25f);
+	    gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f(-0.25f, 0.25f, 0.25f);
+	      
+	    // Back Face
+	    gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f(-0.25f, -0.25f, -0.25f);
+	    gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f(-0.25f, 0.25f, -0.25f);
+	    gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f( 0.25f, 0.25f, -0.25f);
+	    gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f( 0.25f, -0.25f, -0.25f);
 
-	      // Back Face
-	      gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f(-0.25f, -0.25f, -0.25f);
-	      gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f(-0.25f, 0.25f, -0.25f);
-	      gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f( 0.25f, 0.25f, -0.25f);
-	      gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f( 0.25f, -0.25f, -0.25f);
+	    // Top Face
+	    gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f(-0.25f, 0.25f, -0.25f);
+	    gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f(-0.25f, 0.25f, 0.25f);
+	    gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f( 0.25f, 0.25f, 0.25f);
+	    gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f( 0.25f, 0.25f, -0.25f);
 
-	      // Top Face
-	      gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f(-0.25f, 0.25f, -0.25f);
-	      gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f(-0.25f, 0.25f, 0.25f);
-	      gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f( 0.25f, 0.25f, 0.25f);
-	      gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f( 0.25f, 0.25f, -0.25f);
+	    // Bottom Face
+	    gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f(-0.25f, -0.25f, -0.25f);
+	    gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f( 0.25f, -0.25f, -0.25f);
+	    gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f( 0.25f, -0.25f, 0.25f);
+	    gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f(-0.25f, -0.25f, 0.25f);
 
-	      // Bottom Face
-	      gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f(-0.25f, -0.25f, -0.25f);
-	      gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f( 0.25f, -0.25f, -0.25f);
-	      gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f( 0.25f, -0.25f, 0.25f);
-	      gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f(-0.25f, -0.25f, 0.25f);
+	    // Right face
+	    gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f( 0.25f, -0.25f, -0.25f);
+	    gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f( 0.25f, 0.25f, -0.25f);
+	    gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f( 0.25f, 0.25f, 0.25f);
+	    gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f( 0.25f, -0.25f, 0.25f);
 
-	      // Right face
-	      gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f( 0.25f, -0.25f, -0.25f);
-	      gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f( 0.25f, 0.25f, -0.25f);
-	      gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f( 0.25f, 0.25f, 0.25f);
-	      gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f( 0.25f, -0.25f, 0.25f);
-
-	      // Left Face
-	      gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f(-0.25f, -0.25f, -0.25f);
-	      gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f(-0.25f, -0.25f, 0.25f);
-	      gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f(-0.25f, 0.25f, 0.25f);
-	      gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f(-0.25f, 0.25f, -0.25f);
-	      gl2.glEnd();
-	      gl2.glFlush();
+	    // Left Face
+	    gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f(-0.25f, -0.25f, -0.25f);
+	    gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f(-0.25f, -0.25f, 0.25f);
+	    gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f(-0.25f, 0.25f, 0.25f);
+	    gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f(-0.25f, 0.25f, -0.25f);
+	    gl2.glEnd();
+	    gl2.glFlush();
 		
 		gl2.glTranslated(-x, -y, -z);
 

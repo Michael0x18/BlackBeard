@@ -71,8 +71,8 @@ public class Grass extends Block {
 			glut.glutSolidCube(0.5f);
 		}
 		
-		gl2.glColor3d(0, .5, 0);
-		glut.glutWireCube(0.5001f);
+//		gl2.glColor3d(0, .5, 0);
+//		glut.glutWireCube(0.5001f);
 //		gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
 //
 //	    // Front Face

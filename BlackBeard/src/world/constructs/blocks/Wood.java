@@ -117,12 +117,10 @@ public class Wood extends Block{
 	    gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f( 0.25f, -0.25f, -0.25f);
 	    gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f( 0.25f, -0.25f, 0.25f);
 	    gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f(-0.25f, -0.25f, 0.25f);
-	    gl2.glEnd();
 	    gl2.glFlush();
 
 	    // Right face
 	    gl.glBindTexture(GL2.GL_TEXTURE_2D, ObjectLoaderV_C.loaderHash.get("Client/Resources/Wood/Wood2.png").getTextureObject(gl));
-		gl2.glBegin(GL2.GL_QUADS);
 	    gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f( 0.25f, -0.25f, -0.25f);
 	    gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f( 0.25f, 0.25f, -0.25f);
 	    gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f( 0.25f, 0.25f, 0.25f);

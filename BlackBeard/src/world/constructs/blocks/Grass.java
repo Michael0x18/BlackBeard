@@ -82,52 +82,42 @@ public class Grass extends Block {
 	    gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f( 0.25f, -0.25f, 0.25f);
 	    gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f( 0.25f, 0.25f, 0.25f);
 	    gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f(-0.25f, 0.25f, 0.25f);
-	    gl2.glEnd();
 	    gl2.glFlush();
 
 	    // Back Face
 	    gl.glBindTexture(GL2.GL_TEXTURE_2D, ObjectLoaderV_C.loaderHash.get("Client/Resources/Grass/Grass3.png").getTextureObject(gl));
-	    gl2.glBegin(GL2.GL_QUADS);
 	    gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f(-0.25f, -0.25f, -0.25f);
 	    gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f(-0.25f, 0.25f, -0.25f);
 	    gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f( 0.25f, 0.25f, -0.25f);
 	    gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f( 0.25f, -0.25f, -0.25f);
-	    gl2.glEnd();
 	    gl2.glFlush();
 
 	    // Top Face
 	    gl.glBindTexture(GL2.GL_TEXTURE_2D, ObjectLoaderV_C.loaderHash.get("Client/Resources/Grass/Grass.png").getTextureObject(gl));
-	    gl2.glBegin(GL2.GL_QUADS);
 	    gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f(-0.25f, 0.25f, -0.25f);
 	    gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f(-0.25f, 0.25f, 0.25f);
 	    gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f( 0.25f, 0.25f, 0.25f);
 	    gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f( 0.25f, 0.25f, -0.25f);
-	    gl2.glEnd();
 	    gl2.glFlush();
 
 	    // Bottom Face
 	    gl.glBindTexture(GL2.GL_TEXTURE_2D, ObjectLoaderV_C.loaderHash.get("Client/Resources/Grass/Grass5.png").getTextureObject(gl));
-	    gl2.glBegin(GL2.GL_QUADS);
 	    gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f(-0.25f, -0.25f, -0.25f);
 	    gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f( 0.25f, -0.25f, -0.25f);
 	    gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f( 0.25f, -0.25f, 0.25f);
 	    gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f(-0.25f, -0.25f, 0.25f);
-	    gl2.glEnd();
 	    gl2.glFlush();
 
 	    // Right face
 	    gl.glBindTexture(GL2.GL_TEXTURE_2D, ObjectLoaderV_C.loaderHash.get("Client/Resources/Grass/Grass2.png").getTextureObject(gl));
-	    gl2.glBegin(GL2.GL_QUADS);
 	    gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f( 0.25f, -0.25f, -0.25f);
 	    gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f( 0.25f, 0.25f, -0.25f);
 	    gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f( 0.25f, 0.25f, 0.25f);
 	    gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f( 0.25f, -0.25f, 0.25f);
-	    gl2.glEnd();
 	    gl2.glFlush();
 
 	    // Left Face
 	    gl.glBindTexture(GL2.GL_TEXTURE_2D, ObjectLoaderV_C.loaderHash.get("Client/Resources/Grass/Grass1.png").getTextureObject(gl));
-	    gl2.glBegin(GL2.GL_QUADS);
 	    gl2.glTexCoord2f(0.0f, 0.0f); gl2.glVertex3f(-0.25f, -0.25f, -0.25f);
 	    gl2.glTexCoord2f(0.25f, 0.0f); gl2.glVertex3f(-0.25f, -0.25f, 0.25f);
 	    gl2.glTexCoord2f(0.25f, 0.25f); gl2.glVertex3f(-0.25f, 0.25f, 0.25f);

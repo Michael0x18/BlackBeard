@@ -241,8 +241,8 @@ public class JoglPane extends JPanel
 		gl.glEnable(GL2.GL_LIGHTING);
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_NORMALIZE);
-		// float[] position = { 0, 20, 0, 1 };
-		float[] position = { (float) c.getPosition().x, (float) c.getPosition().y, (float) c.getPosition().z, 1 };
+		 float[] position = { 0, 20, 0, 1 };
+		//float[] position = { (float) c.getPosition().x, (float) c.getPosition().y, (float) c.getPosition().z, 1 };
 		gl2.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, position, 0);
 
 		gl2.glEnable(GL2.GL_LIGHT0);

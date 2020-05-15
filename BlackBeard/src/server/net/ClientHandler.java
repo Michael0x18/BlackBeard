@@ -278,7 +278,6 @@ public class ClientHandler extends Thread {
 				myPan = Double.parseDouble(st.nextToken());
 				myTilt = Double.parseDouble(st.nextToken());
 				Server.playerCoords.put(this.socket.getInetAddress().getHostAddress(), msg.substring(7));
-
 			}
 			if (msg.startsWith(":port")) {
 				Server.shipQuick.get(msg.split(" ")[1]).aceleft(0.1);
@@ -293,7 +292,7 @@ public class ClientHandler extends Thread {
 				Server.shipQuick.get(msg.split(" ")[1]).accelerate(-0.01);
 			}
 			if(msg.startsWith(":shootEvent")) {
-				System.out.println("Registered On Server");
+				//System.out.println("Registered On Server");
 				Server.shots.add(new MusketShot(new MVector(myX,myY,myZ), new MVector()));
 			}
 		}

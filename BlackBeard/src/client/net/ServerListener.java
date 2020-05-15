@@ -147,15 +147,17 @@ public class ServerListener extends Thread {
 					for(int i = 1; i < playerData.length; i++) {
 						try {
 						StringTokenizer st = new StringTokenizer(playerData[i]);
-						System.out.println(playerData[i]);
+						//System.out.println(playerData[i]);
 						String ip = st.nextToken();
 						double px = Double.parseDouble(st.nextToken());
 						double py = Double.parseDouble(st.nextToken());
 						double pz = Double.parseDouble(st.nextToken());
+						double pp = Double.parseDouble(st.nextToken());
+						double pt = Double.parseDouble(st.nextToken());
 						if(Math.abs(px-(int)(px)) < 0.001) {
 							px = (int) px;
 						}
-						StructPlayer p = new StructPlayer(px,py,pz,ip);
+						StructPlayer p = new StructPlayer(px,py,pz,pp,pt,ip);
 						sp.add(p);
 						}
 						catch(Exception e) {

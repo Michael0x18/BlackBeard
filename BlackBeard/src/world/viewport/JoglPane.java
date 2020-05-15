@@ -386,6 +386,9 @@ public class JoglPane extends JPanel
 	 */
 	public void actionPerformed(ActionEvent evt) {
 		updateFrame();
+//		if(frameNumber % 100 == 0) {
+//			System.out.println(c.lastShip);
+//		}
 		int i = 0;
 		for (Integer key : Keys) {
 			// System.out.println(e);

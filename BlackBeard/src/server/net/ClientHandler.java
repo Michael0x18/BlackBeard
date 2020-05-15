@@ -41,6 +41,8 @@ public class ClientHandler extends Thread {
 	// public static synchronized nextOtherPlayer
 	// private boolean printCoords;
 	private int playerHP;
+	private double myTilt;
+	private double myPan;
 
 	/**
 	 * Called by ServerConnector. Sets up the ClientHandler, which sticks itself
@@ -273,6 +275,8 @@ public class ClientHandler extends Thread {
 				myX = Double.parseDouble(st.nextToken());
 				myY = Double.parseDouble(st.nextToken());
 				myZ = Double.parseDouble(st.nextToken());
+				myPan = Double.parseDouble(st.nextToken());
+				myTilt = Double.parseDouble(st.nextToken());
 				Server.playerCoords.put(this.socket.getInetAddress().getHostAddress(), msg.substring(7));
 
 			}

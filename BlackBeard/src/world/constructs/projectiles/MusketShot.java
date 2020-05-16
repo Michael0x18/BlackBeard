@@ -14,8 +14,8 @@ public class MusketShot extends Projectile {
 	@Override
 	public void draw(GLUT glut, GLU glu, GL gl, GL2 gl2) {
 		gl2.glTranslated(position.x,position.y, position.z);
-		//glut.glutSolidSphere(1, 1, 1);
-		glut.glutSolidCube(0.15f);
+		glut.glutSolidSphere(0.15, 10, 10);
+//		glut.glutSolidCube(0.15f);
 		gl2.glTranslated(-position.x,-position.y, -position.z);
 	}
 

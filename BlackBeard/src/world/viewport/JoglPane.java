@@ -64,6 +64,7 @@ public class JoglPane extends JPanel
 	private GLU glu = new GLU();
 //	private boolean isFullScreen;
 	public static JoglPane currentLoader;
+	public static boolean smoothShading = true;
 
 	/**
 	 * Called as if a main method.
@@ -207,12 +208,18 @@ public class JoglPane extends JPanel
 		if (!ObjectLoaderV_C.loaded) {
 			return;
 		}
+		
 		GL2 gl = drawable.getGL().getGL2();
 		gl.glClearColor((float) Color.LIGHTSKYBLUE.getRed(), (float) Color.LIGHTSKYBLUE.getGreen(),
 				(float) Color.LIGHTSKYBLUE.getBlue(), 0);
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity(); // Set up modelview transform.
+		if(smoothShading) {
+			gl.glEnable(GL2.GL_SMOOTH);
+		}else {
+			gl.glEnable(GL2.GL_FLAT);
+		}
 		c.act(Grid.world);
 		c.draw(gl, this, window);
 		gl.glTranslated(xt, 0, 0);
@@ -242,10 +249,17 @@ public class JoglPane extends JPanel
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_NORMALIZE);
 		 float[] position = { 0, 20, 0, 1 };
-		//float[] position = { (float) c.getPosition().x, (float) c.getPosition().y, (float) c.getPosition().z, 1 };
+		float[] positions = { (float) c.getPosition().x-12, (float) c.getPosition().y, (float) c.getPosition().z, 1 };
+		float[] positiona = { (float) c.getPosition().x, (float) c.getPosition().y, (float) c.getPosition().z, 1 };
 		gl2.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, position, 0);
+		gl2.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, position, 0);
+		gl2.glLightfv(GL2.GL_LIGHT2, GL2.GL_POSITION, positiona, 0);
+		gl2.glLightfv(GL2.GL_LIGHT3, GL2.GL_POSITION, positions, 0);
 
-		gl2.glEnable(GL2.GL_LIGHT0);
+		gl2.glEnable(GL2.GL_LIGHT1);
+		gl2.glEnable(GL2.GL_LIGHT2);
+		gl2.glEnable(GL2.GL_LIGHT3);
+		
 
 	}
 

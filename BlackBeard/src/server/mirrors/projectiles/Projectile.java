@@ -7,10 +7,12 @@ public abstract class Projectile extends Thread {
 	private volatile MVector position;
 	private volatile MVector velocity;
 	private boolean killed = false;
+	private int counter = 0;
 
 	public Projectile(MVector position, MVector velocity) {
 		this.position = position;
 		this.velocity = velocity;
+		this.velocity.mult(0.5);
 		Server.shots.add(this);
 		this.setDaemon(true);
 		this.start();
@@ -28,7 +30,10 @@ public abstract class Projectile extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			++counter;
 			position.add(velocity);
+			if(counter>100)
+				kill();
 		}
 		}catch(Exception e) {
 			System.err.println("Segmentation fault in Bullet thread: exiting on signal 15.");

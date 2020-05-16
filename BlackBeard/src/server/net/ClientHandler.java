@@ -292,8 +292,8 @@ public class ClientHandler extends Thread {
 				Server.shipQuick.get(msg.split(" ")[1]).accelerate(-0.01);
 			}
 			if(msg.startsWith(":shootEvent")) {
-				//System.out.println("Registered On Server");
-				Server.shots.add(new MusketShot(new MVector(myX,myY,myZ), new MVector()));
+				System.out.println("Registered On Server");
+				Server.shots.add(new MusketShot(new MVector(myX,myY,myZ), MVector.fromAngles(myPan, myTilt)));
 			}
 		}
 

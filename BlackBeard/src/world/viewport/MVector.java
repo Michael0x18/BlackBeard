@@ -137,5 +137,12 @@ public class MVector {
 	static public final double map(double value, double istart, double istop, double ostart, double ostop) {
 		return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
 	}
+	
+	static public final MVector fromAngles(double a1, double a2) {
+		double xc = (Math.cos(a1) * Math.cos(a2));
+		double zc = (Math.sin(a1) * Math.cos(a2));
+		double yc = Math.sin(a2);
+		return new MVector(xc,yc,zc);
+	}
 
 }

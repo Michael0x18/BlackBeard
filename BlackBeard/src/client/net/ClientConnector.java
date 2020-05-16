@@ -36,7 +36,7 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 	private JTextArea input;
 	private JLabel Title;
 	private JButton connectButton;
-	public static final int port = 4444;
+	public static final int port = 59090;
 	public static Image bgGif = new ImageIcon("Client/Resources/BG/2.gif").getImage();
 	/**
 	 * The default port for incoming connections.

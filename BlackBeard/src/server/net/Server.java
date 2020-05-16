@@ -58,7 +58,7 @@ public class Server {
 	/**
 	 * The port to use. 4444 is open in Shelby's room.
 	 */
-	public static final int port = 4444;
+	public static final int port = 59090;
 	/**
 	 * The default port to use. 4444 is open in Shelby's room.
 	 */

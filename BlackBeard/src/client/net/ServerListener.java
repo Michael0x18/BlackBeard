@@ -70,6 +70,7 @@ public class ServerListener extends Thread {
 		while (true) {
 			try {
 				if (this.s.ready()) {
+					System.out.println("CHECK!");
 					String msg = this.s.readLine();
 					// System.out.println(msg);
 					if (msg.equals(":ping")) {
@@ -81,6 +82,7 @@ public class ServerListener extends Thread {
 						System.out.println(msg.substring(5));
 						// PRINT TO SHELL
 					} else if (msg.equals(":disc")) {
+						System.out.println("CLOSING SOCKET!!!");
 						this.socket.close();
 					} else if (msg.equals(":kill")) {
 						// System.exit(1);

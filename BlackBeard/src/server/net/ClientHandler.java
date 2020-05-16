@@ -53,6 +53,7 @@ public class ClientHandler extends Thread {
 	 */
 	public ClientHandler(Socket s) throws IOException {
 		socket = s;
+		s.setKeepAlive(true);
 		Server.clientList.put(s.getInetAddress().getHostAddress(), this);
 		Server.clientDisplayModel.addElement(s.getInetAddress().getHostAddress());
 		out = new PrintWriter(socket.getOutputStream(), true);
@@ -82,6 +83,10 @@ public class ClientHandler extends Thread {
 
 				while (in.ready()) { // Read all messages from stream to Queue
 					inQueue.add(in.readLine());
+				}
+				
+				if(runTime % 1000 == 0) {
+					System.out.println("Process running");
 				}
 
 				pingCounter++; // Increment Ping counter
@@ -192,6 +197,7 @@ public class ClientHandler extends Thread {
 		String msg = this.socket.getInetAddress().getHostAddress();
 		Server.playerCoords.remove(this.socket.getInetAddress().getHostAddress());
 		try {
+			System.out.println("Killing");
 			this.socket.close();
 			Server.println("Killed: " + msg);
 		} catch (IOException e) {

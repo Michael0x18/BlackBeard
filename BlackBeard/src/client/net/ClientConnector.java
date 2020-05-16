@@ -282,7 +282,7 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 			if (codes.length > 1) {
 				this.connect(codes[0], Integer.parseInt(codes[1]));
 			} else {
-				this.connect("", 4444);
+				this.connect("", port);
 			}
 			this.setVisible(false);
 		}

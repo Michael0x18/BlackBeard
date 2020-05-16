@@ -53,7 +53,7 @@ public class Client {
 		} catch (Exception e) {
 
 		}
-		TexLoader.runtimeExec = new TexLoader();
+		
 		isBot = b;
 		
 		connector = new ClientConnector();

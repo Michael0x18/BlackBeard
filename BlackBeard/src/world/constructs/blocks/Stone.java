@@ -14,6 +14,7 @@ import world.viewport.ObjectLoaderV_C;
  *
  */
 public class Stone extends Block {
+	static boolean fancy = false;
 	
 	/**
 	 * see super factory
@@ -92,6 +93,7 @@ public class Stone extends Block {
 		
 		//gl2.glColor3d(0, .5, 0);
 		//glut.glutWireCube(0.5001f);
+		if(fancy) {
 		gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
 		gl.glBindTexture(GL2.GL_TEXTURE_2D, ObjectLoaderV_C.loaderHash.get("Client/Resources/Stone/Stone.png").getTextureObject(gl));
 	    gl2.glBegin(GL2.GL_QUADS);
@@ -133,6 +135,9 @@ public class Stone extends Block {
 	    gl2.glTexCoord2f(0.0f, 0.25f); gl2.glVertex3f(-0.25f, 0.25f, -0.25f);
 	    gl2.glEnd();
 	    gl2.glFlush();
+		}else {
+			glut.glutSolidCube(0.5f);
+		}
 		
 		gl2.glTranslated(-x, -y, -z);
 

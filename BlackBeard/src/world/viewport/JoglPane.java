@@ -19,6 +19,7 @@ import com.jogamp.opengl.util.gl2.GLUT; // for drawing the sample teapot
 
 import client.net.Client;
 import world.constructs.blocks.Clippable;
+import world.constructs.blocks.TexLoader;
 import world.constructs.projectiles.Projectile;
 import world.constructs.OtherPlayer;
 import world.constructs.Ship;
@@ -72,6 +73,13 @@ public class JoglPane extends JPanel
 	 * @param flags
 	 */
 	public static void _driver_start(String[] flags) {
+		try {
+			ClassLoader.getSystemClassLoader().loadClass("world.constructs.blocks.TexLoader");
+			TexLoader t = new TexLoader();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			UIManager.setLookAndFeel(new NimbusLookAndFeel());
 		} catch (UnsupportedLookAndFeelException e) {

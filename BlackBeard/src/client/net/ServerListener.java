@@ -74,7 +74,7 @@ public class ServerListener extends Thread {
 					// System.out.println(msg);
 					if (msg.equals(":ping")) {
 						p.println("-ping");
-						// System.out.println("Ping response");
+						System.out.println("Ping response");
 					} else if (msg.equals(":bce")) {
 						throw (new BCException());
 					} else if (msg.startsWith(":echo ")) {

@@ -86,7 +86,7 @@ public class ClientHandler extends Thread {
 
 				pingCounter++; // Increment Ping counter
 				if (pingCounter == 1000) {
-					// System.out.println("Pinging");
+					System.out.println("Pinging");
 					pingCounter = 0;
 					if (pinging) {
 						missedPings++;
@@ -104,6 +104,7 @@ public class ClientHandler extends Thread {
 				}
 
 				if (inQueue.contains("-ping")) { // Check Client Response for ping
+					System.out.println("Got Ping");
 					ping = pingTimer.halt();
 					inQueue.remove("-ping");
 					pinging = false;
@@ -134,7 +135,7 @@ public class ClientHandler extends Thread {
 							}
 						}
 						if (otherCoords.length() > 0) {
-							System.out.println(otherCoords);
+							//System.out.println(otherCoords);
 							messageQueue.add(":coords" + otherCoords);
 						}
 					}

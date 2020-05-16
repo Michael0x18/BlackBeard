@@ -14,6 +14,10 @@ public abstract class Projectile implements Clippable {
 	public Projectile(double a,double b,double c){
 		position = new MVector(a,b,c);
 	}
+	
+	public void select(boolean b) {
+		return;
+	}
 
 	@Override
 	public abstract void draw(GLUT glut, GLU glu, GL gl, GL2 gl2);

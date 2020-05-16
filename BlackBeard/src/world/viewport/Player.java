@@ -212,6 +212,7 @@ public class Player extends Camera {
 
 			}
 		}
+		selection();
 		for (Ship s : Grid.ships) {
 			boolean hit2 = false;
 			boolean hit = false;
@@ -711,6 +712,20 @@ function accelerate(n) {
 	public double getAngle2() {
 		return this.getTilt();
 	}
+	
+	public void selection() {
+// 		for(double reach = 0; reach <= 2; reach += 0.25) {
+// 			System.out.println("√");
+// 			for(int i = 0; i < Grid.world.size(); i++) {
+// 				if(Grid.world.get(i).getCoords().equals(getPosition().add(new MVector(reach*Math.cos(getPan()),Math.tan(getTilt()),
+// 						Math.sin(getPan()))))) {
+// 					Grid.world.get(i).select(true);
+// 				} else {
+// 					Grid.world.get(i).select(false);
+// 				}
+// 			}
+// 		}
+ 	}
 
 
 }

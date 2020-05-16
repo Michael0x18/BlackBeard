@@ -80,18 +80,21 @@ public class ClientHandler extends Thread {
 			}
 
 			try {
-
+				//Server.println(""+in.ready());
 				while (in.ready()) { // Read all messages from stream to Queue
 					inQueue.add(in.readLine());
 				}
-				
-				if(runTime % 1000 == 0) {
-					System.out.println("Process running");
+				if(inQueue.size() == 0) {
+					System.out.println("There is something going on with the client.");
 				}
+				
+//				if(runTime % 1000 == 0) {
+//					System.out.println("Process running");
+//				}
 
 				pingCounter++; // Increment Ping counter
 				if (pingCounter == 1000) {
-					System.out.println("Pinging");
+					//System.out.println("Pinging");
 					pingCounter = 0;
 					if (pinging) {
 						missedPings++;
@@ -109,7 +112,7 @@ public class ClientHandler extends Thread {
 				}
 
 				if (inQueue.contains("-ping")) { // Check Client Response for ping
-					System.out.println("Got Ping");
+					//System.out.println("Got Ping");
 					ping = pingTimer.halt();
 					inQueue.remove("-ping");
 					pinging = false;

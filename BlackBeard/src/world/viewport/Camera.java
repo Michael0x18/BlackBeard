@@ -487,14 +487,14 @@ public class Camera {
 	 * @param g - what to draw on.
 	 * @param w
 	 */
-	public void draw(GL2 g, JPanel gp, JFrame w) {
+	public void draw(GL2 g, JoglPane joglPane, JFrame w) {
 		hasMoved = false;
 		// Get the coordinates of the borders of the window
 		if (true) {
 			int top = w.getBounds().y + 10;
-			int windowRight = w.getBounds().x + gp.getBounds().width - 10;
+			int windowRight = w.getBounds().x + joglPane.getBounds().width - 10;
 			int left = w.getBounds().x + 10;
-			int bottom = w.getBounds().y + gp.getBounds().height - 10;
+			int bottom = w.getBounds().y + joglPane.getBounds().height - 10;
 
 			if (!parent.disabled) {
 				mouse = MouseInfo.getPointerInfo().getLocation();
@@ -541,8 +541,8 @@ public class Camera {
 				// 2PI
 				// for x
 				// rotation(pan) because you have 360º rotation
-				pan += MVector.map(mouse.x - pMouse.x, 0, gp.getBounds().width, 0, MConstants.TWO_PI) * xSensitivity;
-				tilt += -MVector.map(mouse.y - pMouse.y, 0, gp.getBounds().height, 0, MConstants.PI) * ySensitivity;
+				pan += MVector.map(mouse.x - pMouse.x, 0, joglPane.getBounds().width, 0, MConstants.TWO_PI) * xSensitivity;
+				tilt += -MVector.map(mouse.y - pMouse.y, 0, joglPane.getBounds().height, 0, MConstants.PI) * ySensitivity;
 				tilt = clamp(tilt, -MConstants.PI / 2.01f, MConstants.PI / 2.01f);
 
 				// tan of pi/2 or -pi/2 is undefined so if it happens to be

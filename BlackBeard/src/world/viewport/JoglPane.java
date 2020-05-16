@@ -52,7 +52,7 @@ glLoadIdentity();
 /**
  * Represents a panel for drawing. The bulk of the graphics is done here.
  */
-public class JoglPane extends JPanel
+public class JoglPane extends JLayeredPane
 		implements GLEventListener, KeyListener, MouseListener, MouseMotionListener, ActionListener {
 	/**
 	 * UID- for dumping this into an off heap array??????
@@ -66,6 +66,7 @@ public class JoglPane extends JPanel
 //	private boolean isFullScreen;
 	public static JoglPane currentLoader;
 	public static boolean smoothShading = true;
+	private static JPanel pl;
 
 	/**
 	 * Called as if a main method.
@@ -92,14 +93,15 @@ public class JoglPane extends JPanel
 
 		window = new JFrame("JOGL");
 		JoglPane j = new JoglPane();
-//		pl = new JPanel() {
-//			public void paintComponent(Graphics g) {
-//				this.setBackground(new java.awt.Color(0, 0, 0, 0));
-//				this.setOpaque(false);
-//				g.fillRect(0, 0, 100, 100);
-//			}
-//		};
-		// window.add(pl);
+		pl = new JPanel() {
+			public void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				this.setBackground(new java.awt.Color(0, 0, 0, 0));
+				this.setOpaque(false);
+				g.fillRect(0, 0, 100, 100);
+			}
+		};
+		 window.add(pl);
 
 		window.setContentPane(j);
 		window.pack();
@@ -268,7 +270,7 @@ public class JoglPane extends JPanel
 		gl2.glEnable(GL2.GL_LIGHT2);
 		gl2.glEnable(GL2.GL_LIGHT3);
 		
-
+		//pl.repaint();
 	}
 
 	/**
@@ -408,6 +410,7 @@ public class JoglPane extends JPanel
 	 */
 	public void actionPerformed(ActionEvent evt) {
 		updateFrame();
+		pl.repaint();
 //		if(frameNumber % 100 == 0) {
 //			System.out.println(c.lastShip);
 //		}

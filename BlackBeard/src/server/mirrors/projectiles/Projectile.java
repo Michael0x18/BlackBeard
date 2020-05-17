@@ -50,7 +50,7 @@ public abstract class Projectile extends Thread {
 		while (!killed) {
 			killed = true;
 		}
-		Server.shots.remove(this);
+		Server.shots.remove(this); //
 	}
 
 	/**

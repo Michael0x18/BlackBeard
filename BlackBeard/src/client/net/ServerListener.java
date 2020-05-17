@@ -68,9 +68,9 @@ public class ServerListener extends Thread {
 	@SuppressWarnings("deprecation")
 	public void run() {
 		while (true) {
+			//p.println(":echo hi");
 			try {
 				if (this.s.ready()) {
-					//System.out.println("CHECK!");
 					String msg = this.s.readLine();
 					// System.out.println(msg);
 					if (msg.equals(":ping")) {

@@ -33,7 +33,7 @@ public class Grass extends Block {
 			return;
 		gl2.glTranslated(x, y, z);
 		// glut.glutSolidCube((float) 0.5);
-		gl2.glColor4d(Color.LIGHTSLATEGRAY.getRed(), Color.LIGHTSLATEGRAY.getGreen(), Color.LIGHTSLATEGRAY.getBlue(),4);
+		gl2.glColor4d(Color.FORESTGREEN.getRed(), Color.FORESTGREEN.getGreen(), Color.FORESTGREEN.getBlue(),4);
 		
 		if(TESSELATION_ON) {
 		gl2.glTranslated(0.125, 0.125, 0.125);

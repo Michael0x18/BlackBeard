@@ -80,21 +80,21 @@ public class ClientHandler extends Thread {
 			}
 
 			try {
-				//Server.println(""+in.ready());
+				// Server.println(""+in.ready());
 				while (in.ready()) { // Read all messages from stream to Queue
 					inQueue.add(in.readLine());
 				}
-				if(inQueue.size() == 0) {
-					System.out.println("There is something going on with the client.");
+				if (inQueue.size() == 0) {
+					// System.out.println("There is something going on with the client.");
 				}
-				
+
 //				if(runTime % 1000 == 0) {
 //					System.out.println("Process running");
 //				}
 
 				pingCounter++; // Increment Ping counter
 				if (pingCounter == 1000) {
-					//System.out.println("Pinging");
+					// System.out.println("Pinging");
 					pingCounter = 0;
 					if (pinging) {
 						missedPings++;
@@ -112,7 +112,7 @@ public class ClientHandler extends Thread {
 				}
 
 				if (inQueue.contains("-ping")) { // Check Client Response for ping
-					//System.out.println("Got Ping");
+					// System.out.println("Got Ping");
 					ping = pingTimer.halt();
 					inQueue.remove("-ping");
 					pinging = false;
@@ -143,7 +143,7 @@ public class ClientHandler extends Thread {
 							}
 						}
 						if (otherCoords.length() > 0) {
-							//System.out.println(otherCoords);
+							// System.out.println(otherCoords);
 							messageQueue.add(":coords" + otherCoords);
 						}
 					}
@@ -176,9 +176,9 @@ public class ClientHandler extends Thread {
 						}
 					}
 				}
-				if (inQueue.size() > 0) {
-					inQueue.clear();
-				}
+
+				inQueue.clear();
+
 			} catch (Exception e) {
 				if (Server.verbose)
 					e.printStackTrace();
@@ -274,12 +274,12 @@ public class ClientHandler extends Thread {
 		// use the Runtime millisecond counter eg: %15.
 		if (runTime % 15 == 0) {
 			messageQueue.add(":coords");
-			//messageQueue.add("")
+			// messageQueue.add("")
 		}
 		for (String msg : inQueue) {
 			if (msg.startsWith("/coords")) {
 				// System.out.println(msg);
-				//System.out.println(msg);
+				// System.out.println(msg);
 				StringTokenizer st = new StringTokenizer(msg);
 				st.nextToken();
 				myX = Double.parseDouble(st.nextToken());
@@ -301,9 +301,9 @@ public class ClientHandler extends Thread {
 			if (msg.startsWith(":deac")) {
 				Server.shipQuick.get(msg.split(" ")[1]).accelerate(-0.01);
 			}
-			if(msg.startsWith(":shootEvent")) {
+			if (msg.startsWith(":shootEvent")) {
 				System.out.println("Registered On Server");
-				Server.shots.add(new MusketShot(new MVector(myX,myY,myZ), MVector.fromAngles(myPan, myTilt)));
+				Server.shots.add(new MusketShot(new MVector(myX, myY, myZ), MVector.fromAngles(myPan, myTilt)));
 			}
 		}
 

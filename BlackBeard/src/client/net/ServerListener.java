@@ -38,6 +38,7 @@ public class ServerListener extends Thread {
 	private PrintWriter p;
 	@SuppressWarnings("deprecation")
 	private Queue<ExecutionEvent> outE = new LinkedList<ExecutionEvent>();
+	private Queue<String> outGoing = new LinkedList<String>();
 //	private boolean printCoords = false;
 	private Player matchedPlayer;
 
@@ -68,12 +69,16 @@ public class ServerListener extends Thread {
 	@SuppressWarnings("deprecation")
 	public void run() {
 		while (true) {
-			//p.println(":echo hi");
+			// p.println(":echo hi");
 			try {
+				for (String message : outGoing) {
+					p.println(message);
+				}
+				outGoing.clear();
 				if (this.s.ready()) {
-					//System.out.println("CHECK!");
-					//System.out.println(socket.isClosed());
-					
+					// System.out.println("CHECK!");
+					// System.out.println(socket.isClosed());
+
 					String msg = this.s.readLine();
 					// System.out.println(msg);
 					if (msg.equals(":ping")) {
@@ -103,7 +108,10 @@ public class ServerListener extends Thread {
 						p.println(":exec " + outE.poll().getMessage());
 					}
 
+				} else {
+					System.out.println("No messages");
 				}
+				
 			} catch (Exception e) {
 				// System.out.println("e");
 				if (Client.VerboseMode)
@@ -114,18 +122,17 @@ public class ServerListener extends Thread {
 
 	/**
 	 * Same functionality as Server.
-	 */ 
+	 */
 	public void processEvents(String msg) {
 		if ((matchedPlayer != null) && msg.equals(":getcoords")) {
 			// System.out.println("ok");
 			p.println("/coords " + matchedPlayer.getPosition().x + " " + matchedPlayer.getPosition().y + " "
-					+ matchedPlayer.getPosition().z+ " "+matchedPlayer.getAngle() + " "+matchedPlayer.getAngle2());
-		}
-		else if (msg.startsWith(":ship")) {
+					+ matchedPlayer.getPosition().z + " " + matchedPlayer.getAngle() + " " + matchedPlayer.getAngle2());
+		} else if (msg.startsWith(":ship")) {
 			msg = msg.substring(5);
 			StringTokenizer st = new StringTokenizer(msg);
 			String str = st.nextToken();
-			
+
 			Ship s = new Ship(str);
 			s.moveTo(Double.parseDouble(st.nextToken()), Double.parseDouble(st.nextToken()),
 					Double.parseDouble(st.nextToken()));
@@ -139,44 +146,41 @@ public class ServerListener extends Thread {
 				}
 			}
 			Grid.ships.add(s);
-			
-			
-			//Grid.ships.add(s);
 
-		}
-		else if(msg.startsWith(":coords")) {
+			// Grid.ships.add(s);
+
+		} else if (msg.startsWith(":coords")) {
 			String[] playerData = msg.split("`");
 			new Thread() {
 				public void run() {
 					CopyOnWriteArrayList<StructPlayer> sp = new CopyOnWriteArrayList<StructPlayer>();
-					for(int i = 1; i < playerData.length; i++) {
+					for (int i = 1; i < playerData.length; i++) {
 						try {
-						StringTokenizer st = new StringTokenizer(playerData[i]);
-						//System.out.println(playerData[i]);
-						String ip = st.nextToken();
-						double px = Double.parseDouble(st.nextToken());
-						double py = Double.parseDouble(st.nextToken());
-						double pz = Double.parseDouble(st.nextToken());
-						double pp = Double.parseDouble(st.nextToken());
-						double pt = Double.parseDouble(st.nextToken());
-						if(Math.abs(px-(int)(px)) < 0.001) {
-							px = (int) px;
-						}
-						StructPlayer p = new StructPlayer(px,py,pz,pp,pt,ip);
-						sp.add(p);
-						}
-						catch(Exception e) {
+							StringTokenizer st = new StringTokenizer(playerData[i]);
+							// System.out.println(playerData[i]);
+							String ip = st.nextToken();
+							double px = Double.parseDouble(st.nextToken());
+							double py = Double.parseDouble(st.nextToken());
+							double pz = Double.parseDouble(st.nextToken());
+							double pp = Double.parseDouble(st.nextToken());
+							double pt = Double.parseDouble(st.nextToken());
+							if (Math.abs(px - (int) (px)) < 0.001) {
+								px = (int) px;
+							}
+							StructPlayer p = new StructPlayer(px, py, pz, pp, pt, ip);
+							sp.add(p);
+						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						
+
 					}
 					Grid.players = sp;
 				}
 			}.start();
-		}else if(msg.startsWith(":shots")) {
+		} else if (msg.startsWith(":shots")) {
 			CopyOnWriteArrayList<Projectile> sh2 = new CopyOnWriteArrayList<Projectile>();
 			String[] shots = msg.split(";");
-			for(int i = 1; i < shots.length; i++) {
+			for (int i = 1; i < shots.length; i++) {
 				sh2.add(MeesenMeister.yeet(shots[i]));
 			}
 			Grid.shots = sh2;
@@ -194,6 +198,7 @@ public class ServerListener extends Thread {
 
 	/**
 	 * Rarely used
+	 * 
 	 * @deprecated as of Version 2
 	 * @param executionEvent event to send
 	 */
@@ -201,9 +206,9 @@ public class ServerListener extends Thread {
 		outE.add(executionEvent);
 
 	}
-	
-	public void sendMessafe(String s) {
-		p.println(s);
+
+	public synchronized void sendMessafe(String s) {
+		outGoing.add(s);
 	}
 
 }

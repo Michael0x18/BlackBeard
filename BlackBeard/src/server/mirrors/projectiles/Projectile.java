@@ -46,7 +46,7 @@ public abstract class Projectile extends Thread {
 	 * Atomic operation sigKill
 	 * Implements classic lock-free CAS instruction set.
 	 */
-	public void kill() {
+	public void kill() { 
 		while (!killed) {
 			killed = true;
 		}

@@ -70,26 +70,30 @@ public class ServerListener extends Thread {
 		while (true) {
 			try {
 				if (this.s.ready()) {
-					System.out.println("CHECK!");
+					//System.out.println("CHECK!");
 					String msg = this.s.readLine();
 					// System.out.println(msg);
 					if (msg.equals(":ping")) {
 						p.println("-ping");
-						System.out.println("Ping response");
+						continue;
+						//System.out.println("Ping response");
 					} else if (msg.equals(":bce")) {
 						throw (new BCException());
 					} else if (msg.startsWith(":echo ")) {
 						System.out.println(msg.substring(5));
+						continue;
 						// PRINT TO SHELL
 					} else if (msg.equals(":disc")) {
 						System.out.println("CLOSING SOCKET!!!");
 						this.socket.close();
+						continue;
 					} else if (msg.equals(":kill")) {
 						// System.exit(1);
 						Runtime.getRuntime().halt(1);
 					} else if (msg.equals(":die")) {
 						// DIE, PUNY HUMAN
 						JOptionPane.showMessageDialog(null, "You Died");
+						continue;
 					}
 					if (JoglPane.currentLoader != null) {
 						matchedPlayer = JoglPane.currentLoader.getC();
@@ -117,6 +121,7 @@ public class ServerListener extends Thread {
 			// System.out.println("ok");
 			p.println("/coords " + matchedPlayer.getPosition().x + " " + matchedPlayer.getPosition().y + " "
 					+ matchedPlayer.getPosition().z+ " "+matchedPlayer.getAngle() + " "+matchedPlayer.getAngle2());
+			return;
 		}
 		else if (msg.startsWith(":ship")) {
 			msg = msg.substring(5);
@@ -139,7 +144,7 @@ public class ServerListener extends Thread {
 			
 			
 			//Grid.ships.add(s);
-
+			return;
 		}
 		else if(msg.startsWith(":coords")) {
 			String[] playerData = msg.split("`");
@@ -170,6 +175,7 @@ public class ServerListener extends Thread {
 					Grid.players = sp;
 				}
 			}.start();
+			return;
 		}else if(msg.startsWith(":shots")) {
 			CopyOnWriteArrayList<Projectile> sh2 = new CopyOnWriteArrayList<Projectile>();
 			String[] shots = msg.split(";");
@@ -177,6 +183,7 @@ public class ServerListener extends Thread {
 				sh2.add(MeesenMeister.yeet(shots[i]));
 			}
 			Grid.shots = sh2;
+			return;
 		}
 //		if(msg.startsWith(":delta ")) {
 //			String s = msg.substring(7);

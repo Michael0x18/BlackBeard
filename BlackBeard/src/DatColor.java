@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 public class DatColor {
 	
 	public static void main(String[] args) {
-		JColorChooser.showDialog(new JFrame(), "Pick Dat Color", Color.BLACK);
+		System.out.println(JColorChooser.showDialog(new JFrame(), "Pick Dat Color", Color.BLACK));
 	}
 	
 }

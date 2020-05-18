@@ -23,13 +23,14 @@ public class Ship extends Daemon {
 	public double z = 0;
 	private double bearing = 0;
 	private double velocity = 0;
+	public volatile double hp = 5;
 	private String name;
 	private CopyOnWriteArrayList<String> players = new CopyOnWriteArrayList<>();
 	double turned;
-	//double lastrot;
+	// double lastrot;
 	private volatile int counter = 0;
 	private volatile double v = 0;
-	
+
 	public static final double µk = .9;
 
 	/**
@@ -77,19 +78,23 @@ public class Ship extends Daemon {
 	 * Overrides the run() method in Thread.
 	 * 
 	 */
+	@SuppressWarnings("unlikely-arg-type")
 	public void run() {
 		// velocity = 0.001;
 
 		// x = 10;
 		// z = 10;
 		while (!sunk) {
+			if (hp <= 0) {
+				this.sink();
+			}
 			turnLeft(v);
-			//v=0;
+			// v=0;
 //			++counter;
 //			if(counter == 100) {
 //				velocity = 0;
 //			}
-			//turnLeft(0.1);
+			// turnLeft(0.1);
 //			counter ++;
 //			if(counter > 1000) {
 //				turnLeft(180);
@@ -124,7 +129,7 @@ public class Ship extends Daemon {
 				// synchronized (this) {
 				for (String player : Server.clientList.keySet()) {
 					Server.clientList.get(player).addMessage(":ship " + name + " " + x + " " + y + " " + z + " "
-							+ bearing + " " + velocity + " " + turned,"ship.run");
+							+ bearing + " " + velocity + " " + turned + " " + hp, "ship.run");
 					// System.out.println(bearing);
 					// Server.clientList.get(player).addMessage(":ship YEET 0.0 0.0 0.0 0.0");
 				}
@@ -141,8 +146,10 @@ public class Ship extends Daemon {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			//velocity *= µk;
+			// velocity *= µk;
 		}
+		Server.ships.remove(this);
+		Server.shipQuick.remove(this.name);
 	}
 
 	/**
@@ -150,7 +157,36 @@ public class Ship extends Daemon {
 	 * intercept.
 	 */
 	public void sink() {
-		sunk = true;
+		System.out.println("sinking");
+		new Thread() {
+			public void run() {
+				for (int i = 0; i < 1000; i++) {
+					y -= 0.01;
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				sunk = true;
+				for (int i = 0; i < 100; i++) {
+					try {
+						Thread.sleep(10);
+					}
+					catch(Exception e) {
+						e.printStackTrace();
+					}
+					for (String player : Server.clientList.keySet()) {
+						Server.clientList.get(player).addMessage(":mayday " + name, "sinking");
+						// System.out.println(bearing);
+						// Server.clientList.get(player).addMessage(":ship YEET 0.0 0.0 0.0 0.0");
+					}
+				}
+			}
+
+		}.start();
+
 	}
 
 	/**
@@ -172,29 +208,29 @@ public class Ship extends Daemon {
 		turnLeft(-degrees);
 		turned += degrees;
 	}
-	
+
 	public synchronized void accelerate(double a) {
-		//velocity += a;
+		// velocity += a;
 		velocity += a;
-		if(velocity > 0.01) {
+		if (velocity > 0.01) {
 			velocity = 0.01;
 		}
-		if(velocity < -0.01) {
+		if (velocity < -0.01) {
 			velocity = -0.01;
 		}
-		//counter = 0;
+		// counter = 0;
 	}
-	
+
 	public synchronized void aceleft(double a) {
 		v += a;
-		if(v > 0.2) {
+		if (v > 0.2) {
 			v = 0.2;
 		}
 	}
 
 	public synchronized void aceright(double a) {
 		v -= a;
-		if(v < -0.2) {
+		if (v < -0.2) {
 			v = -0.2;
 		}
 	}

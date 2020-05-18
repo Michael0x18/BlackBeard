@@ -1,5 +1,7 @@
 package server.mirrors.projectiles;
 
+import server.mirrors.Ship;
+import server.net.ClientHandler;
 import server.net.Server;
 import server.util.MVector;
 
@@ -8,13 +10,15 @@ public abstract class Projectile extends Thread {
 	private volatile MVector velocity;
 	private boolean killed = false;
 	private int counter = 0;
+	private ClientHandler source;
 
-	public Projectile(MVector position, MVector velocity) {
+	public Projectile(MVector position, MVector velocity, ClientHandler source) {
 		this.position = position;
 		this.velocity = velocity;
 		this.velocity.mult(0.5);
 		Server.shots.add(this);
 		this.setDaemon(true);
+		this.source = source;
 		this.start();
 	}
 
@@ -34,6 +38,15 @@ public abstract class Projectile extends Thread {
 			position.add(velocity);
 			if(counter>100)
 				kill();
+			for(Ship s : Server.ships) {
+				if(isHit(s.x,s.y,s.z)) {
+					s.hp--;
+					System.out.println("Hit Ship");
+					source.points++;
+					kill();
+					return;
+				}
+			}
 		}
 		}catch(Exception e) {
 			System.err.println("Segmentation fault in Bullet thread: exiting on signal 15.");
@@ -41,6 +54,13 @@ public abstract class Projectile extends Thread {
 			System.out.println("Waiting (max 60 seconds) for Thread buffSpaceDaemon to stop.");
 		}
 		
+	}
+	
+	public boolean isHit(double a, double b, double c) {
+		double x = position.x;
+		double y = position.y;
+		double z = position.z;
+		return (x-a)*(x-a)+(y-b)*(y-b)+(z-c)*(z-c) < 5;
 	}
 	
 	//public abstract void equals();

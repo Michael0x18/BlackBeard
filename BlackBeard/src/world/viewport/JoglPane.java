@@ -142,7 +142,8 @@ public class JoglPane extends JLayeredPane
 									// by keyboard
 	private Player c;
 //	private SensorBlock sb;
-	private JMenuBar jmb;
+	public JMenuBar jmb;
+	public JMenuItem pointcounter = new JMenuItem("Points: ");
 	private JMenu file;
 
 	/**
@@ -197,6 +198,7 @@ public class JoglPane extends JLayeredPane
 		jmb = JoglMenu.applyMenu(window);
 		file = new JMenu("File");
 		jmb.add(file);
+		jmb.add(pointcounter);
 		startAnimation();
 
 	}
@@ -219,6 +221,8 @@ public class JoglPane extends JLayeredPane
 			return;
 		}
 		
+		
+		
 		GL2 gl = drawable.getGL().getGL2();
 		gl.glClearColor((float) Color.LIGHTSKYBLUE.getRed(), (float) Color.LIGHTSKYBLUE.getGreen(),
 				(float) Color.LIGHTSKYBLUE.getBlue(), 0);
@@ -237,6 +241,21 @@ public class JoglPane extends JLayeredPane
 		gl.glRotatef(rotateX, 1, 0, 0);
 
 		GL2 gl2 = gl.getGL2();
+		
+		gl.glEnable(GL2.GL_LIGHTING);
+		gl.glEnable(GL2.GL_LIGHT0);
+		gl.glEnable(GL2.GL_NORMALIZE);
+		 float[] position = { 0, 20, 0, 1 };
+		float[] positions = { (float) c.getPosition().x-12, (float) c.getPosition().y, (float) c.getPosition().z, 1 };
+		float[] positiona = { (float) c.getPosition().x, (float) c.getPosition().y, (float) c.getPosition().z, 1 };
+		gl2.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, position, 0);
+		gl2.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, position, 0);
+		gl2.glLightfv(GL2.GL_LIGHT2, GL2.GL_POSITION, positiona, 0);
+		gl2.glLightfv(GL2.GL_LIGHT3, GL2.GL_POSITION, positions, 0);
+
+		gl2.glEnable(GL2.GL_LIGHT1);
+		gl2.glEnable(GL2.GL_LIGHT2);
+		gl2.glEnable(GL2.GL_LIGHT3);
 
 		for (Clippable c : Grid.world) {
 			c.draw(glut, glu, gl, gl.getGL2());
@@ -254,21 +273,12 @@ public class JoglPane extends JLayeredPane
 		for(Projectile p : Grid.shots) {
 			p.draw(glut, glu, gl, gl2);
 		}
+		
+		if(Client.listener == null) {
+			PlayerTemplate.draw(gl, gl2, glu, glut);
+		}
 
-		gl.glEnable(GL2.GL_LIGHTING);
-		gl.glEnable(GL2.GL_LIGHT0);
-		gl.glEnable(GL2.GL_NORMALIZE);
-		 float[] position = { 0, 20, 0, 1 };
-		float[] positions = { (float) c.getPosition().x-12, (float) c.getPosition().y, (float) c.getPosition().z, 1 };
-		float[] positiona = { (float) c.getPosition().x, (float) c.getPosition().y, (float) c.getPosition().z, 1 };
-		gl2.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, position, 0);
-		gl2.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, position, 0);
-		gl2.glLightfv(GL2.GL_LIGHT2, GL2.GL_POSITION, positiona, 0);
-		gl2.glLightfv(GL2.GL_LIGHT3, GL2.GL_POSITION, positions, 0);
-
-		gl2.glEnable(GL2.GL_LIGHT1);
-		gl2.glEnable(GL2.GL_LIGHT2);
-		gl2.glEnable(GL2.GL_LIGHT3);
+		
 		
 		//pl.repaint();
 	}

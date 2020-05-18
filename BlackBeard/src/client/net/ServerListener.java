@@ -41,6 +41,7 @@ public class ServerListener extends Thread {
 	private Queue<String> outGoing = new LinkedList<String>();
 //	private boolean printCoords = false;
 	private Player matchedPlayer;
+	public static int points = 0;
 
 	/**
 	 * Creates new ServerListener with an established socket connection.
@@ -76,9 +77,9 @@ public class ServerListener extends Thread {
 					System.out.println("Internal error");
 					Runtime.getRuntime().halt(1);
 				}
-				if(outGoing.size() == 0) {
-					System.out.println(socket.isClosed());
-				}
+//				if(outGoing.size() == 0) {
+//					System.out.println(socket.isClosed());
+//				}
 				while (outGoing.size() > 0) {
 					p.println(outGoing.poll());
 				}
@@ -90,7 +91,7 @@ public class ServerListener extends Thread {
 					// System.out.println(msg);
 					if (msg.equals(":ping")) {
 						p.println("-ping");
-						System.out.println("Ping response");
+						//System.out.println("Ping response");
 						continue;
 					} else if (msg.equals(":bce")) {
 						throw (new BCException());
@@ -121,7 +122,7 @@ public class ServerListener extends Thread {
 					}
 
 				} else {
-					System.out.println("No messages in");
+					//System.out.println("No messages in");
 				}
 
 			} catch (Exception e) {
@@ -203,6 +204,19 @@ public class ServerListener extends Thread {
 			}
 			Grid.shots = sh2;
 			return;
+		}
+		else if (msg.startsWith(":points")) {
+			int newPoints = Integer.parseInt(msg.substring(8));
+			points = newPoints;
+			JoglPane.currentLoader.pointcounter.setText("Points: "+points);
+		}
+		else if (msg.startsWith(":mayday ")) {
+			String shipName = msg.substring(9);
+			for(Ship s : Grid.ships) {
+				if(s.name.equals(shipName)) {
+					Grid.newShips.remove(s);
+				}
+			}
 		}
 //		if(msg.startsWith(":delta ")) {
 //			String s = msg.substring(7);

@@ -1,11 +1,12 @@
 package server.mirrors.projectiles;
 
+import server.net.ClientHandler;
 import server.util.MVector;
 
 public class MusketShot extends Projectile{
 
-	public MusketShot(MVector position, MVector velocity) {
-		super(position, velocity);
+	public MusketShot(MVector position, MVector velocity, ClientHandler source) {
+		super(position, velocity,source);
 	}
 
 	@Override

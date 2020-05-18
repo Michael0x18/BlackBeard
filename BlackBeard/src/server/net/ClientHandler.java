@@ -43,6 +43,7 @@ public class ClientHandler extends Thread {
 	private int playerHP;
 	private double myTilt;
 	private double myPan;
+	public int points = 0;
 
 	/**
 	 * Called by ServerConnector. Sets up the ClientHandler, which sticks itself
@@ -144,13 +145,14 @@ public class ClientHandler extends Thread {
 //				}
 					if (runTime % 15 == 0) {
 						messageQueue.add(":getcoords");
+						messageQueue.add(":points "+points);
 					}
 					//System.out.println("sending coordinates");
 					if (runTime % 15 == 0) {
 						String otherCoords = "";
 						for (String s : Server.playerCoords.keySet()) {
 							if (!s.equals(this.socket.getInetAddress().getHostAddress())
-									&& Server.playerCoords.get(s) != null) {
+									&& Server.playerCoords.get(s) != null && !Server.playerCoords.get(s).contains("null")) {
 								otherCoords += "`" + s + " " + Server.playerCoords.get(s);
 							}
 						}
@@ -332,10 +334,12 @@ public class ClientHandler extends Thread {
 			}
 			if (msg.startsWith(":shootEvent")) {
 				System.out.println("Registered On Server");
-				Server.shots.add(new MusketShot(new MVector(myX, myY, myZ), MVector.fromAngles(myPan, myTilt)));
+				Server.shots.add(new MusketShot(new MVector(myX, myY, myZ), MVector.fromAngles(myPan, myTilt),this));
 			}
 		}
 
 	}
+	
+	
 
 }

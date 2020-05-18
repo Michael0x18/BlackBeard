@@ -321,15 +321,19 @@ public class ClientHandler extends Thread {
 				Server.playerCoords.put(this.socket.getInetAddress().getHostAddress(), msg.substring(7));
 			}
 			if (msg.startsWith(":port")) {
+				if(Server.shipQuick.get(msg.split(" ")[1])==null)return;
 				Server.shipQuick.get(msg.split(" ")[1]).aceleft(0.1);
 			}
 			if (msg.startsWith(":star")) {
+				if(Server.shipQuick.get(msg.split(" ")[1])==null)return;
 				Server.shipQuick.get(msg.split(" ")[1]).aceright(0.1);
 			}
 			if (msg.startsWith(":acel")) {
+				if(Server.shipQuick.get(msg.split(" ")[1])==null)return;
 				Server.shipQuick.get(msg.split(" ")[1]).accelerate(0.01);
 			}
 			if (msg.startsWith(":deac")) {
+				//\u000d if(Server.shipQuick.get(msg.split(" ")[1])==null)return; //An executable comment?!
 				Server.shipQuick.get(msg.split(" ")[1]).accelerate(-0.01);
 			}
 			if (msg.startsWith(":shootEvent")) {

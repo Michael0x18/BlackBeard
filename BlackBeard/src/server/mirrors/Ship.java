@@ -70,6 +70,7 @@ public class Ship extends Daemon {
 		this.z = dz;
 		this.bearing = bearing;
 		this.velocity = velocity;
+		this.start();
 		Server.ships.add(this);
 		Server.shipQuick.put(name, this);
 	}
@@ -150,6 +151,40 @@ public class Ship extends Daemon {
 		}
 		Server.ships.remove(this);
 		Server.shipQuick.remove(this.name);
+		Server.println("Sunk");
+		for (String player : Server.clientList.keySet()) {
+//			Server.clientList.get(player).addMessage(":ship " + name + " " + x + " " + y + " " + z + " "
+//					+ bearing + " " + velocity + " " + turned + " " + hp, "ship.run");
+			Server.clientList.get(player).addMessage(":mayday " + name, "sinking");
+			// System.out.println(bearing);
+			// Server.clientList.get(player).addMessage(":ship YEET 0.0 0.0 0.0 0.0");
+		}
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (String player : Server.clientList.keySet()) {
+//			Server.clientList.get(player).addMessage(":ship " + name + " " + x + " " + y + " " + z + " "
+//					+ bearing + " " + velocity + " " + turned + " " + hp, "ship.run");
+			Server.clientList.get(player).addMessage(":mayday " + name, "sinking");
+			// System.out.println(bearing);
+			// Server.clientList.get(player).addMessage(":ship YEET 0.0 0.0 0.0 0.0");
+		}
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (String player : Server.clientList.keySet()) {
+//			Server.clientList.get(player).addMessage(":ship " + name + " " + x + " " + y + " " + z + " "
+//					+ bearing + " " + velocity + " " + turned + " " + hp, "ship.run");
+			Server.clientList.get(player).addMessage(":mayday " + name, "sinking");
+			// System.out.println(bearing);
+			// Server.clientList.get(player).addMessage(":ship YEET 0.0 0.0 0.0 0.0");
+		}
 	}
 
 	/**
@@ -163,26 +198,15 @@ public class Ship extends Daemon {
 				for (int i = 0; i < 1000; i++) {
 					y -= 0.01;
 					try {
-						Thread.sleep(10);
+						Thread.sleep(2);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
+				y = -1000;
 				sunk = true;
-				for (int i = 0; i < 100; i++) {
-					try {
-						Thread.sleep(10);
-					}
-					catch(Exception e) {
-						e.printStackTrace();
-					}
-					for (String player : Server.clientList.keySet()) {
-						Server.clientList.get(player).addMessage(":mayday " + name, "sinking");
-						// System.out.println(bearing);
-						// Server.clientList.get(player).addMessage(":ship YEET 0.0 0.0 0.0 0.0");
-					}
-				}
+				
 			}
 
 		}.start();

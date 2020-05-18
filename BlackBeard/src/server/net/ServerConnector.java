@@ -61,8 +61,8 @@ public class ServerConnector extends Thread {
 
 	@SuppressWarnings("unused")
 	public void run() {
-		//Ship sh = new Ship("Queen_Anne");
-		Ship sh2 = new Ship("Flying_Duchman");
+		Ship sh = new Ship("Queen_Anne",10,0,0,0,0);
+		Ship sh2 = new Ship("Flying_Duchman",10,0,10,0,0);
 		//sh2.z = 10;
 		//sh2.x = 10;
 		while (true) {

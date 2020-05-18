@@ -7,6 +7,7 @@ public class ProjectileDaemon extends Daemon{
 	private ProjectileDaemon theDaemon = null;
 	
 
+	@SuppressWarnings("unused")
 	public ProjectileDaemon() throws DaemonRunningException{
 		super();
 		if(theDaemon != null) {
@@ -15,6 +16,7 @@ public class ProjectileDaemon extends Daemon{
 		else {
 			theDaemon = this;
 			this.start();
+			ProjectileDaemonFlushType p = new ProjectileDaemonFlushType();
 		}
 	}
 	

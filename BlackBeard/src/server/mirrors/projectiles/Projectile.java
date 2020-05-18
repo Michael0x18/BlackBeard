@@ -11,6 +11,7 @@ public abstract class Projectile extends Thread {
 	private boolean killed = false;
 	private int counter = 0;
 	private ClientHandler source;
+	public boolean dead = false;
 
 	public Projectile(MVector position, MVector velocity, ClientHandler source) {
 		this.position = position;
@@ -73,6 +74,7 @@ public abstract class Projectile extends Thread {
 		while (!killed) {
 			killed = true;
 		}
+		this.dead  = true;
 		Server.shots.remove(this); //
 	}
 

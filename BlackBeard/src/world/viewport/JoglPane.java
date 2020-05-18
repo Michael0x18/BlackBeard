@@ -241,7 +241,7 @@ public class JoglPane extends JLayeredPane
 		gl.glRotatef(rotateX, 1, 0, 0);
 
 		GL2 gl2 = gl.getGL2();
-		
+		//gl.glLoadIdentity();
 		gl.glEnable(GL2.GL_LIGHTING);
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_NORMALIZE);
@@ -257,19 +257,23 @@ public class JoglPane extends JLayeredPane
 		gl2.glEnable(GL2.GL_LIGHT2);
 		gl2.glEnable(GL2.GL_LIGHT3);
 
+		//gl.glLoadIdentity();
 		for (Clippable c : Grid.world) {
 			c.draw(glut, glu, gl, gl.getGL2());
 		}
 		gl.glColor4d(Color.ROYALBLUE.getRed(), Color.ROYALBLUE.getGreen(), Color.ROYALBLUE.getBlue(), 0.5);
+		//gl.glLoadIdentity();
 		gl.glTranslated(0, -50.5, 0);
 		glut.glutSolidCube(100);
 		gl.glTranslated(0, 50.5, 0);
 		for (Ship s : Grid.ships) {
 			s.draw(glut, glu, gl, gl2);
 		}
+		//gl.glLoadIdentity();
 		for (StructPlayer p : Grid.players) {
 			OtherPlayer.draw(p, glut, glu, gl, gl2);
 		}
+		//gl.glLoadIdentity();
 		for(Projectile p : Grid.shots) {
 			p.draw(glut, glu, gl, gl2);
 		}

@@ -211,12 +211,15 @@ public class ServerListener extends Thread {
 			JoglPane.currentLoader.pointcounter.setText("Points: "+points);
 		}
 		else if (msg.startsWith(":mayday ")) {
-			String shipName = msg.substring(9);
-			for(Ship s : Grid.ships) {
-				if(s.name.equals(shipName)) {
-					Grid.newShips.remove(s);
-				}
-			}
+			System.out.println("RECIEVED!!!");
+//			String shipName = msg.substring(8);
+//			for(Ship s : Grid.ships) {
+//				if(s.name.equals(shipName)) {
+//					Grid.newShips.remove(s);
+//				}
+//			}
+			Grid.newShips.clear();
+			Grid.ships.clear();
 		}
 //		if(msg.startsWith(":delta ")) {
 //			String s = msg.substring(7);

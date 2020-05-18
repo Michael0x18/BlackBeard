@@ -40,7 +40,10 @@ public abstract class Projectile extends Thread {
 		}finally {
 			System.out.println("Waiting (max 60 seconds) for Thread buffSpaceDaemon to stop.");
 		}
+		
 	}
+	
+	//public abstract void equals();
 
 	/**
 	 * Atomic operation sigKill

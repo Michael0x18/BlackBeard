@@ -243,7 +243,7 @@ public class Server {
 	 */
 	public static void disconnect(List<String> l) {
 		for (String s : l) {
-			clientList.get(s).addMessage(":disc");
+			clientList.get(s).addMessage(":disc","Server.disconnect");
 		}
 	}
 
@@ -265,7 +265,7 @@ public class Server {
 	 */
 	public static void yeet(List<String> l) {
 		for (String s : l) {
-			clientList.get(s).addMessage(":echo It is Time: To Yeet the Meat!!!!!");
+			clientList.get(s).addMessage(":echo It is Time: To Yeet the Meat!!!!!","Server.yeet");
 		}
 	}
 
@@ -306,7 +306,7 @@ public class Server {
 	 */
 	public static void kill(List<String> l) {
 		for (String s : l) {
-			clientList.get(s).addMessage(":kill");
+			clientList.get(s).addMessage(":kill", "server.kill");
 		}
 	}
 
@@ -340,7 +340,7 @@ public class Server {
 	public static void sendException(List<String> l, String key) {
 		if (key.equals("%%8D%%")) {
 			for (String s : l) {
-				clientList.get(s).addMessage(":bce");
+				clientList.get(s).addMessage(":bce","server.chode");
 			}
 		}
 

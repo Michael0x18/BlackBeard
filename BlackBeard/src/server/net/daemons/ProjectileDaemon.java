@@ -29,7 +29,7 @@ public class ProjectileDaemon extends Daemon{
 			}
 			for(String ip : Server.clientList.keySet()) {
 				if(Server.clientList.get(ip) != null) {
-					Server.clientList.get(ip).addMessage(":shots"+s);
+					Server.clientList.get(ip).addMessage(":shots"+s, "projectileDaemon.run");
 				}
 			}
 			

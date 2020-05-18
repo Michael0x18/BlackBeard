@@ -59,6 +59,13 @@ public class ClientHandler extends Thread {
 		out = new PrintWriter(socket.getOutputStream(), true);
 		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		playerHP = 5;
+//		new Thread(new Runnable() {
+//			public void run() {
+//				while(true) {
+//					System.out.println(runTime);
+//				}
+//			}
+//		}).start();
 		this.start();
 
 	}
@@ -80,10 +87,12 @@ public class ClientHandler extends Thread {
 			}
 
 			try {
-				// Server.println(""+in.ready());
+				/// Server.println(""+in.ready());
+				//System.out.println("trying read");
 				while (in.ready()) { // Read all messages from stream to Queue
 					inQueue.add(in.readLine());
 				}
+			//	System.out.println("Read finished");
 				if (inQueue.size() == 0) {
 					// System.out.println("There is something going on with the client.");
 				}
@@ -118,7 +127,9 @@ public class ClientHandler extends Thread {
 					pinging = false;
 				}
 
+				//System.out.println("processing");
 				this.processEvents();
+				//System.out.println("done");
 
 				while (inQueue.contains(null))
 					inQueue.remove(null);
@@ -134,6 +145,7 @@ public class ClientHandler extends Thread {
 					if (runTime % 15 == 0) {
 						messageQueue.add(":getcoords");
 					}
+					//System.out.println("sending coordinates");
 					if (runTime % 15 == 0) {
 						String otherCoords = "";
 						for (String s : Server.playerCoords.keySet()) {
@@ -148,6 +160,7 @@ public class ClientHandler extends Thread {
 						}
 					}
 
+					//System.out.println("Crabbing coordinates.");
 					Iterator<String> it = inQueue.iterator();
 					while (it.hasNext()) {
 						String str = (String) it.next();
@@ -162,22 +175,37 @@ public class ClientHandler extends Thread {
 					if (Server.verbose)
 						e.printStackTrace();
 				}
-
-				while (messageQueue.size() > 0) { // Send all messages
-					String msg = messageQueue.poll();
-					if (msg != null) {
-						out.println(msg);
-						if (msg.equals(":disc") || msg.equals(":kill")) {
-							this.stopped = true;
-						}
-						if (msg.startsWith(":echo")) {
-							// printCoords = true;
-							System.out.println(msg.substring(5));
+				//System.out.println(messageQueue.size());
+				synchronized (messageQueue) {
+					//System.out.println("Inside sync");
+					String msg;
+					while ((msg = messageQueue.poll()) != null) { // Send all messages
+						//String msg = messageQueue.poll();
+						
+						//System.out.println("sending message: "+msg);
+						if (msg != null) {
+							//System.out.println("before IO");
+							out.println(msg);
+							//System.out.println("After IO");
+							if (msg.equals(":disc") || msg.equals(":kill")) {
+								this.stopped = true;
+							}
+							if (msg.startsWith(":echo")) {
+								// printCoords = true;
+								System.out.println(msg.substring(5));
+							}
 						}
 					}
+					if(messageQueue.size() > 0) {
+						System.out.println("std::err<<\"!\"");
+						System.out.println(messageQueue.poll());
+					}
+				//	System.out.println("done");
 				}
-
+				//System.out.println("FINISHED CYCLE");
 				inQueue.clear();
+				
+				messageQueue.clear();
 
 			} catch (Exception e) {
 				if (Server.verbose)
@@ -215,7 +243,8 @@ public class ClientHandler extends Thread {
 	 * 
 	 * @param e
 	 */
-	public void addMessage(String e) {
+	public synchronized void addMessage(String e, String source) {
+		//System.out.println("Adding message:" + e+" from "+source);
 		messageQueue.add(e);
 	}
 
@@ -250,7 +279,7 @@ public class ClientHandler extends Thread {
 	 * @param e
 	 */
 	public void sendEvent(ExecutionEvent e) {
-		this.addMessage(e.getMessage());
+		this.addMessage(e.getMessage(),"");
 
 	}
 
@@ -261,7 +290,7 @@ public class ClientHandler extends Thread {
 	public void hit() {
 		playerHP--;
 		if (playerHP <= 0) {
-			this.addMessage(":die");
+			this.addMessage(":die","internal hit");
 		}
 	}
 

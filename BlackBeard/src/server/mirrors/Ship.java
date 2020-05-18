@@ -124,7 +124,7 @@ public class Ship extends Daemon {
 				// synchronized (this) {
 				for (String player : Server.clientList.keySet()) {
 					Server.clientList.get(player).addMessage(":ship " + name + " " + x + " " + y + " " + z + " "
-							+ bearing + " " + velocity + " " + turned);
+							+ bearing + " " + velocity + " " + turned,"ship.run");
 					// System.out.println(bearing);
 					// Server.clientList.get(player).addMessage(":ship YEET 0.0 0.0 0.0 0.0");
 				}

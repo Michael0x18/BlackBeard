@@ -71,11 +71,17 @@ public class ServerListener extends Thread {
 		while (true) {
 			// p.println(":echo hi");
 			try {
-				
-				for (String message : outGoing) {
-					p.println(message);
+
+				if (outGoing == null) {
+					System.out.println("Internal error");
+					Runtime.getRuntime().halt(1);
 				}
-				outGoing.clear();
+				if(outGoing.size() == 0) {
+					System.out.println(socket.isClosed());
+				}
+				while (outGoing.size() > 0) {
+					p.println(outGoing.poll());
+				}
 				if (this.s.ready()) {
 					// System.out.println("CHECK!");
 					// System.out.println(socket.isClosed());
@@ -107,7 +113,7 @@ public class ServerListener extends Thread {
 					if (JoglPane.currentLoader != null) {
 						matchedPlayer = JoglPane.currentLoader.getC();
 						this.processEvents(msg);
-						
+
 					}
 
 					while (outE.size() > 0) {
@@ -115,13 +121,13 @@ public class ServerListener extends Thread {
 					}
 
 				} else {
-					System.out.println("No messages");
+					System.out.println("No messages in");
 				}
-				
+
 			} catch (Exception e) {
 				// System.out.println("e");
-				if(e instanceof NullPointerException) {
-					e.printStackTrace();d
+				if (e instanceof NullPointerException) {
+					e.printStackTrace();
 					Runtime.getRuntime().halt(1);
 				}
 				if (Client.VerboseMode)

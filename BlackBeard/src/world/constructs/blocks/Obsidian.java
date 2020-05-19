@@ -38,7 +38,10 @@ public class Obsidian extends Stone {
 //		glut.glutWireCube(0.5001f);
 
 		gl2.glTranslated(-x, -y, -z);
-
+		
+		if(super.isSelected) {
+			glut.glutWireCube(0.5f);
+		}
 	}
 
 }

@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import world.constants.declaration.ViewConstants;
 import world.viewport.JoglPane;
 import world.viewport.MVector;
+import world.viewport.Player;
 
 /**
  * 
@@ -72,79 +73,45 @@ public class Block implements Clippable {
 		gl2.glTranslated(x, y, z);
 		// glut.glutSolidCube((float) 0.5);
 		gl2.glColor3d(Color.LAWNGREEN.getRed(), Color.LAWNGREEN.getGreen(), Color.LAWNGREEN.getBlue());
-		if(isSelected) {
-			if (TESSELATION_ON) {
-				gl2.glTranslated(0.125, 0.125, 0.125);
-				glut.glutWireCube(0.25f);
-				gl2.glTranslated(-0.125, -0.125, -0.125);
+		if (TESSELATION_ON) {
+			gl2.glTranslated(0.125, 0.125, 0.125);
+			glut.glutSolidCube(0.25f);
+			gl2.glTranslated(-0.125, -0.125, -0.125);
 
-				gl2.glTranslated(-0.125, 0.125, 0.125);
-				glut.glutWireCube(0.25f);
-				gl2.glTranslated(0.125, -0.125, -0.125);
 
-				gl2.glTranslated(0.125, -0.125, 0.125);
-				glut.glutWireCube(0.25f);
-				gl2.glTranslated(-0.125, 0.125, -0.125);
+			gl2.glTranslated(-0.125, 0.125, 0.125);
+			glut.glutSolidCube(0.25f);
+			gl2.glTranslated(0.125, -0.125, -0.125);
 
-				gl2.glTranslated(0.125, 0.125, -0.125);
-				glut.glutWireCube(0.25f);
-				gl2.glTranslated(-0.125, -0.125, 0.125);
+			gl2.glTranslated(0.125, -0.125, 0.125);
+			glut.glutSolidCube(0.25f);
+			gl2.glTranslated(-0.125, 0.125, -0.125);
 
-				gl2.glTranslated(-0.125, -0.125, -0.125);
-				glut.glutWireCube(0.25f);
-				gl2.glTranslated(0.125, 0.125, 0.125);
+			gl2.glTranslated(0.125, 0.125, -0.125);
+			glut.glutSolidCube(0.25f);
+			gl2.glTranslated(-0.125, -0.125, 0.125);
 
-				gl2.glTranslated(-0.125, -0.125, 0.125);
-				glut.glutWireCube(0.25f);
-				gl2.glTranslated(0.125, 0.125, -0.125);
+			gl2.glTranslated(-0.125, -0.125, -0.125);
+			glut.glutSolidCube(0.25f);
+			gl2.glTranslated(0.125, 0.125, 0.125);
 
-				gl2.glTranslated(0.125, -0.125, -0.125);
-				glut.glutWireCube(0.25f);
-				gl2.glTranslated(-0.125, 0.125, 0.125);
+			gl2.glTranslated(-0.125, -0.125, 0.125);
+			glut.glutSolidCube(0.25f);
+			gl2.glTranslated(0.125, 0.125, -0.125);
 
-				gl2.glTranslated(-0.125, 0.125, -0.125);
-				glut.glutWireCube(0.25f);
-				gl2.glTranslated(0.125, -0.125, 0.125);
-			} else {
-				glut.glutWireCube(0.5f);
-			}
+			gl2.glTranslated(0.125, -0.125, -0.125);
+			glut.glutSolidCube(0.25f);
+			gl2.glTranslated(-0.125, 0.125, 0.125);
+
+			gl2.glTranslated(-0.125, 0.125, -0.125);
+			glut.glutSolidCube(0.25f);
+			gl2.glTranslated(0.125, -0.125, 0.125);
 		} else {
-			if (TESSELATION_ON) {
-				gl2.glTranslated(0.125, 0.125, 0.125);
-				glut.glutSolidCube(0.25f);
-				gl2.glTranslated(-0.125, -0.125, -0.125);
-
-				gl2.glTranslated(-0.125, 0.125, 0.125);
-				glut.glutSolidCube(0.25f);
-				gl2.glTranslated(0.125, -0.125, -0.125);
-
-				gl2.glTranslated(0.125, -0.125, 0.125);
-				glut.glutSolidCube(0.25f);
-				gl2.glTranslated(-0.125, 0.125, -0.125);
-
-				gl2.glTranslated(0.125, 0.125, -0.125);
-				glut.glutSolidCube(0.25f);
-				gl2.glTranslated(-0.125, -0.125, 0.125);
-
-				gl2.glTranslated(-0.125, -0.125, -0.125);
-				glut.glutSolidCube(0.25f);
-				gl2.glTranslated(0.125, 0.125, 0.125);
-
-				gl2.glTranslated(-0.125, -0.125, 0.125);
-				glut.glutSolidCube(0.25f);
-				gl2.glTranslated(0.125, 0.125, -0.125);
-
-				gl2.glTranslated(0.125, -0.125, -0.125);
-				glut.glutSolidCube(0.25f);
-				gl2.glTranslated(-0.125, 0.125, 0.125);
-
-				gl2.glTranslated(-0.125, 0.125, -0.125);
-				glut.glutSolidCube(0.25f);
-				gl2.glTranslated(0.125, -0.125, 0.125);
-			} else {
-				glut.glutSolidCube(0.5f);
-			}
+			glut.glutSolidCube(0.5f);
+		}if(isSelected) {
+			glut.glutWireCube(0.5f);
 		}
+
 
 		// gl2.glColor3d(0, .5, 0);
 		// glut.glutWireCube(0.5001f);
@@ -232,6 +199,33 @@ public class Block implements Clippable {
 	public void movez(double d) {
 		z+=d;
 
+	}
+
+	public MVector getDirection(Player p) {
+		MVector r = p.getPosition();
+		double distance = Math.sqrt(Math.pow(this.x-r.x, 2)+Math.pow(this.y-r.y, 2)
+		+Math.pow(this.z-r.z, 2));
+		double xA = Math.acos((this.x-r.x)/distance);
+		double yA = Math.asin((this.y-r.y)/distance);
+		double zA = Math.acos((this.z-r.z)/distance);
+		if(xA<Math.PI/2) {
+			return new MVector(-1,0,0);
+		} else if(xA>-3*Math.PI/2) {
+			return new MVector(1,0,0);
+		} else if(yA<Math.PI/2) {
+			return new MVector(0,-1,0);
+		} else if(yA>-3*Math.PI/2) {
+			return new MVector(0,1,0);
+		}else if(zA<Math.PI/2) {
+			return new MVector(0,0,-1);
+		} else if(zA>-3*Math.PI/2) {
+			return new MVector(0,0,1);
+		} else {
+			return null;
+		}
+	}
+	public boolean getSelection() {
+		return isSelected;
 	}
 
 }

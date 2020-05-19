@@ -137,6 +137,8 @@ public class Stone extends Block {
 	    gl2.glFlush();
 		}else {
 			glut.glutSolidCube(0.5f);
+		}if(super.isSelected) {
+			glut.glutWireCube(0.5f);
 		}
 		
 		gl2.glTranslated(-x, -y, -z);

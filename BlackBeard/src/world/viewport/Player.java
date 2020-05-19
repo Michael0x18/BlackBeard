@@ -50,11 +50,11 @@ public class Player extends Camera {
 
 	/**
 	 * Creates a new default player.
-	 * @param jp
+	 * @param joglPane
 	 */
-	public Player(JoglPane jp) {
+	public Player(JoglPane joglPane) {
 		// speed is at .1f max
-		this(0.5, 1.5, 0.5, .05f, .5f, .5f, .75f, MConstants.PI / 3f, 1000f, jp);
+		this(0.5, 1.5, 0.5, .05f, .5f, .5f, .75f, MConstants.PI / 3f, 1000f, joglPane);
 		this.position.y = 5;
 	}
 
@@ -381,6 +381,7 @@ public class Player extends Camera {
 			newz = position.z * Math.cos(rad) + position.x * Math.sin(rad);
 			position.x = newx;
 			position.z = newz;
+			selection();
 
 			position.x += s.x;
 			position.z += s.z;
@@ -714,18 +715,20 @@ function accelerate(n) {
 	}
 	
 	public void selection() {
-// 		for(double reach = 0; reach <= 2; reach += 0.25) {
-// 			System.out.println("√");
-// 			for(int i = 0; i < Grid.world.size(); i++) {
-// 				if(Grid.world.get(i).getCoords().equals(getPosition().add(new MVector(reach*Math.cos(getPan()),Math.tan(getTilt()),
-// 						Math.sin(getPan()))))) {
-// 					Grid.world.get(i).select(true);
-// 				} else {
-// 					Grid.world.get(i).select(false);
-// 				}
-// 			}
-// 		}
- 	}
+		MVector Position = getPosition();
+		for(double reach = 0; reach <= 1; reach += 0.25) {
+			for(int i = 0; i < Grid.world.size(); i++) {
+				if(Grid.world.get(i).containsPoint(Position.x +reach*Math.cos(getPan()),
+						Position.y +reach*Math.tan(getTilt()), Position.z +reach*Math.sin(getPan()))) {
+					Grid.world.get(i).select(true);
+					
+				} 
+				else {
+					Grid.world.get(i).select(false);
+				}
+			}
+		}
+	}
 
 
 }

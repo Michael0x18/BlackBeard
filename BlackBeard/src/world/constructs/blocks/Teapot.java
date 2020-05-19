@@ -58,7 +58,9 @@ public class Teapot extends Block {
 		glut.glutSolidTeapot(0.25);
 		// glut.glutWireCube(0.5f);
 		gl2.glTranslated(-x, -y, -z);
-
+		if(super.isSelected) {
+			glut.glutWireCube(0.5f);
+		}
 	}
 
 }

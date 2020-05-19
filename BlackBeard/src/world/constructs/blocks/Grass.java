@@ -70,6 +70,9 @@ public class Grass extends Block {
 		}else {
 			glut.glutSolidCube(0.5f);
 		}
+		if(super.isSelected) {
+			glut.glutWireCube(0.5f);
+		}
 		
 //		gl2.glColor3d(0, .5, 0);
 //		glut.glutWireCube(0.5001f);

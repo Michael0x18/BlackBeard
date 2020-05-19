@@ -6,6 +6,7 @@ import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.gl2.GLUT;
 
 import world.viewport.MVector;
+import world.viewport.Player;
 
 public interface Clippable {
 
@@ -91,5 +92,8 @@ public interface Clippable {
 
 	public abstract void select(boolean b);
 	
+	public abstract boolean getSelection();
+	
+	public abstract MVector getDirection(Player p);
 
 }

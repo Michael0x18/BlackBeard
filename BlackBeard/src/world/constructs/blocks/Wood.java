@@ -87,6 +87,8 @@ public class Wood extends Block{
 		gl2.glTranslated(0.125, -0.125, 0.125);
 		}else {
 			glut.glutSolidCube(0.5f);
+		}if(super.isSelected) {
+			glut.glutWireCube(0.5f);
 		}
 		
 //		gl2.glColor3d(0, .5, 0);

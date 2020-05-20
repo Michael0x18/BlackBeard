@@ -57,16 +57,16 @@ public class JoglPane extends JLayeredPane
 	/**
 	 * UID- for dumping this into an off heap array??????
 	 */
-	private static final long serialVersionUID = 6999533994092038855L;
-	private static JFrame window;
-	private static Cursor blankCursor;
-//	private static JPanel pl;
-	private CopyOnWriteArrayList<Integer> Keys = new CopyOnWriteArrayList<Integer>();
-	private GLU glu = new GLU();
-//	private boolean isFullScreen;
+	protected static final long serialVersionUID = 6999533994092038855L;
+	protected static JFrame window;
+	protected static Cursor blankCursor;
+//	protected static JPanel pl;
+	protected CopyOnWriteArrayList<Integer> Keys = new CopyOnWriteArrayList<Integer>();
+	protected GLU glu = new GLU();
+//	protected boolean isFullScreen;
 	public static JoglPane currentLoader;
 	public static boolean smoothShading = true;
-	private static JPanel pl;
+	protected static JPanel pl;
 
 	/**
 	 * Called as if a main method.
@@ -136,15 +136,15 @@ public class JoglPane extends JLayeredPane
 		this.setCursor(new Cursor(Cursor.MOVE_CURSOR));
 	}
 
-	private GLJPanel display;
+	protected GLJPanel display;
 	Timer animationTimer;
-	private float rotateX, rotateY; // rotation amounts about axes, controlled
+	protected float rotateX, rotateY; // rotation amounts about axes, controlled
 									// by keyboard
-	private Player c;
-//	private SensorBlock sb;
+	protected Player c;
+//	protected SensorBlock sb;
 	public JMenuBar jmb;
 	public JMenuItem pointcounter = new JMenuItem("Points: ");
-	private JMenu file;
+	protected JMenu file;
 
 	/**
 	 * returns the player associated with this object. Weird dependencies are ok, as
@@ -205,13 +205,13 @@ public class JoglPane extends JLayeredPane
 
 	// --------------- Methods of the GLEventListener interface -----------
 
-	private GLUT glut = new GLUT(); // for drawing the teapot
-	private double xt;
+	protected GLUT glut = new GLUT(); // for drawing the teapot
+	protected double xt;
 	/**
 	 * true if escape has been pressed.
 	 */
 	boolean disabled;
-	private boolean fullscreen;
+	protected boolean fullscreen;
 
 	/**
 	 * This method is called when the OpenGL display needs to be redrawn.
@@ -384,12 +384,12 @@ public class JoglPane extends JLayeredPane
 
 	int frameNumber = 0;
 
-	private boolean animating;
+	protected boolean animating;
 
 	/**
 	 * called each frame.
 	 */
-	private void updateFrame() {
+	protected void updateFrame() {
 		// window.setLayout(null);
 		frameNumber++;
 		// this.setBounds(-300,-300,window.getWidth()+600,window.getHeight()+600);
@@ -473,12 +473,12 @@ public class JoglPane extends JLayeredPane
 
 	// ---------------------- support for mouse events ----------------------
 
-	private boolean dragging; // is a drag operation in progress?
+	protected boolean dragging; // is a drag operation in progress?
 
 	@SuppressWarnings("unused")
-	private int startX, startY; // starting location of mouse during drag
+	protected int startX, startY; // starting location of mouse during drag
 	@SuppressWarnings("unused")
-	private int prevX, prevY; // previous location of mouse during drag
+	protected int prevX, prevY; // previous location of mouse during drag
 
 	/**
 	 * Called when the user presses a mouse button on the display.

@@ -3,6 +3,7 @@ package world.viewport;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.*;
@@ -18,9 +19,11 @@ import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.gl2.GLUT; // for drawing the sample teapot
 
 import client.net.Client;
+import world.constructs.blocks.Block;
 import world.constructs.blocks.Clippable;
 import world.constructs.blocks.TexLoader;
 import world.constructs.projectiles.Projectile;
+import world.io.Printer;
 import world.constructs.OtherPlayer;
 import world.constructs.Ship;
 import world.constructs.StructPlayer;
@@ -55,19 +58,6 @@ glLoadIdentity();
  */
 public class JoglPaneB extends JoglPane
 		implements GLEventListener, KeyListener, MouseListener, MouseMotionListener, ActionListener {
-	/**
-	 * UID- for dumping this into an off heap array??????
-	 */
-	private static final long serialVersionUID = 6999533994092038855L;
-	private static JFrame window;
-	private static Cursor blankCursor;
-//	private static JPanel pl;
-	private CopyOnWriteArrayList<Integer> Keys = new CopyOnWriteArrayList<Integer>();
-	private GLU glu = new GLU();
-//	private boolean isFullScreen;
-	public static JoglPaneB currentLoader;
-	public static boolean smoothShading = true;
-	private static JPanel pl;
 
 	/**
 	 * Called as if a main method.
@@ -102,7 +92,7 @@ public class JoglPaneB extends JoglPane
 				g.fillRect(0, 0, 100, 100);
 			}
 		};
-		 window.add(pl);
+		window.add(pl);
 
 		window.setContentPane(j);
 		window.pack();
@@ -137,15 +127,6 @@ public class JoglPaneB extends JoglPane
 		this.setCursor(new Cursor(Cursor.MOVE_CURSOR));
 	}
 
-	private GLJPanel display;
-	Timer animationTimer;
-	private float rotateX, rotateY; // rotation amounts about axes, controlled
-									// by keyboard
-	private Player c;
-//	private SensorBlock sb;
-	public JMenuBar jmb;
-	public JMenuItem pointcounter = new JMenuItem("Points: ");
-	private JMenu file;
 	private Builder bob = new Builder("TBD");
 
 	/**
@@ -168,52 +149,49 @@ public class JoglPaneB extends JoglPane
 	 * new JoglPane. Really only should be used from within this class.
 	 */
 	JoglPaneB() {
-		currentLoader = this;
-		GLCapabilities caps = new GLCapabilities(null);
-		display = new GLJPanel(caps);
-		display.setPreferredSize(new Dimension(600, 600));
-		// size here
-		display.addGLEventListener(this);
-		setLayout(new BorderLayout());
-		add(display, BorderLayout.CENTER);
-
-		rotateX = 0; // initialize some variables used in the drawing.
-		rotateY = 0;
-
-		requestFocusInWindow();
-		display.addKeyListener(this);
-
-		// handling
-		display.addMouseListener(this);
-		display.addMouseMotionListener(this);
-
-		// c = new Camera();
-		// c.setScale(3);
-		// c.installTrackball(this);
-		// c.setScale(3);
-		// Ship sh = new Ship();
-		// c = new Player(this,sh);
-		c = new Player(this);
-		c.setScale(0.6);
-		c.moveTo(0, 5, 0);
-//		sb = new SensorBlock(c, 1, 0, 0);
-		jmb = JoglMenu.applyMenu(window);
-		file = new JMenu("File");
-		jmb.add(file);
-		jmb.add(pointcounter);
-		startAnimation();
+		super();
+//		currentLoader = this;
+//		GLCapabilities caps = new GLCapabilities(null);
+//		display = new GLJPanel(caps);
+//		display.setPreferredSize(new Dimension(600, 600));
+//		// size here
+//		display.addGLEventListener(this);
+//		setLayout(new BorderLayout());
+//		add(display, BorderLayout.CENTER);
+//
+//		rotateX = 0; // initialize some variables used in the drawing.
+//		rotateY = 0;
+//
+//		requestFocusInWindow();
+//		display.addKeyListener(this);
+//
+//		// handling
+//		display.addMouseListener(this);
+//		display.addMouseMotionListener(this);
+//
+//		// c = new Camera();
+//		// c.setScale(3);
+//		// c.installTrackball(this);
+//		// c.setScale(3);
+//		// Ship sh = new Ship();
+//		// c = new Player(this,sh);
+//		c = new Player(this);
+//		c.setScale(0.6);
+//		c.moveTo(0, 5, 0);
+////		sb = new SensorBlock(c, 1, 0, 0);
+//		try {
+//		jmb = JoglMenu.applyMenu(window);
+//		file = new JMenu("File");
+//		jmb.add(file);
+//		jmb.add(pointcounter);
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//		startAnimation();
 
 	}
 
 	// --------------- Methods of the GLEventListener interface -----------
-
-	private GLUT glut = new GLUT(); // for drawing the teapot
-	private double xt;
-	/**
-	 * true if escape has been pressed.
-	 */
-	boolean disabled;
-	private boolean fullscreen;
 
 	/**
 	 * This method is called when the OpenGL display needs to be redrawn.
@@ -222,18 +200,16 @@ public class JoglPaneB extends JoglPane
 		if (!ObjectLoaderV_C.loaded) {
 			return;
 		}
-		
-		
-		
+
 		GL2 gl = drawable.getGL().getGL2();
 		gl.glClearColor((float) Color.LIGHTSKYBLUE.getRed(), (float) Color.LIGHTSKYBLUE.getGreen(),
 				(float) Color.LIGHTSKYBLUE.getBlue(), 0);
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity(); // Set up modelview transform.
-		if(smoothShading) {
+		if (smoothShading) {
 			gl.glEnable(GL2.GL_SMOOTH);
-		}else {
+		} else {
 			gl.glEnable(GL2.GL_FLAT);
 		}
 		c.act(Grid.world);
@@ -243,12 +219,12 @@ public class JoglPaneB extends JoglPane
 		gl.glRotatef(rotateX, 1, 0, 0);
 
 		GL2 gl2 = gl.getGL2();
-		//gl.glLoadIdentity();
+		// gl.glLoadIdentity();
 		gl.glEnable(GL2.GL_LIGHTING);
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_NORMALIZE);
-		 float[] position = { 0, 20, 0, 1 };
-		float[] positions = { (float) c.getPosition().x-12, (float) c.getPosition().y, (float) c.getPosition().z, 1 };
+		float[] position = { 0, 20, 0, 1 };
+		float[] positions = { (float) c.getPosition().x - 12, (float) c.getPosition().y, (float) c.getPosition().z, 1 };
 		float[] positiona = { (float) c.getPosition().x, (float) c.getPosition().y, (float) c.getPosition().z, 1 };
 		gl2.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, position, 0);
 		gl2.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, position, 0);
@@ -259,34 +235,32 @@ public class JoglPaneB extends JoglPane
 		gl2.glEnable(GL2.GL_LIGHT2);
 		gl2.glEnable(GL2.GL_LIGHT3);
 
-		//gl.glLoadIdentity();
+		// gl.glLoadIdentity();
 		for (Clippable c : Grid.world) {
 			c.draw(glut, glu, gl, gl.getGL2());
 		}
 		gl.glColor4d(Color.ROYALBLUE.getRed(), Color.ROYALBLUE.getGreen(), Color.ROYALBLUE.getBlue(), 0.5);
-		//gl.glLoadIdentity();
+		// gl.glLoadIdentity();
 		gl.glTranslated(0, -50.5, 0);
 		glut.glutSolidCube(100);
 		gl.glTranslated(0, 50.5, 0);
 		for (Ship s : Grid.ships) {
 			s.draw(glut, glu, gl, gl2);
 		}
-		//gl.glLoadIdentity();
+		// gl.glLoadIdentity();
 		for (StructPlayer p : Grid.players) {
 			OtherPlayer.draw(p, glut, glu, gl, gl2);
 		}
-		//gl.glLoadIdentity();
-		for(Projectile p : Grid.shots) {
+		// gl.glLoadIdentity();
+		for (Projectile p : Grid.shots) {
 			p.draw(glut, glu, gl, gl2);
 		}
-		
-		if(Client.listener == null) {
+
+		if (Client.listener == null) {
 			PlayerTemplate.draw(gl, gl2, glu, glut);
 		}
 
-		
-		
-		//pl.repaint();
+		// pl.repaint();
 	}
 
 	/**
@@ -384,14 +358,10 @@ public class JoglPaneB extends JoglPane
 
 	// --------------------------- animation support ---------------------------
 
-	int frameNumber = 0;
-
-	private boolean animating;
-
 	/**
 	 * called each frame.
 	 */
-	private void updateFrame() {
+	protected void updateFrame() {
 		// window.setLayout(null);
 		frameNumber++;
 		// this.setBounds(-300,-300,window.getWidth()+600,window.getHeight()+600);
@@ -449,7 +419,24 @@ public class JoglPaneB extends JoglPane
 				i = 1;
 			else if (key == KeyEvent.VK_SPACE)
 				c.jump();
-			else if (key == KeyEvent.VK_R)
+			else if (key == KeyEvent.VK_ENTER) {
+				try {
+					Printer p = new Printer("TEMPLE.GRID");
+					for (Clippable c : Grid.world) {
+						if (c instanceof Block) {
+							String s = c.getClass().getSimpleName();
+							p.print(s+"\t\t");
+							p.print(2*c.getX()+"\t");
+							p.print(2*c.getY()+"\t");
+							p.print(2*c.getZ()+"\t\n");
+						}
+					}
+					p.flush();
+					p.close();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			} else if (key == KeyEvent.VK_R)
 				Grid.load("TEMPLE.GRID");
 			else if (key == KeyEvent.VK_LEFT) {
 				if (c.lastShip != null)
@@ -474,13 +461,6 @@ public class JoglPaneB extends JoglPane
 	}
 
 	// ---------------------- support for mouse events ----------------------
-
-	private boolean dragging; // is a drag operation in progress?
-
-	@SuppressWarnings("unused")
-	private int startX, startY; // starting location of mouse during drag
-	@SuppressWarnings("unused")
-	private int prevX, prevY; // previous location of mouse during drag
 
 	/**
 	 * Called when the user presses a mouse button on the display.
@@ -536,20 +516,22 @@ public class JoglPaneB extends JoglPane
 	 */
 	public void mouseClicked(MouseEvent evt) {
 		if (evt.getButton() == (MouseEvent.BUTTON1)) {
-			//Client.listener.sendMessafe(":shootEvent");
-			for(int i = 0; i<Grid.world.size(); i++) {
-				if(Grid.world.get(i).getSelection()) {
+			System.out.println("left click");
+			// Client.listener.sendMessafe(":shootEvent");
+			for (int i = 0; i < Grid.world.size(); i++) {
+				if (Grid.world.get(i).getSelection()) {
 					Grid.world.remove(i);
 				}
 			}
-		} else if (evt.getButton() == (MouseEvent.BUTTON2)) {
-			for(int i = 0; i<Grid.world.size(); i++) {
-				if(Grid.world.get(i).getSelection()) {
-					MVector location = Grid.world.get(i).getCoords().add
-							(Grid.world.get(i).getDirection(c));
-					String entry = "Grass" + "\t" + "\t" + location.x + "\t" + location.y +
-							"\t" + location.z;
+		} else if (evt.getButton() == (MouseEvent.BUTTON3)) {
+			System.out.println("right click");
+			for (int i = 0; i < Grid.world.size(); i++) {
+				if (Grid.world.get(i).getSelection()) {
+					MVector location = MVector.mult(Grid.world.get(i).getCoords(), 2)
+							.add(Grid.world.get(i).getDirection(c));
+					String entry = "Grass" + "\t" + "\t" + location.x + "\t" + location.y + "\t" + location.z;
 					bob.write(entry);
+
 				}
 			}
 		}

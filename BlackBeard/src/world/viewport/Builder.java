@@ -17,7 +17,7 @@ public class Builder {
 		try
 		{  
 			// append characters to the file
-			FileWriter writer = new FileWriter(filename, false);
+			FileWriter writer = new FileWriter(filename, true);
 			for(int i = 0; i<p.size(); i++) {
 				writer.write(((String) p.get(i)) + "\n");
 			}
@@ -34,10 +34,10 @@ public class Builder {
 		try
 		{  
 			// append characters to the file
-			FileWriter writer = new FileWriter(filename, false);
-			writer.write(s);
-
+			FileWriter writer = new FileWriter(filename, true);
+			writer.write(s + "\n");
 			writer.close();
+			Grid.load("TBD");
 		}
 		catch ( IOException iox )
 		{

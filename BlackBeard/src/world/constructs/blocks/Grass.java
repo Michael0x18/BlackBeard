@@ -71,6 +71,7 @@ public class Grass extends Block {
 			glut.glutSolidCube(0.5f);
 		}
 		if(super.isSelected) {
+			glut.glutSolidCube(0.6f);
 			glut.glutWireCube(0.5f);
 		}
 		

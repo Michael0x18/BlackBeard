@@ -25,18 +25,18 @@ public class Block implements Clippable {
 	}
 
 	public void moveTo(double a, double b, double c) {
-		x=a;
-		y=b;
-		z=c;
-		mv = new MVector(x,y,z);
+		x = a;
+		y = b;
+		z = c;
+		mv = new MVector(x, y, z);
 	}
 
 	public static boolean TESSELATION_ON = false;
 
 	double x, y, z;
-	//	private double red = Math.random()*4;
-	//	private double green = Math.random()*4;
-	//	private double blue = Math.random()*4;
+	// private double red = Math.random()*4;
+	// private double green = Math.random()*4;
+	// private double blue = Math.random()*4;
 	protected final double size = 0.5;
 
 	protected MVector mv;
@@ -60,15 +60,17 @@ public class Block implements Clippable {
 	}
 
 	protected boolean outOfRange() {
-		//		if(MVector.add(mv.copy().mult(-1), JoglPane.currentLoader.getC().getPosition()).getMagnitude()>ViewConstants.ABSOLUTE_RENDER_RANGE) {
-		//			return true;
-		//		}
+		// if(MVector.add(mv.copy().mult(-1),
+		// JoglPane.currentLoader.getC().getPosition()).getMagnitude()>ViewConstants.ABSOLUTE_RENDER_RANGE)
+		// {
+		// return true;
+		// }
 		return false;
 	}
 
 	@Override
 	public void draw(GLUT glut, GLU glu, GL gl, GL2 gl2) {
-		if(outOfRange())
+		if (outOfRange())
 			return;
 		gl2.glTranslated(x, y, z);
 		// glut.glutSolidCube((float) 0.5);
@@ -77,7 +79,6 @@ public class Block implements Clippable {
 			gl2.glTranslated(0.125, 0.125, 0.125);
 			glut.glutSolidCube(0.25f);
 			gl2.glTranslated(-0.125, -0.125, -0.125);
-
 
 			gl2.glTranslated(-0.125, 0.125, 0.125);
 			glut.glutSolidCube(0.25f);
@@ -107,11 +108,13 @@ public class Block implements Clippable {
 			glut.glutSolidCube(0.25f);
 			gl2.glTranslated(0.125, -0.125, 0.125);
 		} else {
+			if(!isSelected);
 			glut.glutSolidCube(0.5f);
-		}if(isSelected) {
+		}
+		if (isSelected) {
+			glut.glutSolidCube(0.6f);
 			glut.glutWireCube(0.5f);
 		}
-
 
 		// gl2.glColor3d(0, .5, 0);
 		// glut.glutWireCube(0.5001f);
@@ -185,45 +188,45 @@ public class Block implements Clippable {
 
 	@Override
 	public void movex(double d) {
-		x+=d;
+		x += d;
 
 	}
 
 	@Override
 	public void movey(double d) {
-		y+=d;
+		y += d;
 
 	}
 
 	@Override
 	public void movez(double d) {
-		z+=d;
+		z += d;
 
 	}
 
 	public MVector getDirection(Player p) {
 		MVector r = p.getPosition();
-		double distance = Math.sqrt(Math.pow(this.x-r.x, 2)+Math.pow(this.y-r.y, 2)
-		+Math.pow(this.z-r.z, 2));
-		double xA = Math.acos((this.x-r.x)/distance);
-		double yA = Math.asin((this.y-r.y)/distance);
-		double zA = Math.acos((this.z-r.z)/distance);
-		if(xA<Math.PI/2) {
-			return new MVector(-1,0,0);
-		} else if(xA>-3*Math.PI/2) {
-			return new MVector(1,0,0);
-		} else if(yA<Math.PI/2) {
-			return new MVector(0,-1,0);
-		} else if(yA>-3*Math.PI/2) {
-			return new MVector(0,1,0);
-		}else if(zA<Math.PI/2) {
-			return new MVector(0,0,-1);
-		} else if(zA>-3*Math.PI/2) {
-			return new MVector(0,0,1);
+		double distance = Math.sqrt(Math.pow(this.x - r.x, 2) + Math.pow(this.y - r.y, 2) + Math.pow(this.z - r.z, 2));
+		double xA = Math.acos((this.x - r.x) / distance);
+		double yA = Math.asin((this.y - r.y) / distance);
+		double zA = Math.acos((this.z - r.z) / distance);
+		if (xA < Math.PI / 2) {
+			return new MVector(-1, 0, 0);
+		} else if (xA > -3 * Math.PI / 2) {
+			return new MVector(1, 0, 0);
+		} else if (yA < Math.PI / 2) {
+			return new MVector(0, -1, 0);
+		} else if (yA > -3 * Math.PI / 2) {
+			return new MVector(0, 1, 0);
+		} else if (zA < Math.PI / 2) {
+			return new MVector(0, 0, -1);
+		} else if (zA > -3 * Math.PI / 2) {
+			return new MVector(0, 0, 1);
 		} else {
 			return null;
 		}
 	}
+
 	public boolean getSelection() {
 		return isSelected;
 	}

@@ -7,6 +7,7 @@ import com.jogamp.opengl.util.gl2.GLUT;
 
 import world.constructs.blocks.Clippable;
 import world.viewport.MVector;
+import world.viewport.Player;
 
 public abstract class Projectile implements Clippable {
 	protected MVector position;
@@ -18,6 +19,8 @@ public abstract class Projectile implements Clippable {
 	public void select(boolean b) {
 		return;
 	}
+	
+	
 
 	@Override
 	public abstract void draw(GLUT glut, GLU glu, GL gl, GL2 gl2);
@@ -73,6 +76,18 @@ public abstract class Projectile implements Clippable {
 	public void movez(double d) {
 		position.z += d;
 
+	}
+
+	@Override
+	public boolean getSelection() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public MVector getDirection(Player p) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -402,7 +402,7 @@ public class Player extends Camera {
 //				time = 200;
 //			}
 			//lastShip = s;
-			if (hit2 || hit) {
+			if (hit) {
 				//System.out.println("true");
 				lastShip = s;
 				//time = 1000;

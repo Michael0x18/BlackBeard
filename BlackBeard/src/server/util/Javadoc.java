@@ -1,9 +1,15 @@
+package server.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/**
+ * A quick utility class that compiles JavaDocs.
+ * @author Michael Ferolito
+ *
+ */
 public class Javadoc {
 
 	public static void main(String[] args) throws IOException {
@@ -11,7 +17,7 @@ public class Javadoc {
 	}
 
 	/**
-	 * Attempts to compile a javadoc.
+	 * Attempts to compile a JavaDoc based on existing comments.
 	 * 
 	 * @throws IOException
 	 */

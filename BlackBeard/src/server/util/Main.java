@@ -1,3 +1,4 @@
+package server.util;
 import world.viewport.Grid;
 import world.viewport.JoglPane;
 

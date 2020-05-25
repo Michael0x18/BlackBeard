@@ -202,9 +202,12 @@ public class JoglPaneB extends JoglPane
 		}
 
 		GL2 gl = drawable.getGL().getGL2();
-		gl.glClearColor((float) Color.LIGHTSKYBLUE.getRed(), (float) Color.LIGHTSKYBLUE.getGreen(),
-				(float) Color.LIGHTSKYBLUE.getBlue(), 0);
-
+		if (this.c.getPosition().y > 0)
+			gl.glClearColor((float) Color.LIGHTSKYBLUE.getRed(), (float) Color.LIGHTSKYBLUE.getGreen(),
+					(float) Color.LIGHTSKYBLUE.getBlue(), 0);
+		else
+			gl.glClearColor((float) Color.BLACK.getRed(), (float) Color.BLACK.getGreen(),
+					(float) Color.BLACK.getBlue(), 0);
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity(); // Set up modelview transform.
 		if (smoothShading) {
@@ -304,9 +307,9 @@ public class JoglPaneB extends JoglPane
 //		if (e.getModifiersEx() !=0)
 //			return;
 		// Keys.add(Integer.valueOf(e.getKeyCode()));
-		if (!Keys.contains(e.getKeyCode())) {
-			Keys.add(Integer.valueOf(e.getKeyCode()));
-		}
+		// if (!Keys.contains(e.getKeyCode())) {
+		Keys.add(Integer.valueOf(e.getKeyCode()));
+		// }
 		repaint();
 
 	}
@@ -319,12 +322,12 @@ public class JoglPaneB extends JoglPane
 	}
 
 	public void keyReleased(KeyEvent e) {
-		
-		if(e.getKeyCode() == KeyEvent.VK_P){
-			int xd = (int)(0.5+this.c.getPosition().x*2);
-			int yd = (int)(0.5+this.c.getPosition().y*2);
-			int zd = (int)(0.5+this.c.getPosition().z*2);
-			System.out.println(xd+" "+yd+" "+zd);
+
+		if (e.getKeyCode() == KeyEvent.VK_P) {
+			int xd = (int) (0.5 + this.c.getPosition().x * 2);
+			int yd = (int) (0.5 + this.c.getPosition().y * 2);
+			int zd = (int) (0.5 + this.c.getPosition().z * 2);
+			System.out.println(xd + " " + yd + " " + zd);
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -432,10 +435,10 @@ public class JoglPaneB extends JoglPane
 					for (Clippable c : Grid.world) {
 						if (c instanceof Block) {
 							String s = c.getClass().getSimpleName();
-							p.print(s+"\t\t");
-							p.print(2*c.getX()+"\t");
-							p.print(2*c.getY()+"\t");
-							p.print(2*c.getZ()+"\t\n");
+							p.print(s + "\t\t");
+							p.print(2 * c.getX() + "\t");
+							p.print(2 * c.getY() + "\t");
+							p.print(2 * c.getZ() + "\t\n");
 						}
 					}
 					p.flush();

@@ -224,9 +224,12 @@ public class JoglPane extends JLayeredPane
 		
 		
 		GL2 gl = drawable.getGL().getGL2();
-		gl.glClearColor((float) Color.LIGHTSKYBLUE.getRed(), (float) Color.LIGHTSKYBLUE.getGreen(),
-				(float) Color.LIGHTSKYBLUE.getBlue(), 0);
-
+		if (this.c.getPosition().y > 0)
+			gl.glClearColor((float) Color.LIGHTSKYBLUE.getRed(), (float) Color.LIGHTSKYBLUE.getGreen(),
+					(float) Color.LIGHTSKYBLUE.getBlue(), 0);
+		else
+			gl.glClearColor((float) Color.BLACK.getRed(), (float) Color.BLACK.getGreen(),
+					(float) Color.BLACK.getBlue(), 0);
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity(); // Set up modelview transform.
 		if(smoothShading) {

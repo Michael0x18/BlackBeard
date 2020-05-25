@@ -319,6 +319,13 @@ public class JoglPaneB extends JoglPane
 	}
 
 	public void keyReleased(KeyEvent e) {
+		
+		if(e.getKeyCode() == KeyEvent.VK_P){
+			int xd = (int)(0.5+this.c.getPosition().x*2);
+			int yd = (int)(0.5+this.c.getPosition().y*2);
+			int zd = (int)(0.5+this.c.getPosition().z*2);
+			System.out.println(xd+" "+yd+" "+zd);
+		}
 
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			c.getRobot().mouseMove(window.getX() + this.getBounds().width / 2,

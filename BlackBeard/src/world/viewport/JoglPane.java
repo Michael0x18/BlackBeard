@@ -374,7 +374,8 @@ public class JoglPane extends JLayeredPane
 				window.setVisible(true);
 			}
 		} else if (e.getKeyCode() == KeyEvent.VK_G)
-			c.toggleGravity();
+			System.out.println("Flying is disabled");
+			//c.toggleGravity();
 		while (Keys.contains(Integer.valueOf(e.getKeyCode())))
 			Keys.remove(Integer.valueOf(e.getKeyCode()));
 		repaint();

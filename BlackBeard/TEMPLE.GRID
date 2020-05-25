@@ -1095,12 +1095,11 @@ Stone		-24	0	9
 Grass		-23	0	9
 Grass		-22	0	9
 Grass		-21	0	9
-Grass		-20	0	9
 Grass		-19	0	9
-Grass		-18	0	9
+Stone		-18	0	9
 Grass		-17	0	9
 Grass		-16	0	9
-Grass		-15	0	9
+Stone		-15	0	9
 Grass		-14	0	9
 Stone		-13	0	9
 Grass		-12	0	9
@@ -1133,8 +1132,8 @@ Grass		-21	0	10
 Grass		-20	0	10
 Grass		-19	0	10
 Grass		-18	0	10
-Grass		-17	0	10
-Grass		-16	0	10
+Stone		-17	0	10
+Stone		-16	0	10
 Grass		-15	0	10
 Grass		-14	0	10
 Stone		-13	0	10
@@ -1159,15 +1158,15 @@ Grass		-31	0	11
 Grass		-30	0	11
 Grass		-29	0	11
 Grass		-28	0	11
-Grass		-27	0	11
+Stone		-27	0	11
 Grass		-26	0	11
-Grass		-25	0	11
+Stone		-25	0	11
 Grass		-24	0	11
 Grass		-23	0	11
 Grass		-22	0	11
 Grass		-21	0	11
 Grass		-20	0	11
-Grass		-19	0	11
+Stone		-19	0	11
 Grass		-18	0	11
 Grass		-17	0	11
 Grass		-16	0	11
@@ -1197,15 +1196,13 @@ Grass		-30	0	12
 Grass		-29	0	12
 Grass		-28	0	12
 Grass		-27	0	12
-Grass		-26	0	12
-Grass		-25	0	12
+Stone		-26	0	12
+Stone		-25	0	12
 Grass		-24	0	12
 Grass		-23	0	12
 Grass		-22	0	12
 Grass		-21	0	12
-Grass		-20	0	12
 Grass		-19	0	12
-Grass		-18	0	12
 Grass		-17	0	12
 Grass		-16	0	12
 Grass		-15	0	12
@@ -1234,7 +1231,7 @@ Grass		-30	0	13
 Grass		-29	0	13
 Grass		-28	0	13
 Grass		-27	0	13
-Grass		-26	0	13
+Stone		-26	0	13
 Grass		-25	0	13
 Grass		-24	0	13
 Grass		-23	0	13
@@ -1311,16 +1308,14 @@ Grass		-31	0	15
 Grass		-30	0	15
 Grass		-29	0	15
 Grass		-28	0	15
-Grass		-27	0	15
-Grass		-26	0	15
-Grass		-25	0	15
+Stone		-27	0	15
+Stone		-26	0	15
+Stone		-25	0	15
 Grass		-24	0	15
 Grass		-23	0	15
 Grass		-22	0	15
 Grass		-21	0	15
-Grass		-20	0	15
 Grass		-19	0	15
-Grass		-18	0	15
 Grass		-17	0	15
 Grass		-16	0	15
 Grass		-15	0	15
@@ -1350,7 +1345,7 @@ Grass		-31	0	16
 Grass		-30	0	16
 Grass		-29	0	16
 Grass		-28	0	16
-Grass		-27	0	16
+Stone		-27	0	16
 Grass		-26	0	16
 Grass		-25	0	16
 Grass		-24	0	16
@@ -1390,7 +1385,7 @@ Grass		-30	0	17
 Grass		-29	0	17
 Grass		-28	0	17
 Grass		-27	0	17
-Grass		-26	0	17
+Stone		-26	0	17
 Grass		-25	0	17
 Grass		-24	0	17
 Grass		-23	0	17
@@ -1428,7 +1423,7 @@ Grass		-31	0	18
 Grass		-30	0	18
 Grass		-29	0	18
 Grass		-28	0	18
-Grass		-27	0	18
+Stone		-27	0	18
 Grass		-26	0	18
 Grass		-25	0	18
 Grass		-24	0	18
@@ -1465,9 +1460,9 @@ Grass		-32	0	19
 Grass		-31	0	19
 Grass		-30	0	19
 Grass		-29	0	19
-Grass		-28	0	19
-Grass		-27	0	19
-Grass		-26	0	19
+Stone		-28	0	19
+Stone		-27	0	19
+Stone		-26	0	19
 Grass		-25	0	19
 Grass		-24	0	19
 Grass		-23	0	19
@@ -1503,7 +1498,6 @@ Grass		-31	0	20
 Grass		-30	0	20
 Grass		-29	0	20
 Grass		-28	0	20
-Grass		-27	0	20
 Grass		-26	0	20
 Grass		-25	0	20
 Grass		-24	0	20
@@ -1538,9 +1532,6 @@ Grass		-32	0	21
 Grass		-31	0	21
 Grass		-30	0	21
 Grass		-29	0	21
-Grass		-28	0	21
-Grass		-27	0	21
-Grass		-26	0	21
 Grass		-25	0	21
 Grass		-24	0	21
 Grass		-23	0	21
@@ -1573,12 +1564,6 @@ Grass		-32	0	22
 Grass		-31	0	22
 Grass		-30	0	22
 Grass		-29	0	22
-Grass		-28	0	22
-Grass		-27	0	22
-Grass		-26	0	22
-Grass		-25	0	22
-Grass		-24	0	22
-Grass		-23	0	22
 Grass		-22	0	22
 Grass		-21	0	22
 Grass		-20	0	22
@@ -1618,9 +1603,6 @@ Grass		-32	0	23
 Grass		-31	0	23
 Grass		-30	0	23
 Grass		-29	0	23
-Grass		-28	0	23
-Grass		-27	0	23
-Grass		-26	0	23
 Grass		-25	0	23
 Grass		-24	0	23
 Grass		-23	0	23
@@ -3028,6 +3010,7 @@ Stone		-4	17	19
 
 Stone		-6	18	21
 Stone		-6	18	19
+Light		-5	18	20
 Stone		-4	18	21
 Stone		-4	18	19
 
@@ -3077,6 +3060,140 @@ Wood		-4	21	20
 Wood		-4	21	21
 
 Wood		-5	22	20
+
+Stone		-1	1	9
+Stone		-2	1	9
+Stone		-8	1	9
+Stone		-9	1	9
+
+Stone		-1	2	9
+Stone		-2	2	9
+Stone		-8	2	9
+Stone		-9	2	9
+
+Stone		-1	3	9
+Stone		-2	3	9
+Stone		-8	3	9
+Stone		-9	3	9
+
+Stone		-1	4	9
+Stone		-2	4	9
+Stone		-8	4	9
+Stone		-9	4	9
+
+Stone		-1	5	9
+Stone		-2	5	9
+Stone		-3	5	9
+Stone		-7	5	9
+Stone		-8	5	9
+Stone		-9	5	9
+
+Stone		-1	6	9
+Stone		-2	6	9
+Stone		-3	6	9
+Stone		-7	6	9
+Stone		-8	6	9
+Stone		-9	6	9
+
+Stone		-1	7	9
+Stone		-2	7	9
+Stone		-3	7	9
+Stone		-4	7	9
+Stone		-6	7	9
+Stone		-7	7	9
+Stone		-8	7	9
+Stone		-9	7	9
+
+Stone		-2	8	9
+Stone		-3	8	9
+Stone		-4	8	9
+Stone		-6	8	9
+Stone		-7	8	9
+Stone		-8	8	9
+
+Stone		-2	9	9
+Stone		-3	9	9
+Stone		-4	9	9
+Stone		-5	9	9
+Stone		-6	9	9
+Stone		-7	9	9
+Stone		-8	9	9
+
+Stone		-3	10	9
+Stone		-4	10	9
+Stone		-5	10	9
+Stone		-6	10	9
+Stone		-7	10	9
+
+Wood		-1	1	11
+Wood		-2	1	11
+Wood		-3	1	11
+
+Wood		-1	1	13
+Wood		-2	1	13
+Wood		-3	1	13
+
+Wood		-1	1	15
+Wood		-2	1	15
+Wood		-3	1	15
+
+Wood		-7	1	11
+Wood		-8	1	11
+Wood		-9	1	11
+
+Wood		-7	1	13
+Wood		-8	1	13
+Wood		-9	1	13
+
+Wood		-7	1	15
+Wood		-8	1	15
+Wood		-9	1	15
+
+Wood		-2	1	18
+Wood		-3	1	18
+Wood		-4	1	18
+Wood		-5	1	18
+Wood		-6	1	18
+Wood		-7	1	18
+Wood		-8	1	18
+
+Wood		-1	1	19
+Wood		-2	1	19
+Wood		-3	1	19
+Wood		-4	1	19
+Wood		-5	1	19
+Wood		-6	1	19
+Wood		-7	1	19
+Wood		-8	1	19
+Wood		-9	1	19
+
+Wood		-1	1	20
+Wood		-2	1	20
+Wood		-3	1	20
+Wood		-4	1	20
+Wood		-5	1	20
+Wood		-6	1	20
+Wood		-7	1	20
+Wood		-8	1	20
+Wood		-9	1	20
+
+Wood		-5	2	18
+
+
+Stone		-23	0	22
+Stone		-24	0	22
+Stone		-25	0	22
+Stone		-26	0	21
+Stone		-26	0	22
+Stone		-26	0	23
+Stone		-27	0	21
+Stone		-27	0	22
+Stone		-27	0	23
+Stone		-28	0	21
+Stone		-28	0	22
+Stone		-28	0	23
+Stone		-27	0	20
+
 Wood		-26	1	24
 Wood		-27	1	24
 Wood		-28	1	24
@@ -3293,3 +3410,60 @@ Grass		-51	-1	43
 Grass		-51	-1	45.5
 Stone		-52.9	-1	47
 Stone		-52.8	0	47
+
+
+Stone		-22	1	7
+Stone		-21	1	7
+Stone		-20	1	7
+Stone		-19	1	7
+Stone		-18	1	7
+Stone		-17	1	7
+Stone		-16	1	7
+Stone		-22	1	8
+Stone		-16	1	8
+Stone		-22	1	9
+Stone		-22	1	10
+Stone		-22	1	11
+Stone		-16	1	11
+Stone		-22	1	12
+Stone		-16	1	12
+Stone		-22	1	13
+Stone		-16	1	13
+Stone		-22	1	14
+Stone		-16	1	14
+Stone		-22	1	15
+Stone		-16	1	15
+Stone		-22	1	16
+Stone		-16	1	16
+Stone		-22	1	17
+Stone		-16	1	17
+Stone		-22	1	18
+Stone		-21	1	18
+Stone		-20	1	18
+Stone		-19	1	18
+Stone		-18	1	18
+Stone		-17	1	18
+Stone		-16	1	18
+
+Stone		-22	2	7
+Stone		-16	2	7
+Stone		-16	2	12
+Stone		-22	2	18
+Stone		-16	2	18
+
+Stone		-22	3	7
+Stone		-16	3	7
+Stone		-16	3	12
+Stone		-22	3	18
+Stone		-16	3	18
+
+Stone		-20	1	16
+Wood		-20	0	15
+Stone		-18	1	16
+Wood		-18	0	15
+Stone		-20	1	13
+Wood		-20	0	12
+Stone		-18	1	13
+Wood		-18	0	12
+Stone		-20	1	10
+Wood		-20	0	9

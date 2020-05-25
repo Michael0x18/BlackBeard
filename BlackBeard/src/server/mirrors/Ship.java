@@ -22,7 +22,7 @@ public class Ship extends Daemon {
 	public double z = 0;
 	private double bearing = 0;
 	private double velocity = 0;
-	public volatile double hp = 5;
+	public volatile double hp = 1024;
 	private String name;
 	private CopyOnWriteArrayList<String> players = new CopyOnWriteArrayList<>();
 	double turned;

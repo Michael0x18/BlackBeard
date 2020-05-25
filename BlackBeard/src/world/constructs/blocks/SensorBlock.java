@@ -9,8 +9,9 @@ import world.viewport.Player;
 
 /**
  * For sensing. Going to be deprecated as soon as William finished his, so
- * documentation is sparce.
+ * documentation is scarce.
  * 
+ * @deprecated Since Version 2.5
  * @author Michael Ferolito
  *
  */
@@ -19,7 +20,7 @@ public class SensorBlock extends BGBlock {
 	private double x, y, z;
 
 	/**
-	 *super()
+	 * super()
 	 */
 	public SensorBlock(Player p, double a, double b, double c) {
 		this.p = p;

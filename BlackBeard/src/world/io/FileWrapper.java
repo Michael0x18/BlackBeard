@@ -8,21 +8,24 @@ import java.io.Reader;
 
 /**
  * Just a bufferedReader, but with better to construction.
+ * 
  * @author Michael Ferolito
- *
+ * @version 2
  */
-public class FileWrapper extends BufferedReader{
-	
+public class FileWrapper extends BufferedReader {
+
 	/**
 	 * see super constructor
+	 * 
 	 * @param w
 	 */
 	public FileWrapper(Reader w) {
 		super(w);
 	}
-	
+
 	/**
 	 * creates a new FileReader and a new this.
+	 * 
 	 * @param s
 	 * @throws FileNotFoundException
 	 */

@@ -67,6 +67,7 @@ public class ServerPanel extends JPanel implements KeyListener {
 	 * Important implementation note: paintComponent is called before the repaint
 	 * methods of the individual components; if you want to draw on top of them
 	 * please override paint.
+	 * 
 	 * @param g
 	 */
 	public void paintComponent(Graphics g) {
@@ -101,7 +102,8 @@ public class ServerPanel extends JPanel implements KeyListener {
 
 	@Override
 	/**
-	 * senses a character like the gets function in c.
+	 * senses a character like the getch function in c.
+	 * 
 	 */
 	public void keyPressed(KeyEvent e) {
 //		if(Server.shell.getText().length() < 3) {
@@ -112,6 +114,7 @@ public class ServerPanel extends JPanel implements KeyListener {
 	@Override
 	/**
 	 * senses a key release.
+	 * 
 	 * @since version 1 does nothing.
 	 */
 	public void keyReleased(KeyEvent e) {

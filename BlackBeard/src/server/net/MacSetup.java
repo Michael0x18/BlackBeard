@@ -10,8 +10,17 @@ import java.io.IOException;
 
 import com.apple.eawt.AppEvent.AboutEvent;
 
+/**
+ * See client.net.MacSetup.
+ * 
+ * @author Michael Ferolito
+ *
+ */
 public class MacSetup {
-	
+
+	/**
+	 * See client.net.MacSetup.
+	 */
 	public void run() {
 		com.apple.eawt.Application application = com.apple.eawt.Application.getApplication();
 		Image image = Toolkit.getDefaultToolkit().getImage("Server/Build/Server.png");

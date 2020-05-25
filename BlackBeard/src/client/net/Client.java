@@ -12,18 +12,18 @@ import world.constructs.blocks.TexLoader;
 import world.fx._Mixer;
 
 /**
+ * Represents a TCP client class. Default port is 4444 Coupled strongly to other
+ * backend client classes in client.net
+ * 
+ * The Client is the centralized location for the client.net classes. It holds
+ * references to other important parts, such as the ServerListener, and the
+ * ClientConnector. In contrast to the server networking classes, the client
+ * only needs to manage one of each type of buffer and handle, which drastically
+ * simplifies its implementation.
  * 
  * @author mferolito676
- * @version 2.0 Represents a TCP client class. Default port is 4444 Coupled
- *          strongly to other backend client classes in client.net
- * 
- *          The Client is the centralized location for the client.net classes.
- *          It holds references to other important parts, such as the
- *          ServerListener, and the ClientConnector. In contrast to the server
- *          networking classes, the client only needs to manage one of each type
- *          of buffer and handle, which drastically simplifies its
- *          implementation.
- * 
+ * @version 2.5
+ * @since Version 1
  */
 public class Client {
 	public static final boolean VerboseMode = true;
@@ -53,9 +53,9 @@ public class Client {
 		} catch (Exception e) {
 
 		}
-		
+
 		isBot = b;
-		
+
 		connector = new ClientConnector();
 		connector.check();
 
@@ -74,6 +74,7 @@ public class Client {
 	/**
 	 * Uses Execution Events. Sends to server. Mainly for sending events to from
 	 * Server from a non-back end class
+	 * 
 	 * @deprecated as of version 2
 	 * @param msg
 	 */
@@ -88,6 +89,7 @@ public class Client {
 	/**
 	 * Uses execution events. For communication with the Server. Called by non back
 	 * end classes that wish to communicate with the Server.
+	 * 
 	 * @deprecated as of version 2
 	 * @param msg
 	 */
@@ -97,6 +99,7 @@ public class Client {
 
 	/**
 	 * Functions like the addActionlistener found in Swing classes.
+	 * 
 	 * @deprecated as of version 2
 	 * @param e - listener e
 	 */

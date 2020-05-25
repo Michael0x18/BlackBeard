@@ -6,7 +6,7 @@ import server.net.daemons.Daemon;
  * A CAS Daemon used by the ClientHandlers to manage ping.
  * @author Michael Ferolito
  * @since Version 1
- * @version 2
+ * @version 2.5
  *
  */
 public class StopWatch extends Daemon {

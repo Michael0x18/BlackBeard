@@ -2,14 +2,26 @@ package server.net.daemons;
 
 import server.net.Server;
 
-public class ProjectileDaemonFlushType extends Daemon{
-	
+/**
+ * Server Daemon for handling buffers.
+ * 
+ * @author Michael Ferolito
+ *
+ */
+public class ProjectileDaemonFlushType extends Daemon {
+
+	/**
+	 * Generic constructor. Directly inherited from super.
+	 */
 	public ProjectileDaemonFlushType() {
 		super();
 	}
-	
+
+	/**
+	 * Overridden Daemon run method.
+	 */
 	public void run() {
-		while(true) {
+		while (true) {
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {

@@ -10,16 +10,16 @@ import java.nio.file.Paths;
 import server.mirrors.Ship;
 
 /**
+ * Represents a ServerConnector. This is the class whose sole instance holds the
+ * ServerSocket to which all connection are made. It constantly polls the socket
+ * for connections, and upon detection immediately transfers it to a
+ * ClientHandler. It then continues. IMPORTANT: The ServerConnector is a direct
+ * subclass of Thread. It is not a daemon. Therefore, it will stop the JVM from
+ * exiting if it is the only Thread running.
  * 
  * @author Michael Ferolito
  * @since Version 1
- * @version 2.0 Represents a ServerConnector. This is the class whose sole
- *          instance holds the ServerSocket to which all connection are made. It
- *          constantly polls the socket for connections, and upon detection
- *          immediately transfers it to a ClientHandler. It then continues.
- *          IMPORTANT: The ServerConnector is a direct subclass of Thread. It is
- *          not a daemon. Therefore, it will stop the JVM from exiting if it is
- *          the only Thread running.
+ * @version 2.5
  *
  */
 public class ServerConnector extends Thread {
@@ -61,10 +61,10 @@ public class ServerConnector extends Thread {
 
 	@SuppressWarnings("unused")
 	public void run() {
-		Ship sh = new Ship("Queen_Anne",9,0,0,0,0);
-		Ship sh2 = new Ship("Flying_Duchman",9,0,10,0,0);
-		//sh2.z = 10;
-		//sh2.x = 10;
+		Ship sh = new Ship("Queen_Anne", 9, 0, 0, 0, 0);
+		Ship sh2 = new Ship("Flying_Duchman", 9, 0, 10, 0, 0);
+		// sh2.z = 10;
+		// sh2.x = 10;
 		while (true) {
 			try {
 				Socket s = socket.accept();

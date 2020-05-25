@@ -17,12 +17,18 @@ public class ExecutionHandler extends Thread {
 	private static ExecutionHandler h;
 	public static Queue<ExecutionEvent> executionEvents = new LinkedList<ExecutionEvent>();
 
+	/**
+	 * Launch() sets up and runs the Internal ExecutionDaemon.
+	 */
 	public static void launch() {
 		h = new ExecutionHandler();
 		h.setDaemon(true);
 		h.start();
 	}
 
+	/**
+	 * Overrides Thread run. Note: This was before the addition of Daemon.
+	 */
 	public void run() {
 
 		while (true) {
@@ -33,6 +39,11 @@ public class ExecutionHandler extends Thread {
 		}
 	}
 
+	/**
+	 * Adds an execution Event to the Server Queue.
+	 * 
+	 * @param e
+	 */
 	public static void addEvent(ExecutionEvent e) {
 		executionEvents.add(e);
 	}

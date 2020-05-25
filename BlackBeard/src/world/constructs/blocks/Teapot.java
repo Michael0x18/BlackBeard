@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
  * had to put this in. It actually looks pretty good.
  * 
  * @author Michael Ferolito
- *
+ * @version 2.5
  */
 public class Teapot extends Block {
 
@@ -31,6 +31,7 @@ public class Teapot extends Block {
 
 	/**
 	 * Just for laughs.
+	 * 
 	 * @param i
 	 * @param d
 	 * @param j
@@ -58,7 +59,7 @@ public class Teapot extends Block {
 		glut.glutSolidTeapot(0.25);
 		// glut.glutWireCube(0.5f);
 		gl2.glTranslated(-x, -y, -z);
-		if(super.isSelected) {
+		if (super.isSelected) {
 			glut.glutWireCube(0.5f);
 		}
 	}

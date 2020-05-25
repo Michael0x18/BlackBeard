@@ -1,34 +1,34 @@
 package server.net;
 
-
 /**
- * Originally contained a license.
+ * Originally contained a license. Launches the Server. UIManager handling is
+ * set up inside Server.
  * 
  * @author Michael Ferolito
- * @version 2
- * @since 1 Launches the Server. UIManager handling is set up inside Server.
+ * @version 2.5
+ * @since 1
  *
  */
 public class ServerMain {
 
 	/**
 	 * ahoy!
+	 * 
 	 * @param args
 	 * @throws InterruptedException
 	 */
 	public static void main(String[] args) throws InterruptedException {
-		//System.out.println(System.getProperty("os.name"));
-		if(System.getProperty("os.name").contains("Mac")) {
-			MacSetup ms = (MacSetup)loadClass("server.net.MacSetup");
+		// System.out.println(System.getProperty("os.name"));
+		if (System.getProperty("os.name").contains("Mac")) {
+			MacSetup ms = (MacSetup) loadClass("server.net.MacSetup");
 			ms.run();
 		}
 		Server.launch();
 		Thread.sleep(1000);
 		Server.startServer();
-		
-		
+
 	}
-	
+
 	private static Object loadClass(String whichClass) {
 		try {
 			Class<?> clazz = Class.forName(whichClass);

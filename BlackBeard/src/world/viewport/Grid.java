@@ -25,10 +25,25 @@ import world.io.FileWrapper;
  *
  */
 public class Grid {
+	/**
+	 * The blocks.
+	 */
 	public static CopyOnWriteArrayList<Clippable> world = new CopyOnWriteArrayList<Clippable>();
+	/**
+	 * The ships.
+	 */
 	public static CopyOnWriteArrayList<Ship> ships = new CopyOnWriteArrayList<Ship>();
+	/**
+	 * The ship buffer.
+	 */
 	public static CopyOnWriteArrayList<Ship> newShips = new CopyOnWriteArrayList<Ship>();
+	/**
+	 * The Player buffer.
+	 */
 	public static CopyOnWriteArrayList<StructPlayer> players = new CopyOnWriteArrayList<StructPlayer>();
+	/**
+	 * The shot buffer.
+	 */
 	public static CopyOnWriteArrayList<Projectile> shots = new CopyOnWriteArrayList<Projectile>();
 
 	/**
@@ -103,7 +118,12 @@ public class Grid {
 
 	/**
 	 * Loads a crummy testing thingy that Michael used to debug the camera. It was
-	 * left in because left is left.
+	 * left in because Arthur Dent found the construction notice in the basement.
+	 * The lights had gone and so had the stairs. He found it in the bottom of a
+	 * locked filing cabinet in a disused lavatory with a sign on the door that read
+	 * "Beware of Leopard."
+	 * 
+	 * Thats why its still in here.
 	 */
 	public static void loadTowerOfBabel() {
 		for (int i = 0; i < 10; i++) {

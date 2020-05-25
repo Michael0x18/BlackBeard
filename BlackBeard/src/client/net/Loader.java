@@ -3,11 +3,12 @@ package client.net;
 import javax.swing.JFrame;
 
 /**
+ * Represents a loader, which will display a loading animation to the user while
+ * JoglPane gldriver sets up the graphics server
  * 
  * @author Michael Ferolito
- * @version 2
- * @since Version 2 Represents a loader, which will display a loading animation
- *        to the user while JoglPane gldriver sets up the graphics server
+ * @version 2.5
+ * @since Version 2
  *
  */
 public class Loader extends JFrame {

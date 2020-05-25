@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
  * Represents a red clay block. Clay supports tesselation factors.
  * 
  * @author Michael Ferolito
- * @version 2
+ * @version 2.5
  * @since 2
  */
 public class Clay extends Block {
@@ -25,6 +25,7 @@ public class Clay extends Block {
 
 	/**
 	 * super
+	 * 
 	 * @param x2
 	 * @param y2
 	 * @param z2
@@ -37,6 +38,7 @@ public class Clay extends Block {
 
 	/**
 	 * super
+	 * 
 	 * @param i
 	 * @param j
 	 * @param k
@@ -88,7 +90,8 @@ public class Clay extends Block {
 			gl2.glTranslated(0.125, -0.125, 0.125);
 		} else {
 			glut.glutSolidCube(0.5f);
-		}if(super.isSelected) {
+		}
+		if (super.isSelected) {
 			glut.glutWireCube(0.5f);
 		}
 //		gl2.glColor3d(0, .5, 0);

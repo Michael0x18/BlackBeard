@@ -22,10 +22,25 @@ import world.constructs.blocks.Clippable;
  *
  */
 public class Ship {
+	/**
+	 * x coordinate
+	 */
 	public double x = 0;
+	/**
+	 * y coordinate
+	 */
 	public double y = 0;
+	/**
+	 * z coordinate
+	 */
 	public double z = 0;
+	/**
+	 * bearing
+	 */
 	public double rot = 0;
+	/**
+	 * Previous bearing
+	 */
 	public double lastrot = 0;
 
 	/**
@@ -296,6 +311,11 @@ public class Ship {
 		this.rot = bearing;
 	}
 
+	/**
+	 * Sets the velocity
+	 * 
+	 * @param v
+	 */
 	public void setVelocity(String v) {
 		this.velocity = Double.parseDouble(v);
 

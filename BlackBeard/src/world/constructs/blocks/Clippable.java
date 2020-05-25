@@ -8,6 +8,11 @@ import com.jogamp.opengl.util.gl2.GLUT;
 import world.viewport.MVector;
 import world.viewport.Player;
 
+/**
+ * 
+ * @author Michael Ferolito, William Meng, Dennis Huang
+ *
+ */
 public interface Clippable {
 
 	/**
@@ -90,10 +95,26 @@ public interface Clippable {
 	 */
 	public abstract void movez(double d);
 
+	/**
+	 * Selects the block
+	 * 
+	 * @param b
+	 */
 	public abstract void select(boolean b);
-	
+
+	/**
+	 * returns the selection state.
+	 * 
+	 * @return
+	 */
 	public abstract boolean getSelection();
-	
+
+	/**
+	 * TBI (To be implemented)
+	 * 
+	 * @param p
+	 * @return
+	 */
 	public abstract MVector getDirection(Player p);
 
 }

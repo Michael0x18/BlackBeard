@@ -7,7 +7,7 @@ import javax.swing.JMenuBar;
  * A convenience class for setting up the menu UI.
  * 
  * @author Michael Ferolito
- * @version 2
+ * @version 2.5
  * @since Version 2
  */
 public class JoglMenu {

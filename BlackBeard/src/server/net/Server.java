@@ -46,7 +46,7 @@ import server.net.daemons.ServerDaemon;
  * 
  * @author Michael Ferolito
  * @since Version 1
- * @version 2
+ * @version 2.5
  *
  */
 public class Server {

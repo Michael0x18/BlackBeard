@@ -49,15 +49,21 @@ glLoadIdentity();
 gluPerspective(45.0, (GLfloat) W_WIDTH / (GLfloat) W_HEIGHT, 0.1, 1000.0);
 glMatrixMode(GL_MODELVIEW);
 glLoadIdentity();
-
-
-
+*/
 
 /**
  * Represents a panel for drawing. The bulk of the graphics is done here.
+ * Extension of JoglPane for world building.
+ * 
+ * @author William Meng
  */
 public class JoglPaneB extends JoglPane
 		implements GLEventListener, KeyListener, MouseListener, MouseMotionListener, ActionListener {
+
+	/**
+	 * UID
+	 */
+	private static final long serialVersionUID = 6762170465835508649L;
 
 	/**
 	 * Called as if a main method.
@@ -127,6 +133,9 @@ public class JoglPaneB extends JoglPane
 		this.setCursor(new Cursor(Cursor.MOVE_CURSOR));
 	}
 
+	/**
+	 * The builder instance
+	 */
 	private Builder bob = new Builder("TBD");
 
 	/**
@@ -206,8 +215,8 @@ public class JoglPaneB extends JoglPane
 			gl.glClearColor((float) Color.LIGHTSKYBLUE.getRed(), (float) Color.LIGHTSKYBLUE.getGreen(),
 					(float) Color.LIGHTSKYBLUE.getBlue(), 0);
 		else
-			gl.glClearColor((float) Color.BLACK.getRed(), (float) Color.BLACK.getGreen(),
-					(float) Color.BLACK.getBlue(), 0);
+			gl.glClearColor((float) Color.BLACK.getRed(), (float) Color.BLACK.getGreen(), (float) Color.BLACK.getBlue(),
+					0);
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity(); // Set up modelview transform.
 		if (smoothShading) {
@@ -321,6 +330,9 @@ public class JoglPaneB extends JoglPane
 		// char ch = e.getKeyChar(); // Which character was typed.
 	}
 
+	/**
+	 * Different bindings,but same idea as JoglPane.
+	 */
 	public void keyReleased(KeyEvent e) {
 
 		if (e.getKeyCode() == KeyEvent.VK_P) {
@@ -522,7 +534,7 @@ public class JoglPaneB extends JoglPane
 	}
 
 	/**
-	 * Dont call
+	 * Dont call, only for building events.
 	 */
 	public void mouseClicked(MouseEvent evt) {
 		if (evt.getButton() == (MouseEvent.BUTTON1)) {

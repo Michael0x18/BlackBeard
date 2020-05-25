@@ -2,6 +2,7 @@ package world.constants.declaration;
 
 /**
  * contains constants pertaining to the viewport and related statistics.
+ * 
  * @author Michael Ferolito
  *
  */

@@ -2,13 +2,14 @@ package world.constants.declaration;
 
 /**
  * privides basic network commands for reference by the user
+ * 
  * @author Michael Ferolito
  * @version 2
  * @since 2
  *
  */
 public interface NetworkConstants {
-	
+
 	/**
 	 * ping
 	 */
@@ -37,7 +38,5 @@ public interface NetworkConstants {
 	 * return exec
 	 */
 	public static final String EXECUTE_REPLY = "/exec<*>";
-
-	
 
 }

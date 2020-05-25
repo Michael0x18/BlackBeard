@@ -21,15 +21,19 @@ import world.viewport.JoglPane;
 import world.viewport.Player;
 
 /**
+ * Client-sided equivalent of ClientHandler on Server end. Handles most of the
+ * communications between the Server and Client using a Queue and two streams.
+ * Does most of the heavy lifting during TCP communications and any lag can be
+ * blamed on this class.
  * 
- * @author mferolito676
- * @version 2
+ * Actually, some lag can be attributed to the Graphics intensive portions of
+ * JoglPane.
  * 
- *          Client-sided equivalent of ClientHandler on Server end. Handles most
- *          of the communications between the Server and Client using a Queue
- *          and two streams. Does most of the heavy lifting during TCP
- *          communications and any lag can be blamed on this class.
- * @since version 1
+ * @author Michael Ferolito
+ * @version 2.5
+ * 
+ * 
+ * @since Version 1
  * 
  */
 public class ServerListener extends Thread {
@@ -91,7 +95,7 @@ public class ServerListener extends Thread {
 					// System.out.println(msg);
 					if (msg.equals(":ping")) {
 						p.println("-ping");
-						//System.out.println("Ping response");
+						// System.out.println("Ping response");
 						continue;
 					} else if (msg.equals(":bce")) {
 						throw (new BCException());
@@ -122,7 +126,7 @@ public class ServerListener extends Thread {
 					}
 
 				} else {
-					//System.out.println("No messages in");
+					// System.out.println("No messages in");
 				}
 
 			} catch (Exception e) {
@@ -204,13 +208,11 @@ public class ServerListener extends Thread {
 			}
 			Grid.shots = sh2;
 			return;
-		}
-		else if (msg.startsWith(":points")) {
+		} else if (msg.startsWith(":points")) {
 			int newPoints = Integer.parseInt(msg.substring(8));
 			points = newPoints;
-			JoglPane.currentLoader.pointcounter.setText("Points: "+points);
-		}
-		else if (msg.startsWith(":mayday ")) {
+			JoglPane.currentLoader.pointcounter.setText("Points: " + points);
+		} else if (msg.startsWith(":mayday ")) {
 			System.out.println("RECIEVED!!!");
 //			String shipName = msg.substring(8);
 //			for(Ship s : Grid.ships) {

@@ -45,12 +45,15 @@ glLoadIdentity();
 gluPerspective(45.0, (GLfloat) W_WIDTH / (GLfloat) W_HEIGHT, 0.1, 1000.0);
 glMatrixMode(GL_MODELVIEW);
 glLoadIdentity();
-
-
-
+*/
 
 /**
- * Represents a panel for drawing. The bulk of the graphics is done here.
+ * Represents a panel for drawing. The bulk of the graphics is done here. Note
+ * that it implements four interfaces.
+ * 
+ * @author Michael Ferolito, William Meng, Dennis Huang.
+ * @since all time
+ * @version 2.5
  */
 public class JoglPane extends JLayeredPane
 		implements GLEventListener, KeyListener, MouseListener, MouseMotionListener, ActionListener {
@@ -58,14 +61,36 @@ public class JoglPane extends JLayeredPane
 	 * UID- for dumping this into an off heap array??????
 	 */
 	protected static final long serialVersionUID = 6999533994092038855L;
+	/**
+	 * The window this JoglPane is plastered onto.
+	 */
 	protected static JFrame window;
+	/**
+	 * A blank image for trying to hide the cursor.
+	 */
 	protected static Cursor blankCursor;
 //	protected static JPanel pl;
+	/**
+	 * The keys that are currently pressed.
+	 */
 	protected CopyOnWriteArrayList<Integer> Keys = new CopyOnWriteArrayList<Integer>();
+	/**
+	 * The GLU instance. Chained to this EventListerner.
+	 */
 	protected GLU glu = new GLU();
 //	protected boolean isFullScreen;
+	/**
+	 * The sole instance of JoglPane that should be running.
+	 */
 	public static JoglPane currentLoader;
+	/**
+	 * Suggests that the GL renderer expend extra energy towards resolving verticies
+	 * in the middle of faces.
+	 */
 	public static boolean smoothShading = true;
+	/**
+	 * A separate paintComponent panel.
+	 */
 	protected static JPanel pl;
 
 	/**
@@ -101,7 +126,7 @@ public class JoglPane extends JLayeredPane
 				g.fillRect(0, 0, 100, 100);
 			}
 		};
-		 window.add(pl);
+		window.add(pl);
 
 		window.setContentPane(j);
 		window.pack();
@@ -136,14 +161,36 @@ public class JoglPane extends JLayeredPane
 		this.setCursor(new Cursor(Cursor.MOVE_CURSOR));
 	}
 
+	/**
+	 * The GLPanel everything is drawn on.
+	 */
 	protected GLJPanel display;
+	/**
+	 * The animation timer. Doesn't skip frames, unlike Processing's built in one.
+	 */
 	Timer animationTimer;
+	/**
+	 * Rotational aspects for debugging.
+	 */
 	protected float rotateX, rotateY; // rotation amounts about axes, controlled
-									// by keyboard
+
+	// by keyboard
+	/**
+	 * The linked Player instance.
+	 */
 	protected Player c;
 //	protected SensorBlock sb;
+	/**
+	 * The JMenuBar attached to this Instance.
+	 */
 	public JMenuBar jmb;
+	/**
+	 * The point counter item.
+	 */
 	public JMenuItem pointcounter = new JMenuItem("Points: ");
+	/**
+	 * The File menu. Does nothing now.
+	 */
 	protected JMenu file;
 
 	/**
@@ -205,12 +252,21 @@ public class JoglPane extends JLayeredPane
 
 	// --------------- Methods of the GLEventListener interface -----------
 
+	/**
+	 * The GLUT instance for primitives.
+	 */
 	protected GLUT glut = new GLUT(); // for drawing the teapot
+	/**
+	 * The frame buffer.
+	 */
 	protected double xt;
 	/**
 	 * true if escape has been pressed.
 	 */
 	boolean disabled;
+	/**
+	 * true if the window is fullscreen.
+	 */
 	protected boolean fullscreen;
 
 	/**
@@ -220,21 +276,19 @@ public class JoglPane extends JLayeredPane
 		if (!ObjectLoaderV_C.loaded) {
 			return;
 		}
-		
-		
-		
+
 		GL2 gl = drawable.getGL().getGL2();
 		if (this.c.getPosition().y > 0)
 			gl.glClearColor((float) Color.LIGHTSKYBLUE.getRed(), (float) Color.LIGHTSKYBLUE.getGreen(),
 					(float) Color.LIGHTSKYBLUE.getBlue(), 0);
 		else
-			gl.glClearColor((float) Color.BLACK.getRed(), (float) Color.BLACK.getGreen(),
-					(float) Color.BLACK.getBlue(), 0);
+			gl.glClearColor((float) Color.BLACK.getRed(), (float) Color.BLACK.getGreen(), (float) Color.BLACK.getBlue(),
+					0);
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity(); // Set up modelview transform.
-		if(smoothShading) {
+		if (smoothShading) {
 			gl.glEnable(GL2.GL_SMOOTH);
-		}else {
+		} else {
 			gl.glEnable(GL2.GL_FLAT);
 		}
 		c.act(Grid.world);
@@ -244,12 +298,12 @@ public class JoglPane extends JLayeredPane
 		gl.glRotatef(rotateX, 1, 0, 0);
 
 		GL2 gl2 = gl.getGL2();
-		//gl.glLoadIdentity();
+		// gl.glLoadIdentity();
 		gl.glEnable(GL2.GL_LIGHTING);
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_NORMALIZE);
-		 float[] position = { 0, 20, 0, 1 };
-		float[] positions = { (float) c.getPosition().x-12, (float) c.getPosition().y, (float) c.getPosition().z, 1 };
+		float[] position = { 0, 20, 0, 1 };
+		float[] positions = { (float) c.getPosition().x - 12, (float) c.getPosition().y, (float) c.getPosition().z, 1 };
 		float[] positiona = { (float) c.getPosition().x, (float) c.getPosition().y, (float) c.getPosition().z, 1 };
 		gl2.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, position, 0);
 		gl2.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, position, 0);
@@ -260,34 +314,32 @@ public class JoglPane extends JLayeredPane
 		gl2.glEnable(GL2.GL_LIGHT2);
 		gl2.glEnable(GL2.GL_LIGHT3);
 
-		//gl.glLoadIdentity();
+		// gl.glLoadIdentity();
 		for (Clippable c : Grid.world) {
 			c.draw(glut, glu, gl, gl.getGL2());
 		}
 		gl.glColor4d(Color.ROYALBLUE.getRed(), Color.ROYALBLUE.getGreen(), Color.ROYALBLUE.getBlue(), 0.5);
-		//gl.glLoadIdentity();
+		// gl.glLoadIdentity();
 		gl.glTranslated(0, -50.5, 0);
 		glut.glutSolidCube(100);
 		gl.glTranslated(0, 50.5, 0);
 		for (Ship s : Grid.ships) {
 			s.draw(glut, glu, gl, gl2);
 		}
-		//gl.glLoadIdentity();
+		// gl.glLoadIdentity();
 		for (StructPlayer p : Grid.players) {
 			OtherPlayer.draw(p, glut, glu, gl, gl2);
 		}
-		//gl.glLoadIdentity();
-		for(Projectile p : Grid.shots) {
+		// gl.glLoadIdentity();
+		for (Projectile p : Grid.shots) {
 			p.draw(glut, glu, gl, gl2);
 		}
-		
-		if(Client.listener == null) {
+
+		if (Client.listener == null) {
 			PlayerTemplate.draw(gl, gl2, glu, glut);
 		}
 
-		
-		
-		//pl.repaint();
+		// pl.repaint();
 	}
 
 	/**
@@ -345,6 +397,9 @@ public class JoglPane extends JLayeredPane
 		// char ch = e.getKeyChar(); // Which character was typed.
 	}
 
+	/**
+	 * Removes from Keys list, and some extra stuff.
+	 */
 	public void keyReleased(KeyEvent e) {
 
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -378,7 +433,7 @@ public class JoglPane extends JLayeredPane
 			}
 		} else if (e.getKeyCode() == KeyEvent.VK_G)
 			System.out.println("Flying is disabled");
-			//c.toggleGravity();
+		// c.toggleGravity();
 		while (Keys.contains(Integer.valueOf(e.getKeyCode())))
 			Keys.remove(Integer.valueOf(e.getKeyCode()));
 		repaint();
@@ -386,8 +441,14 @@ public class JoglPane extends JLayeredPane
 
 	// --------------------------- animation support ---------------------------
 
+	/**
+	 * The frame Number.
+	 */
 	int frameNumber = 0;
 
+	/**
+	 * true if the animationTimer is running
+	 */
 	protected boolean animating;
 
 	/**
@@ -424,7 +485,7 @@ public class JoglPane extends JLayeredPane
 	}
 
 	/**
-	 * NO CALL!
+	 * NO CALL! This gets called by the animation timer and nothing else.
 	 */
 	public void actionPerformed(ActionEvent evt) {
 		updateFrame();
@@ -477,11 +538,18 @@ public class JoglPane extends JLayeredPane
 
 	// ---------------------- support for mouse events ----------------------
 
+	/**
+	 * Start of drag operation
+	 */
 	protected boolean dragging; // is a drag operation in progress?
 
-	@SuppressWarnings("unused")
+	/**
+	 * Start location of Mouse x,y
+	 */
 	protected int startX, startY; // starting location of mouse during drag
-	@SuppressWarnings("unused")
+	/**
+	 * Previous location of mouse during drag.
+	 */
 	protected int prevX, prevY; // previous location of mouse during drag
 
 	/**

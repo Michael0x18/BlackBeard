@@ -5,7 +5,7 @@ package world.viewport;
  * This is not bloated like processing's which has a 2D mode. For this one, if
  * you want a 2D mode, LEAVE THE Z VALUE BLANK!
  * 
- * @author Michael Ferolito
+ * @author Michael Ferolito, additions by William Meng.
  * 
  *
  */
@@ -79,6 +79,7 @@ public class MVector {
 
 	/**
 	 * makes da magnitude 1
+	 * 
 	 * @return
 	 */
 	public MVector normalize() {
@@ -90,6 +91,7 @@ public class MVector {
 
 	/**
 	 * multiplies and returns this by d.
+	 * 
 	 * @param d
 	 * @return
 	 */
@@ -103,18 +105,20 @@ public class MVector {
 
 	/**
 	 * copy factory
+	 * 
 	 * @return
 	 */
 	public MVector copy() {
 		return new MVector(x, y, z);
 	}
-	
+
 	public double[] getPosition() {
-		return new double[] {x,y,z};
+		return new double[] { x, y, z };
 	}
-	
+
 	/**
 	 * adds the two and returns da result.
+	 * 
 	 * @param u
 	 * @param v
 	 * @return
@@ -127,6 +131,7 @@ public class MVector {
 
 	/**
 	 * Like PApplet.map, but with DOUBLES!
+	 * 
 	 * @param value
 	 * @param istart
 	 * @param istop
@@ -137,12 +142,12 @@ public class MVector {
 	static public final double map(double value, double istart, double istop, double ostart, double ostop) {
 		return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
 	}
-	
+
 	static public final MVector fromAngles(double a1, double a2) {
 		double xc = (Math.cos(a1) * Math.cos(a2));
 		double zc = (Math.sin(a1) * Math.cos(a2));
 		double yc = Math.sin(a2);
-		return new MVector(xc,yc,zc);
+		return new MVector(xc, yc, zc);
 	}
 
 }

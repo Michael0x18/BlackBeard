@@ -17,32 +17,91 @@ import server.util.MVector;
 /**
  * The workhorse of the Server backend, the ClientHandler is the class that
  * almost exclusively talks to the client. It implements an atomic style of
- * threading. See the thicck paragraph on the Server doc for more informaion.
+ * threading. See the thicck paragraph on the Server doc for more information.
  * 
  * @author Michael Ferolito
+ * @version 2.5
+ * @since Before Version 1.
  *
  */
 public class ClientHandler extends Thread {
+	/**
+	 * The socket
+	 */
 	private Socket socket;
+	/**
+	 * Connected to byteStream
+	 */
 	private PrintWriter out;
+	/**
+	 * Connected to byteStream
+	 */
 	private BufferedReader in;
+	/**
+	 * Messages to be sent
+	 */
 	private Queue<String> messageQueue = new LinkedList<String>();
+	/**
+	 * Everything received.
+	 */
 	private Queue<String> inQueue = new LinkedList<String>();
+	/**
+	 * last ping
+	 */
 	private int ping = 0;
+	/**
+	 * Used internally
+	 */
 	private int pingCounter = 0;
+	/**
+	 * Used internally
+	 */
 	private StopWatch pingTimer;
+	/**
+	 * Used internally
+	 */
 	private boolean stopped = false;
+	/**
+	 * Used internally
+	 */
 	private boolean pinging = false;
+	/**
+	 * Used internally
+	 */
 	private int missedPings = 0;
+	/**
+	 * Used internally
+	 */
 	private int runTime = 0;
+	/**
+	 * Used internally
+	 */
 	private double myX = 0;
+	/**
+	 * Used internally
+	 */
 	private double myY = 0;
+	/**
+	 * Used internally
+	 */
 	private double myZ = 0;
 	// public static synchronized nextOtherPlayer
 	// private boolean printCoords;
+	/**
+	 * Used internally
+	 */
 	private int playerHP;
+	/**
+	 * Used internally
+	 */
 	private double myTilt;
+	/**
+	 * Used internally
+	 */
 	private double myPan;
+	/**
+	 * Used internally
+	 */
 	public int points = 0;
 
 	/**
@@ -89,11 +148,11 @@ public class ClientHandler extends Thread {
 
 			try {
 				/// Server.println(""+in.ready());
-				//System.out.println("trying read");
+				// System.out.println("trying read");
 				while (in.ready()) { // Read all messages from stream to Queue
 					inQueue.add(in.readLine());
 				}
-			//	System.out.println("Read finished");
+				// System.out.println("Read finished");
 				if (inQueue.size() == 0) {
 					// System.out.println("There is something going on with the client.");
 				}
@@ -128,9 +187,9 @@ public class ClientHandler extends Thread {
 					pinging = false;
 				}
 
-				//System.out.println("processing");
+				// System.out.println("processing");
 				this.processEvents();
-				//System.out.println("done");
+				// System.out.println("done");
 
 				while (inQueue.contains(null))
 					inQueue.remove(null);
@@ -145,14 +204,15 @@ public class ClientHandler extends Thread {
 //				}
 					if (runTime % 15 == 0) {
 						messageQueue.add(":getcoords");
-						messageQueue.add(":points "+points);
+						messageQueue.add(":points " + points);
 					}
-					//System.out.println("sending coordinates");
+					// System.out.println("sending coordinates");
 					if (runTime % 15 == 0) {
 						String otherCoords = "";
 						for (String s : Server.playerCoords.keySet()) {
 							if (!s.equals(this.socket.getInetAddress().getHostAddress())
-									&& Server.playerCoords.get(s) != null && !Server.playerCoords.get(s).contains("null")) {
+									&& Server.playerCoords.get(s) != null
+									&& !Server.playerCoords.get(s).contains("null")) {
 								otherCoords += "`" + s + " " + Server.playerCoords.get(s);
 							}
 						}
@@ -162,7 +222,7 @@ public class ClientHandler extends Thread {
 						}
 					}
 
-					//System.out.println("Crabbing coordinates.");
+					// System.out.println("Crabbing coordinates.");
 					Iterator<String> it = inQueue.iterator();
 					while (it.hasNext()) {
 						String str = (String) it.next();
@@ -177,18 +237,18 @@ public class ClientHandler extends Thread {
 					if (Server.verbose)
 						e.printStackTrace();
 				}
-				//System.out.println(messageQueue.size());
+				// System.out.println(messageQueue.size());
 				synchronized (messageQueue) {
-					//System.out.println("Inside sync");
+					// System.out.println("Inside sync");
 					String msg;
 					while ((msg = messageQueue.poll()) != null) { // Send all messages
-						//String msg = messageQueue.poll();
-						
-						//System.out.println("sending message: "+msg);
+						// String msg = messageQueue.poll();
+
+						// System.out.println("sending message: "+msg);
 						if (msg != null) {
-							//System.out.println("before IO");
+							// System.out.println("before IO");
 							out.println(msg);
-							//System.out.println("After IO");
+							// System.out.println("After IO");
 							if (msg.equals(":disc") || msg.equals(":kill")) {
 								this.stopped = true;
 							}
@@ -198,15 +258,15 @@ public class ClientHandler extends Thread {
 							}
 						}
 					}
-					if(messageQueue.size() > 0) {
+					if (messageQueue.size() > 0) {
 						System.out.println("std::err<<\"!\"");
 						System.out.println(messageQueue.poll());
 					}
-				//	System.out.println("done");
+					// System.out.println("done");
 				}
-				//System.out.println("FINISHED CYCLE");
+				// System.out.println("FINISHED CYCLE");
 				inQueue.clear();
-				
+
 				messageQueue.clear();
 
 			} catch (Exception e) {
@@ -246,7 +306,7 @@ public class ClientHandler extends Thread {
 	 * @param e
 	 */
 	public synchronized void addMessage(String e, String source) {
-		//System.out.println("Adding message:" + e+" from "+source);
+		// System.out.println("Adding message:" + e+" from "+source);
 		messageQueue.add(e);
 	}
 
@@ -281,7 +341,7 @@ public class ClientHandler extends Thread {
 	 * @param e
 	 */
 	public void sendEvent(ExecutionEvent e) {
-		this.addMessage(e.getMessage(),"");
+		this.addMessage(e.getMessage(), "");
 
 	}
 
@@ -292,13 +352,14 @@ public class ClientHandler extends Thread {
 	public void hit() {
 		playerHP--;
 		if (playerHP <= 0) {
-			this.addMessage(":die","internal hit");
+			this.addMessage(":die", "internal hit");
 		}
 	}
 
 	/**
-	 * Should be overridden in subclasses. Provides infastructure for handling
+	 * Should be overridden in subclasses. Provides infrastructure for handling
 	 * events drawn from the queues that do not need to be immediately dealt with.
+	 * @since Version 2.5
 	 */
 	public void processEvents() {
 		// add code for handling front-end interactions here and here only.
@@ -321,29 +382,31 @@ public class ClientHandler extends Thread {
 				Server.playerCoords.put(this.socket.getInetAddress().getHostAddress(), msg.substring(7));
 			}
 			if (msg.startsWith(":port")) {
-				if(Server.shipQuick.get(msg.split(" ")[1])==null)return;
+				if (Server.shipQuick.get(msg.split(" ")[1]) == null)
+					return;
 				Server.shipQuick.get(msg.split(" ")[1]).aceleft(0.1);
 			}
 			if (msg.startsWith(":star")) {
-				if(Server.shipQuick.get(msg.split(" ")[1])==null)return;
+				if (Server.shipQuick.get(msg.split(" ")[1]) == null)
+					return;
 				Server.shipQuick.get(msg.split(" ")[1]).aceright(0.1);
 			}
 			if (msg.startsWith(":acel")) {
-				if(Server.shipQuick.get(msg.split(" ")[1])==null)return;
+				if (Server.shipQuick.get(msg.split(" ")[1]) == null)
+					return;
 				Server.shipQuick.get(msg.split(" ")[1]).accelerate(0.01);
 			}
 			if (msg.startsWith(":deac")) {
-				//\u000d if(Server.shipQuick.get(msg.split(" ")[1])==null)return; //An executable comment?!
+				// \u000d if (Server.shipQuick.get(msg.split(" ")[1]) == null)
+					return; // An executable comment?!
 				Server.shipQuick.get(msg.split(" ")[1]).accelerate(-0.01);
 			}
 			if (msg.startsWith(":shootEvent")) {
 				System.out.println("Registered On Server");
-				Server.shots.add(new MusketShot(new MVector(myX, myY, myZ), MVector.fromAngles(myPan, myTilt),this));
+				Server.shots.add(new MusketShot(new MVector(myX, myY, myZ), MVector.fromAngles(myPan, myTilt), this));
 			}
 		}
 
 	}
-	
-	
 
 }

@@ -7,14 +7,13 @@ import server.net.Server;
 import server.net.daemons.Daemon;
 
 /**
+ * The ship is the Server equivalent of a UNIX daemon. It is created as a daemon
+ * to prevent the JVM from continuing execution once the event, graphics, main,
+ * and network Threads have shut down.
  * 
- * @author michaelonblue
- * @since version 2
- * @version 2 The ship is the Server equivalent of a UNIX daemon. It is created
- *          as a daemon to prevent the JVM from continuing execution once the
- *          event, graphics, main, and network Threads have shut down.
- * 
- *
+ * @author Michael Ferolito
+ * @since Version 2
+ * @version 2.5
  */
 public class Ship extends Daemon {
 	private boolean sunk = false;
@@ -206,7 +205,7 @@ public class Ship extends Daemon {
 				}
 				y = -1000;
 				sunk = true;
-				
+
 			}
 
 		}.start();
@@ -233,6 +232,10 @@ public class Ship extends Daemon {
 		turned += degrees;
 	}
 
+	/**
+	 * Causes the ship to accelerate by the parameter.
+	 * @param a
+	 */
 	public synchronized void accelerate(double a) {
 		// velocity += a;
 		velocity += a;
@@ -245,6 +248,10 @@ public class Ship extends Daemon {
 		// counter = 0;
 	}
 
+	/**
+	 * Adds 'a' to the left rotational velocity vector
+	 * @param a
+	 */
 	public synchronized void aceleft(double a) {
 		v += a;
 		if (v > 0.2) {
@@ -252,6 +259,10 @@ public class Ship extends Daemon {
 		}
 	}
 
+	/**
+	 * Adds 'a' to the right rotational velocity vector
+	 * @param a
+	 */
 	public synchronized void aceright(double a) {
 		v -= a;
 		if (v < -0.2) {

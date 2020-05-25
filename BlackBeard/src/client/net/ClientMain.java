@@ -10,10 +10,10 @@ import world.fx._Mixer;
  * platform. When running this as a cross platform java application, please run
  * from ServerMain, not MacServerMain. Since this is java jdk 8, this class
  * depends on the com.apple.eawt classes.
- * 
+ * Launches the Server. UIManager handling is set up inside Server.
  * @author Michael Ferolito
- * @version 2
- * @since 1 Launches the Server. UIManager handling is set up inside Server.
+ * @version 2.5
+ * @since Version 1 
  *        
  * 
  */

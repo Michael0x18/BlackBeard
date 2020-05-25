@@ -15,7 +15,8 @@ import world.constructs.blocks.Clippable;
  * The player, extension of camera for collisions.
  * 
  * @author Michael Ferolito
- *
+ * @since Before Version 1
+ * @version 2.5
  */
 public class Player extends Camera {
 	private double w, h, d;
@@ -33,7 +34,7 @@ public class Player extends Camera {
 	 * dz
 	 */
 	public double dz;
-	
+
 	@SuppressWarnings("unused")
 	private CopyOnWriteArrayList<Clippable> br3 = new CopyOnWriteArrayList<Clippable>();
 	/**
@@ -50,6 +51,7 @@ public class Player extends Camera {
 
 	/**
 	 * Creates a new default player.
+	 * 
 	 * @param joglPane
 	 */
 	public Player(JoglPane joglPane) {
@@ -222,8 +224,8 @@ public class Player extends Camera {
 			MVector position = new MVector();
 			position.x = this.position.x;
 			position.z = this.position.z;
-			position.y = this.position.y-0.1;
-			//position.z = -position.z;
+			position.y = this.position.y - 0.1;
+			// position.z = -position.z;
 			position.x -= (s.x);
 			position.z -= (s.z);
 //			position.x = Math.cos(rad) * (position.x - s.x) - Math.sin(rad) * (position.z - s.z) + s.x;///////////////////////////////////
@@ -248,8 +250,7 @@ public class Player extends Camera {
 //			position.x = x;
 			// System.out.println((int)(position.x*100)/100.0+" "+(int)(s.x*100)/100.0);
 
-			
-			if(Math.abs(this.position.x) <= 2 && Math.abs(this.position.z) <= 14) {
+			if (Math.abs(this.position.x) <= 2 && Math.abs(this.position.z) <= 14) {
 				hit2 = true;
 			}
 			for (Clippable b : s.blocks) {
@@ -389,37 +390,34 @@ public class Player extends Camera {
 //			position.z = -position.z;
 
 			this.position = position.copy();
-			
-			
+
 //			Rectangle rect = new Rectangle((int)(s.x-2)*100,(int)s.y-16*100,400,3200);
 //			int x = (int)this.position.x * 100;
 //			int y = (int)this.position.y * 100;
 //			int z = (int)this.position.z * 100;
-			
-			
+
 //			if(hit2) {
 //				lastShip = s;
 //				time = 200;
 //			}
-			//lastShip = s;
+			// lastShip = s;
 			if (hit) {
-				//System.out.println("true");
+				// System.out.println("true");
 				lastShip = s;
-				//time = 1000;
+				// time = 1000;
 				this.velocity.x = this.velocity.x + (s.velocity * Math.cos(rad)) * (1.0 / friction);
 				this.velocity.z = this.velocity.z + (s.velocity * Math.sin(rad)) * (1.0 / friction);
-				if (Math.abs(this.velocity.x - s.velocity * Math.cos(rad)) < VCT ) {
+				if (Math.abs(this.velocity.x - s.velocity * Math.cos(rad)) < VCT) {
 					this.velocity.x = s.velocity * Math.cos(rad) / friction;
 				}
 				if (Math.abs(this.velocity.z - s.velocity * Math.sin(rad)) < VCT) {
 					this.velocity.z = s.velocity * Math.sin(rad) / friction;
 				}
 				Point p = new Point(this.position.x, this.position.z);
-				this.rotate_point((float)s.x, (float)(s.z), (float)(Math.toRadians(s.lastrot))*4f, p);
-				this.pan += (float)(Math.toRadians(s.lastrot))*4f;
+				this.rotate_point((float) s.x, (float) (s.z), (float) (Math.toRadians(s.lastrot)) * 4f, p);
+				this.pan += (float) (Math.toRadians(s.lastrot)) * 4f;
 				this.position.x = p.x;
 				this.position.z = p.y;
-				
 
 //				this.position.x -= s.x;
 //				this.position.z -= s.z;
@@ -427,7 +425,7 @@ public class Player extends Camera {
 //				newz = this.position.z * Math.cos(s.lastrot) + this.position.x * Math.sin(-s.lastrot);
 //				this.position.x += s.x;
 //				this.position.z += s.z;
-				
+
 //				
 
 //				// this.setZeroVelocity(s.velocity*Math.cos(rad),s.velocity*Math.sin(rad));
@@ -438,9 +436,10 @@ public class Player extends Camera {
 //				double sz = s.velocity*Math.cos(rad);
 
 				/**
-				* this.velocity.x += (this.position.x-s.x) * Math.cos(Math.toRadians(s.lastrot))*(1.0/friction)/6;
-				* this.velocity.z += (this.position.z-s.z) * Math.sin(Math.toRadians(s.lastrot))*(1.0/friction)/6;
-				*/
+				 * this.velocity.x += (this.position.x-s.x) *
+				 * Math.cos(Math.toRadians(s.lastrot))*(1.0/friction)/6; this.velocity.z +=
+				 * (this.position.z-s.z) * Math.sin(Math.toRadians(s.lastrot))*(1.0/friction)/6;
+				 */
 //				r = Math
 //						.sqrt(((this.position.x - (s.x)) * ((this.position.x - (s.x))) + (this.position.z - s.z) * (this.position.z - (s.z))));
 //				if (Double.isNaN(r)) {
@@ -454,7 +453,7 @@ public class Player extends Camera {
 //				this.velocity.z += sz * Math.cos(rad) + sx * Math.sin(-rad)*(1.0/friction);
 
 			}
-			
+
 		}
 
 		// if (!grounded)
@@ -492,6 +491,7 @@ public class Player extends Camera {
 
 	/**
 	 * Oh no you don't. Leave this alone.
+	 * 
 	 * @param e
 	 * @param f
 	 */
@@ -503,6 +503,7 @@ public class Player extends Camera {
 
 	/**
 	 * Returns the thicckness of the player
+	 * 
 	 * @return
 	 */
 	public double getWidth() {
@@ -511,6 +512,7 @@ public class Player extends Camera {
 
 	/**
 	 * returns the height of the player
+	 * 
 	 * @return
 	 */
 	public double getHeight() {
@@ -519,29 +521,29 @@ public class Player extends Camera {
 
 	/**
 	 * returns the obesity rating of the Player.
+	 * 
 	 * @return
 	 */
 	public double getDepth() {
 		return d;
 	}
-	
-	Point rotate_point(float cx,float cy,float angle,Point p)
-	{
-	  float s = (float) sin(angle);
-	  float c = (float) cos(angle);
 
-	  // translate point back to origin:
-	  p.x -= cx;
-	  p.y -= cy;
+	Point rotate_point(float cx, float cy, float angle, Point p) {
+		float s = (float) sin(angle);
+		float c = (float) cos(angle);
 
-	  // rotate point
-	  double xnew = p.x * c - p.y * s;
-	  double ynew = p.x * s + p.y * c;
+		// translate point back to origin:
+		p.x -= cx;
+		p.y -= cy;
 
-	  // translate point back:
-	  p.x = (xnew + cx);
-	  p.y = (ynew + cy);
-	  return p;
+		// rotate point
+		double xnew = p.x * c - p.y * s;
+		double ynew = p.x * s + p.y * c;
+
+		// translate point back:
+		p.x = (xnew + cx);
+		p.y = (ynew + cy);
+		return p;
 	}
 
 	/**
@@ -566,6 +568,7 @@ public class Player extends Camera {
 
 	/**
 	 * Fancy getPan();
+	 * 
 	 * @return
 	 */
 	public double getAngle() {
@@ -573,162 +576,81 @@ public class Player extends Camera {
 	}
 
 	/**
-	 * Fancy getTilt();
-	 * <head>
-<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">ACCELERATE</button>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<style>
-canvas {
-    border:1px solid #d3d3d3;
-    background-color: #f1f1f1;
-}
-</style>
-</head>
-<body onload="startGame()">
-<script>
-var myGamePiece;
-var myObstacles = [];
-var myScore;
-window.addEventListener('keydown',this.check,false);
-window.addEventListener('keyup',this.check2,false);
-function check(e) {
-    accelerate(-0.2);
-}
-function check2(e){
-	accelerate(0.2)
-}
-function startGame() {
-    myGamePiece = new component(30, 30, "red", 10, 120);
-    myGamePiece.gravity = 0.05;
-    myScore = new component("30px", "Consolas", "black", 280, 40, "text");
-    myGameArea.start();
-}
-var myGameArea = {
-    canvas : document.createElement("canvas"),
-    start : function() {
-        this.canvas.width = 480;
-        this.canvas.height = 270;
-        this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.frameNo = 0;
-        this.interval = setInterval(updateGameArea, 20);
-        },
-    clear : function() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-}
-function component(width, height, color, x, y, type) {
-    this.type = type;
-    this.score = 0;
-    this.width = width;
-    this.height = height;
-    this.speedX = 00;
-    this.speedY = 0;    
-    this.x = x;
-    this.y = y;
-    this.gravity = 0;
-    this.gravitySpeed = 0;
-    this.update = function() {
-        ctx = myGameArea.context;
-        if (this.type == "text") {
-            ctx.font = this.width + " " + this.height;
-            ctx.fillStyle = color;
-            ctx.fillText(this.text, this.x, this.y);
-        } else {
-            ctx.fillStyle = color;
-            ctx.fillRect(this.x, this.y, this.width, this.height);
-        }
-    }
-    this.newPos = function() {
-        this.gravitySpeed += this.gravity;
-        this.x += this.speedX;
-        this.y += this.speedY + this.gravitySpeed;
-        this.hitBottom();
-    }
-    this.hitBottom = function() {
-        var rockbottom = myGameArea.canvas.height - this.height;
-        if (this.y > rockbottom) {
-            this.y = rockbottom;
-            this.gravitySpeed = 0;
-        }
-    }
-    this.crashWith = function(otherobj) {
-        var myleft = this.x;
-        var myright = this.x + (this.width);
-        var mytop = this.y;
-        var mybottom = this.y + (this.height);
-        var otherleft = otherobj.x;
-        var otherright = otherobj.x + (otherobj.width);
-        var othertop = otherobj.y;
-        var otherbottom = otherobj.y + (otherobj.height);
-        var crash = true;
-        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
-            crash = false;
-        }
-        return crash;
-    }
-}
-function updateGameArea() {
-    var x, height, gap, minHeight, maxHeight, minGap, maxGap;
-    for (i = 0; i < myObstacles.length; i += 1) {
-        if (myGamePiece.crashWith(myObstacles[i])) {
-            return;
-        } 
-    }
-    myGameArea.clear();
-    myGameArea.frameNo += 1;
-    if (myGameArea.frameNo == 1 || everyinterval(150)) {
-        x = myGameArea.canvas.width;
-        minHeight = 20;
-        maxHeight = 200;
-        height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
-        minGap = 50;
-        maxGap = 200;
-        gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
-        myObstacles.push(new component(10, height, "green", x, 0));
-        myObstacles.push(new component(10, x - height - gap, "green", x, height + gap));
-    }
-    for (i = 0; i < myObstacles.length; i += 1) {
-        myObstacles[i].x += -1;
-        myObstacles[i].update();
-    }
-    myScore.text="SCORE: " + myGameArea.frameNo;
-    myScore.update();
-    myGamePiece.newPos();
-    myGamePiece.update();
-}
-function everyinterval(n) {
-    if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
-    return false;
-}
-function accelerate(n) {
-    myGamePiece.gravity = n;
-}
-</script>
-<br>
-<p>Use the ACCELERATE button to stay in the air</p>
-<p>How long can you stay alive?</p>
-</body>
+	 * Fancy getTilt(); <head> <button onmousedown="accelerate(-0.2)" onmouseup=
+	 * "accelerate(0.05)">ACCELERATE</button>
+	 * <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	 * <style> canvas { border:1px solid #d3d3d3; background-color: #f1f1f1; }
+	 * </style> </head> <body onload="startGame()"> <script> var myGamePiece; var
+	 * myObstacles = []; var myScore;
+	 * window.addEventListener('keydown',this.check,false);
+	 * window.addEventListener('keyup',this.check2,false); function check(e) {
+	 * accelerate(-0.2); } function check2(e){ accelerate(0.2) } function
+	 * startGame() { myGamePiece = new component(30, 30, "red", 10, 120);
+	 * myGamePiece.gravity = 0.05; myScore = new component("30px", "Consolas",
+	 * "black", 280, 40, "text"); myGameArea.start(); } var myGameArea = { canvas :
+	 * document.createElement("canvas"), start : function() { this.canvas.width =
+	 * 480; this.canvas.height = 270; this.context = this.canvas.getContext("2d");
+	 * document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+	 * this.frameNo = 0; this.interval = setInterval(updateGameArea, 20); }, clear :
+	 * function() { this.context.clearRect(0, 0, this.canvas.width,
+	 * this.canvas.height); } } function component(width, height, color, x, y, type)
+	 * { this.type = type; this.score = 0; this.width = width; this.height = height;
+	 * this.speedX = 00; this.speedY = 0; this.x = x; this.y = y; this.gravity = 0;
+	 * this.gravitySpeed = 0; this.update = function() { ctx = myGameArea.context;
+	 * if (this.type == "text") { ctx.font = this.width + " " + this.height;
+	 * ctx.fillStyle = color; ctx.fillText(this.text, this.x, this.y); } else {
+	 * ctx.fillStyle = color; ctx.fillRect(this.x, this.y, this.width, this.height);
+	 * } } this.newPos = function() { this.gravitySpeed += this.gravity; this.x +=
+	 * this.speedX; this.y += this.speedY + this.gravitySpeed; this.hitBottom(); }
+	 * this.hitBottom = function() { var rockbottom = myGameArea.canvas.height -
+	 * this.height; if (this.y > rockbottom) { this.y = rockbottom;
+	 * this.gravitySpeed = 0; } } this.crashWith = function(otherobj) { var myleft =
+	 * this.x; var myright = this.x + (this.width); var mytop = this.y; var mybottom
+	 * = this.y + (this.height); var otherleft = otherobj.x; var otherright =
+	 * otherobj.x + (otherobj.width); var othertop = otherobj.y; var otherbottom =
+	 * otherobj.y + (otherobj.height); var crash = true; if ((mybottom < othertop)
+	 * || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+	 * crash = false; } return crash; } } function updateGameArea() { var x, height,
+	 * gap, minHeight, maxHeight, minGap, maxGap; for (i = 0; i <
+	 * myObstacles.length; i += 1) { if (myGamePiece.crashWith(myObstacles[i])) {
+	 * return; } } myGameArea.clear(); myGameArea.frameNo += 1; if
+	 * (myGameArea.frameNo == 1 || everyinterval(150)) { x =
+	 * myGameArea.canvas.width; minHeight = 20; maxHeight = 200; height =
+	 * Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight); minGap = 50;
+	 * maxGap = 200; gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+	 * myObstacles.push(new component(10, height, "green", x, 0));
+	 * myObstacles.push(new component(10, x - height - gap, "green", x, height +
+	 * gap)); } for (i = 0; i < myObstacles.length; i += 1) { myObstacles[i].x +=
+	 * -1; myObstacles[i].update(); } myScore.text="SCORE: " + myGameArea.frameNo;
+	 * myScore.update(); myGamePiece.newPos(); myGamePiece.update(); } function
+	 * everyinterval(n) { if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
+	 * return false; } function accelerate(n) { myGamePiece.gravity = n; } </script>
+	 * <br>
+	 * <p>
+	 * Use the ACCELERATE button to stay in the air
+	 * </p>
+	 * <p>
+	 * How long can you stay alive?
+	 * </p>
+	 * </body>
 	 */
 	public double getAngle2() {
 		return this.getTilt();
 	}
-	
+
 	public void selection() {
 		MVector Position = getPosition();
-		for(double reach = 0; reach <= 1; reach += 0.25) {
-			for(int i = 0; i < Grid.world.size(); i++) {
-				if(Grid.world.get(i).containsPoint(Position.x +reach*Math.cos(getPan()),
-						Position.y +reach*Math.tan(getTilt()), Position.z +reach*Math.sin(getPan()))) {
+		for (double reach = 0; reach <= 1; reach += 0.25) {
+			for (int i = 0; i < Grid.world.size(); i++) {
+				if (Grid.world.get(i).containsPoint(Position.x + reach * Math.cos(getPan()),
+						Position.y + reach * Math.tan(getTilt()), Position.z + reach * Math.sin(getPan()))) {
 					Grid.world.get(i).select(true);
-					
-				} 
-				else {
+
+				} else {
 					Grid.world.get(i).select(false);
 				}
 			}
 		}
 	}
-
 
 }

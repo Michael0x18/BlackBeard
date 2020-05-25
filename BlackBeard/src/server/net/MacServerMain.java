@@ -7,7 +7,8 @@ package server.net;
  * from ServerMain, not MacServerMain. Since this is java jdk 8, this class
  * depends on the com.apple.eawt classes.
  * 
- * Note that this should be called only by the MacOSX app native launcher toolkit.
+ * Note that this should be called only by the MacOSX app native launcher
+ * toolkit.
  * 
  * IMPORTANT INFO: WHEN BUILDING A JAR FILE: DO NOT SPECITY THIS AS THE TARGET!!
  * 
@@ -28,7 +29,7 @@ public class MacServerMain {
 	public static void main(String[] args) throws InterruptedException {
 		// System.out.println(System.getProperty("os.name"));
 		if (System.getProperty("os.name").contains("Mac")) {
-			
+
 		}
 		Server.launch();
 		Thread.sleep(1000);

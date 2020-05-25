@@ -21,12 +21,14 @@ import javax.swing.Timer;
 
 /**
  * Class ClientConnector extens JFrame implements KeyListener, ActionListener
+ * Window title is "Connection Utility" provides a stripped-down GUI for
+ * connections by explicit IP. The window is a widget based GUI made using
+ * swing. It contains extra functionality for plugins later to the project
+ * launcher.
  * 
- * @author mferolito676
- * @version 2.0 window title is "Connection Utility" provides a stripped-down
- *          GUI for connections by explicit IP. The window is a widget based GUI
- *          made using swing. It contains extra functionality for plugins later
- *          to the project launcher.
+ * @author Michael Ferolito
+ * @version 2.5
+ * @since Version 1
  */
 public class ClientConnector extends JFrame implements KeyListener, ActionListener {
 	/**
@@ -43,7 +45,7 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 	 */
 	public static final int defaultport = 4444;
 	private JMenuBar jmb = new JMenuBar();
-	Timer t = new Timer(10,this);
+	Timer t = new Timer(10, this);
 	int i = 0;
 	// public static int port = 4444;
 
@@ -62,19 +64,19 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 
 			public void paintComponent(Graphics g) {
 				this.setBackground(Color.BLACK);
-				g.setColor(new Color(0,0,0,200));
-				g.drawImage(bgGif,0,0,800,600,null);
+				g.setColor(new Color(0, 0, 0, 200));
+				g.drawImage(bgGif, 0, 0, 800, 600, null);
 				g.fillRect(0, 0, 800, 600);
 //				if(i < 120);
 //				Title.setBackground(new Color(i++));
 			}
-			
+
 		});
 		this.setContentPane(j);
-		//this.getContentPane().add(j);
+		// this.getContentPane().add(j);
 		j.setBackground(Color.BLACK);
 		this.setLayout(null);
-		j.setBounds(0,0,800,600);
+		j.setBounds(0, 0, 800, 600);
 		this.setBounds(10, 10, 800, 600);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -84,7 +86,7 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 		this.setAlwaysOnTop(true);
 		this.setAutoRequestFocus(true);
 		Title.setFont(new Font("Monospaced", 1, 100));
-		Title.setForeground(new Color(40,60,60));
+		Title.setForeground(new Color(40, 60, 60));
 		Title.setBounds(120, 0, 800, 400);
 		this.add(input);
 		this.add(Title);
@@ -164,14 +166,12 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 //		NoServer.add(youcan);
 //		NoServer.add(leviathan);
 //		NoServer.add(egress);
-		this.setJMenuBar(jmb);		
+		this.setJMenuBar(jmb);
 		this.setVisible(true);
 		input.addKeyListener(this);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
-	
-	
 
 	@Override
 	/**
@@ -286,7 +286,7 @@ public class ClientConnector extends JFrame implements KeyListener, ActionListen
 			}
 			this.setVisible(false);
 		}
-		if(e.getSource().equals(t)) {
+		if (e.getSource().equals(t)) {
 //			if(i < 120)
 //			Title.setBackground(new Color(90,90,90));
 			this.getContentPane().repaint();

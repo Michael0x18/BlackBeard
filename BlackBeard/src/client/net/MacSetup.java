@@ -10,8 +10,20 @@ import java.io.IOException;
 
 import com.apple.eawt.AppEvent.AboutEvent;
 
+/**
+ * Performs Mac-specific setup. Generally stuff like the application image,
+ * name, help page.
+ * 
+ * @author Michael Ferolito
+ * @version 2.5
+ * @since 2
+ */
 public class MacSetup {
-	
+
+	/**
+	 * Runs mac specific utilities. Throws exceptions on Windows machines, so the
+	 * driver class doesn't call it.
+	 */
 	public void run() {
 		com.apple.eawt.Application application = com.apple.eawt.Application.getApplication();
 		Image image = Toolkit.getDefaultToolkit().getImage("Server/Build/Server.png");

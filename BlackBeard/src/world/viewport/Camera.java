@@ -23,7 +23,10 @@ import javax.swing.JPanel;
  * direction will be expanded if necessary to match the aspect ratio of the
  * screen. And the view volume extends from -10 to 10 along the z-axis. Only the
  * default constructor exists. Non-default properties must be set by calling
- * methods.
+ * methods. This class is about as thicccccccck as it gets.
+ * 
+ * @author Michael Ferolito
+ * 
  */
 public class Camera {
 	/**
@@ -541,8 +544,10 @@ public class Camera {
 				// 2PI
 				// for x
 				// rotation(pan) because you have 360º rotation
-				pan += MVector.map(mouse.x - pMouse.x, 0, joglPane.getBounds().width, 0, MConstants.TWO_PI) * xSensitivity;
-				tilt += -MVector.map(mouse.y - pMouse.y, 0, joglPane.getBounds().height, 0, MConstants.PI) * ySensitivity;
+				pan += MVector.map(mouse.x - pMouse.x, 0, joglPane.getBounds().width, 0, MConstants.TWO_PI)
+						* xSensitivity;
+				tilt += -MVector.map(mouse.y - pMouse.y, 0, joglPane.getBounds().height, 0, MConstants.PI)
+						* ySensitivity;
 				tilt = clamp(tilt, -MConstants.PI / 2.01f, MConstants.PI / 2.01f);
 
 				// tan of pi/2 or -pi/2 is undefined so if it happens to be
@@ -636,6 +641,7 @@ public class Camera {
 
 	/**
 	 * Returns the major plane of the velocity vector.
+	 * 
 	 * @return
 	 */
 	public MVector getVelocity() {
@@ -670,6 +676,7 @@ public class Camera {
 
 	/**
 	 * returns the raw tilt value.
+	 * 
 	 * @return
 	 */
 	public double getTilt() {
@@ -678,6 +685,7 @@ public class Camera {
 
 	/**
 	 * returns the raw pan value.
+	 * 
 	 * @return
 	 */
 	public double getPan() {

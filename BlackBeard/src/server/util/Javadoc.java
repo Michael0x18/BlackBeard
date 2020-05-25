@@ -7,8 +7,9 @@ import java.io.InputStreamReader;
 
 /**
  * A quick utility class that compiles JavaDocs.
+ * 
  * @author Michael Ferolito
- *
+ * @since Way before Version 1 was even a thing.
  */
 public class Javadoc {
 

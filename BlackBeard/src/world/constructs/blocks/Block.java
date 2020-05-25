@@ -12,18 +12,33 @@ import world.viewport.MVector;
 import world.viewport.Player;
 
 /**
+ * Common superclass for all Blocks. When created, forms a "GRASS BLOCK"
  * 
- * @author Michael Ferolito Common superclass for all Blocks. When created,
- *         forms a "GRASS BLOCK"
+ * @author Michael Ferolito,William Meng
  *
  */
 public class Block implements Clippable {
 
+	/**
+	 * Constructs a Block from coordinates that are twice the specified amount.
+	 * 
+	 * @param x2
+	 * @param y2
+	 * @param z2
+	 * @return
+	 */
 	public static Block fromDoubleCoords(double x2, double y2, double z2) {
 		return new Block(x2 / 2, y2 / 2, z2 / 2);
 
 	}
 
+	/**
+	 * For use with the classloader library.
+	 * 
+	 * @param a
+	 * @param b
+	 * @param c
+	 */
 	public void moveTo(double a, double b, double c) {
 		x = a;
 		y = b;
@@ -31,18 +46,37 @@ public class Block implements Clippable {
 		mv = new MVector(x, y, z);
 	}
 
+	/**
+	 * Suggests that the block add extra verticies to its drawing.
+	 */
 	public static boolean TESSELATION_ON = false;
 
+	/**
+	 * The position of the block
+	 */
 	double x, y, z;
 	// private double red = Math.random()*4;
 	// private double green = Math.random()*4;
 	// private double blue = Math.random()*4;
+	/**
+	 * The size of the block. Subclasses may choose to change this value.
+	 */
 	protected final double size = 0.5;
 
+	/**
+	 * The position vector, used for transformations.
+	 */
 	protected MVector mv;
 
+	/**
+	 * True if and only if the block is selected by the Player. Subclasses may need
+	 * to be allowed access.
+	 */
 	protected boolean isSelected;
 
+	/**
+	 * Default for classloader.
+	 */
 	public Block() {
 		x = 0;
 		y = 0;
@@ -51,6 +85,9 @@ public class Block implements Clippable {
 		isSelected = false;
 	}
 
+	/**
+	 * Constructs a block with the specified coordinates.
+	 */
 	public Block(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
@@ -59,6 +96,10 @@ public class Block implements Clippable {
 		isSelected = false;
 	}
 
+	/**
+	 * Returns true if the Block is out of the Player's rendering range. Removed for
+	 * lag reasons.
+	 */
 	protected boolean outOfRange() {
 		// if(MVector.add(mv.copy().mult(-1),
 		// JoglPane.currentLoader.getC().getPosition()).getMagnitude()>ViewConstants.ABSOLUTE_RENDER_RANGE)
@@ -69,6 +110,9 @@ public class Block implements Clippable {
 	}
 
 	@Override
+	/**
+	 * Draws the Block using the viewport parameters given.
+	 */
 	public void draw(GLUT glut, GLU glu, GL gl, GL2 gl2) {
 		if (outOfRange())
 			return;
@@ -108,7 +152,8 @@ public class Block implements Clippable {
 			glut.glutSolidCube(0.25f);
 			gl2.glTranslated(0.125, -0.125, 0.125);
 		} else {
-			if(!isSelected);
+			if (!isSelected)
+				;
 			glut.glutSolidCube(0.5f);
 		}
 		if (isSelected) {
@@ -147,63 +192,107 @@ public class Block implements Clippable {
 	}
 
 	@Override
+	/**
+	 * Returns the coordinates in a MVector.
+	 */
 	public MVector getCoords() {
 		return new MVector(x, y, z);
 	}
 
 	@Override
+	/**
+	 * See MVector.getCoords
+	 */
 	public double[] packCoords() {
 		double[] a = { x, y, z };
 		return a;
 	}
 
+	/**
+	 * sets the block selection to the boolean.
+	 */
 	public void select(boolean b) {
 		isSelected = b;
 	}
 
 	@Override
+	/**
+	 * Returns the size of the Block.
+	 */
 	public double getSize() {
 		return 0.5;
 	}
 
 	@Override
+	/**
+	 * Returns the x coordinate of this block.
+	 */
 	public double getX() {
 		return x;
 	}
 
 	@Override
+	/**
+	 * Returns the y coordinate of this Block.
+	 */
 	public double getY() {
 		return y;
 	}
 
 	@Override
+	/**
+	 * Returns the z coordinate of this Block.
+	 */
 	public double getZ() {
 		return z;
 	}
 
+	/**
+	 * Meant to be overridden
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @return
+	 */
 	public boolean containsPoint1(double x, double y, double z) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
+	/**
+	 * Translate x
+	 */
 	public void movex(double d) {
 		x += d;
 
 	}
 
 	@Override
+	/**
+	 * Translate y
+	 */
 	public void movey(double d) {
 		y += d;
 
 	}
 
 	@Override
+	/**
+	 * Translate z
+	 */
 	public void movez(double d) {
 		z += d;
 
 	}
 
+	/**
+	 * For building Worlds. Returns a compensation MVector for blocks.
+	 * 
+	 * @author William Meng
+	 * @version 2.5
+	 * @since 2.5
+	 */
 	public MVector getDirection(Player p) {
 		MVector r = p.getPosition();
 		double distance = Math.sqrt(Math.pow(this.x - r.x, 2) + Math.pow(this.y - r.y, 2) + Math.pow(this.z - r.z, 2));
@@ -227,6 +316,11 @@ public class Block implements Clippable {
 		}
 	}
 
+	/**
+	 * Returns true if this Block is selected.
+	 * 
+	 * @author William Meng
+	 */
 	public boolean getSelection() {
 		return isSelected;
 	}

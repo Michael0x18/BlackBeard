@@ -22,7 +22,7 @@ import javax.swing.JMenuItem;
  * Server command of the same name.
  * 
  * @author Michael Ferolito
- * @version 2
+ * @version 2.5
  * 
  */
 public class ServerWindow extends JFrame implements KeyListener, MouseListener, ActionListener {

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="BlackBeard/src"/>
+	<classpathentry kind="lib" path="BlackBeard/build/gluegen-rt-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/build/gluegen-rt-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/build/gluegen-rt-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/build/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/build/gluegen.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/build/jfxrt.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/build/jogl-all-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/build/jogl-all-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/build/jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/build/jogl-all.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/build/Unsafe.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/dist/BlackBeard2.00.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/dist/BlackBeard2.01_Alpha.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/dist/BlackBeard2.02_Beta.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/dist/BlackBeard3.00_release01.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/dist/BlackBeard3.01_release02(Latest).jar"/>
+	<classpathentry kind="lib" path="BlackBeard/dist/Client/Server3.00_release01.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/dist/Server2.00.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/dist/Server2.01_Alpha.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/dist/Server2.02_Beta.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/dist/Server3.00_release01.jar"/>
+	<classpathentry kind="lib" path="BlackBeard/dist/Server3.01_release02(Latest).jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

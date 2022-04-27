@@ -27,6 +27,7 @@ public class ClientMain {
 	 */
 	public static void main(String[] args) throws InterruptedException {
 		// System.out.println(System.getProperty("os.name"));
+		System.setProperty("jogl.disable.openglcore", "false");
 		if (System.getProperty("os.name").contains("Mac")) {
 			MacSetup ms = (MacSetup)loadClass("server.net.MacSetup");
 			ms.run();
